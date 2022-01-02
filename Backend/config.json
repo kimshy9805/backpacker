@@ -1,0 +1,15 @@
+{
+    "http": { 
+        "socket": "",
+        "ip": "localhost",
+        "port": 8080
+    },
+    "mysql": {
+        "username": "root",
+        "password": "*Ajrlehr9805",
+        "database": "backpacker",
+        "host":"127.0.0.1",
+        "port":3306
+    }
+}
+
