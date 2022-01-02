@@ -1,0 +1,6 @@
+module Pods_backpacker {
+  umbrella header "Pods-backpacker-umbrella.h"
+
+  export *
+  module * { export * }
+}
