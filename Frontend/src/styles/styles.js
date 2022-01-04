@@ -17,6 +17,11 @@ const styles = StyleSheet.create({
     flexRow: {
         flexDirection: 'row',
     },
+
+    flexRowCenter: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     flexRowCenterBetween: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -112,11 +117,84 @@ const styles = StyleSheet.create({
         ...Typography.bold4,
         lineHeight: 18,
     },
+
+    sectionHeaderContainer: {
+        paddingHorizontal: Sizes.padding,
+        paddingVertical: Sizes.padding,
+        backgroundColor: Colors.white,
+    },
+
+    /********************
+     **  @Tweet   **
+     ********************/
+
+    tweetContainer: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        backgroundColor: Colors.white,
+    },
+
+    tweetCardContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        borderBottomWidth: 0.5,
+        borderColor: 'lightgrey',
+        padding: Sizes.padding,
+        borderWidth: 1,
+    },
+
+    tweetProfileContainer: {
+        flex: 1,
+        height: '100%',
+    },
+    tweetDetailContainer: {
+        flex: 6,
+        width: '100%',
+        height: '100%',
+    },
+    tweetHeaderContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    tweetHeaderNames: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+
+    tweetContentContainer: {
+        marginTop: 5,
+    },
+    tweetFooterContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 5,
+    },
+    tweetFooterNumber: {
+        ...Typography.body6,
+        color: 'grey',
+        textAlign: 'center',
+        marginLeft: 5,
+    },
+
+    newTweetButtonContainer: {
+        width: 50,
+        height: 50,
+        borderRadius: Sizes.radius * 3,
+        position: 'absolute',
+        bottom: 30,
+        right: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.primary,
+    },
+
     /********************
      **  @Components   **
      ********************/
 
-    // filter select button
     bigDropDownPicker: {
         width: Sizes.width * 0.425,
         height: 45,
@@ -1061,7 +1139,6 @@ const styles = StyleSheet.create({
     /******************
      ***   @SignUp   ***
      ******************/
-
 });
 
 export default styles;

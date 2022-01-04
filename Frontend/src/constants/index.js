@@ -1,7 +1,7 @@
 import icons from './icons';
 import images from './images';
-import dummyData from './dummyData';
+import data from './data';
 import mapStyle from './maps';
 import constants from './constants';
 
-export {icons, images, dummyData, mapStyle, constants};
+export {icons, images, data, mapStyle, constants};

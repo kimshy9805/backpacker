@@ -7,6 +7,14 @@ import SplashScreen from 'react-native-splash-screen';
 import AppStackNavigator from './src/navigation/navigate';
 import store from './src/redux/store';
 import * as RootNavigation from './src/navigation/rootNavigation';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {fab} from '@fortawesome/free-brands-svg-icons';
+import {
+    faHome,
+    faSearch,
+    faBell,
+    faEnvelope,
+} from '@fortawesome/free-solid-svg-icons';
 import {
     setJSExceptionHandler,
     setNativeExceptionHandler,
@@ -30,6 +38,9 @@ function handleApplicationError(errorMessage) {
 // setJSExceptionHandler(errorHandler, true);
 
 // setNativeExceptionHandler(handleApplicationError, true, false);
+
+// FontAwesome Library
+library.add(fab, faHome, faSearch, faBell, faEnvelope);
 
 const App = () => {
     //Log ignore
