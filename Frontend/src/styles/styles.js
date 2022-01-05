@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
+        backgroundColor: Colors.white,
     },
     mt10: {
         marginTop: 10,
@@ -189,6 +190,38 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Colors.primary,
+    },
+
+    newTweetHeaderContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: Sizes.padding,
+        borderBottomColor: Colors.darkGray,
+        borderBottomWidth: 0.5,
+    },
+
+    newTweetHeaderButtonContainer: {
+        width: 60,
+        backgroundColor: Colors.primary,
+        borderRadius: Sizes.radius * 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    newTweetContainer: {
+        flexDirection: 'row',
+        padding: Sizes.padding,
+        flex: 1,
+    },
+
+    newTweetInputContainer: {
+        width: '100%',
+        marginLeft: Sizes.padding,
+    },
+
+    newTweetInput: {
+        width: '80%',
     },
 
     /********************

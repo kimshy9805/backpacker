@@ -3,17 +3,17 @@ import {Alert} from 'react-native';
 
 import {signInUserAsync, signInUserAsyncFailed} from '@ducks/auth';
 import {getUserAsync, getUserAsyncFailed} from '@ducks/user';
-import {requestGetUser, requestUpdateUser} from '@sagas/requests/user';
+import {fetchTweetsAsync, fetchTweetsAsyncFailed} from '@ducks/tweet';
 
-const getUserResp = {
+const fetchTweets = {
     data: {},
     err: '',
 };
 
-export function* handleGetUser() {
+export function* handleFetchTweets() {
     let resp;
     try {
-        resp = yield call(requestGetUser);
+        resp = yield call(requestFetchTweets);
 
         // Throw exceptions
         if (resp.data === undefined) {
@@ -25,15 +25,20 @@ export function* handleGetUser() {
             throw resp.err;
         }
 
-        let user = resp.data;
+        let result = resp.data;
 
-        yield put(getUserAsync(user));
+        yield put(fetchTweetsAsync(user));
     } catch (error) {
-        yield put(getUserAsyncFailed(error));
+        yield put(fetchTweetsAsyncFailed(error));
     }
 }
 
-export function* handleUpdateUser(action) {
+const postTweet = {
+    data: {},
+    err: '',
+};
+
+export function* handlePostTweet(action) {
     let resp;
 
     try {
@@ -45,17 +50,14 @@ export function* handleUpdateUser(action) {
         }
 
         // Logic Error
-        if (resp.status === 'FAIL') {
-            Alert.alert('NEON', resp.data);
-            return;
+        if (resp.err !== null) {
+            throw resp.err;
         }
 
-        let user = resp.data;
-        yield put(updateUserAsync(user));
-        yield put(getUser());
+        let result = resp.data;
+        yield put(postTweetAsync(result));
     } catch (error) {
         // HTTP Error
-        Alert.alert('NEON', 'Something went wrong...');
-        yield put(updateUserAsyncFailed(error));
+        yield put(postTweetAsyncFailed(error));
     }
 }

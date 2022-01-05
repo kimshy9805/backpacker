@@ -1,4 +1,5 @@
-import {userReducer} from './user';
 import {authReducer} from './auth';
+import {userReducer} from './user';
+import {tweetReducer} from './tweet';
 
-export {userReducer, authReducer};
+export {userReducer, authReducer, tweetReducer};

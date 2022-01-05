@@ -5,7 +5,11 @@ const initialState = {
         user_name: 'nstory',
         email: 'neon@nstory.com',
         contact_number: 93935849,
+        image: 'https://picsum.photos/200',
     },
+
+    isFetching: null,
+    error: null,
 };
 
 const userSlice = createSlice({
@@ -15,57 +19,31 @@ const userSlice = createSlice({
 
     reducers: {
         getUser: state => {
-            console.log('getUser Saga Request');
-            state.isGetUserSuccess = false;
+            console.log('Request getUser');
+            state.isFetching = false;
             state.error = null;
         },
 
         getUserAsync: (state, {payload: user}) => {
-            console.log('getUser Saga Success');
+            console.log('Saga getUserAsync');
             state.user = user;
-            state.isGetUserSuccess = true;
+            state.isFetching = true;
         },
 
         getUserAsyncFailed: (state, {payload: error}) => {
-            console.log('getUser Saga Failed');
+            console.log('Saga getUserAsyncFailed');
+            state.isFetching = null;
             state.error = error;
-            state.isGetUserSuccess = false;
         },
 
-        resetGetUser: state => {
-            state.isGetUserSuccess = null;
-            state.error = null;
-        },
-
-        resetUser: state => {
-            state.user = {
-                user_name: 'nstory',
-                email: 'neon@nstory.com',
-                contact_number: 93935849,
-                my_stores_no: [],
-                my_deals_no: [],
-                my_bookings_no: [],
-                my_messages_no: [],
-            };
-            state.qr = {};
-            state.myStores = [];
-            state.myDeals = [];
-            state.myBookings = [];
-            state.myCoupons = [];
-            state.myMessages = [];
-            state.isLoggedIn = null;
-            state.isSuccess = false;
+        resetAPIStatus: state => {
+            state.isFetching = null;
         },
     },
 });
 
-export const {
-    getUser,
-    getUserAsync,
-    getUserAsyncFailed,
-    resetGetUser,
-    resetUser,
-} = userSlice.actions;
+export const {getUser, getUserAsync, getUserAsyncFailed, resetAPIStatus} =
+    userSlice.actions;
 
 export const namespace = userSlice.name;
 

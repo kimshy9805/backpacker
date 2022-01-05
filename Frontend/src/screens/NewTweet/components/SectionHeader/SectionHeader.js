@@ -2,34 +2,35 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import {styles, Colors} from '@styles';
+import {styles, Colors, Typography, Sizes} from '@styles';
 import {ProfilePicture} from '@components';
 import {data} from '@constants';
 
 const SectionHeader = () => {
     const nav = useNavigation();
+
+    const onClose = () => {
+        nav.goBack();
+    };
+
+    const onPostTweet = () => {
+        console.log('New tweet');
+    };
+
     return (
-        <View style={styles.sectionHeaderContainer}>
-            <View style={styles.flexRowCenterBetween}>
-                <TouchableOpacity
-                    onPress={() => nav.navigate('Profile', {userId: 1})}>
-                    <ProfilePicture size={40} image={data.users?.image} />
-                </TouchableOpacity>
-                <FontAwesomeIcon
-                    icon={'home'}
-                    color={Colors.primary}
-                    size={30}
-                />
-                <TouchableOpacity onPress={() => nav.navigate('Dashboard')}>
-                    <MaterialCommunityIcons
-                        name={'star-four-points-outline'}
-                        size={30}
-                        color={Colors.primary}
-                    />
-                </TouchableOpacity>
-            </View>
+        <View style={styles.newTweetHeaderContainer}>
+            <TouchableOpacity onPress={onClose}>
+                <AntDesign name="close" size={30} color={Colors.primary} />
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.newTweetHeaderButtonContainer}
+                onPress={onPostTweet}>
+                <Text style={{...Typography.bold5, color: Colors.white}}>
+                    Tweet
+                </Text>
+            </TouchableOpacity>
         </View>
     );
 };
