@@ -80,8 +80,32 @@ export const neon_apple_logo = require('../assets/icons/neon_apple_logo.png');
 export const neon_facebook_logo2 = require('../assets/icons/neon_facebook.logo2.png');
 export const neon_gift = require('../assets/icons/neon_gift.png');
 export const neon_logo_black = require('../assets/icons/neon_logo_black.png');
+export const aeroplane = require('../assets/icons/aeroplane.png');
+export const bed_off = require('../assets/icons/bed_off.png');
+export const bed_on = require('../assets/icons/bed_on.png');
+export const bookmark = require('../assets/icons/bookmark.png');
+export const calendar = require('../assets/icons/calendar.png');
+export const left_arrow = require('../assets/icons/left_arrow.png');
+export const maps = require('../assets/icons/maps.png');
+export const plane = require('../assets/icons/plane.png');
+export const settings = require('../assets/icons/settings.png');
+export const side_drawer = require('../assets/icons/side_drawer.png');
+export const star = require('../assets/icons/star.png');
+export const up_arrow = require('../assets/icons/up_arrow.png');
 
 export default {
+    aeroplane,
+    bed_off,
+    bed_on,
+    bookmark,
+    calendar,
+    left_arrow,
+    maps,
+    plane,
+    settings,
+    side_drawer,
+    star,
+    up_arrow,
     neon_arrow_down,
     neon_arrow_left,
     neon_arrow_right,

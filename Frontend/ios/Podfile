@@ -12,6 +12,12 @@ target 'backpacker' do
     :hermes_enabled => false
   )
 
+  # Google map
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
+
   target 'backpackerTests' do
     inherit! :complete
     # Pods for testing
@@ -27,6 +33,4 @@ target 'backpacker' do
     react_native_post_install(installer)
   end
 end
-Multiple commands produce '/Users/TRECE/Library/Developer/Xcode/DerivedData/backpacker-dvmmnvsgzuhlefcfbyofbhpdosge/Build/Products/Debug-iphonesimulator/backpacker.app/FontAwesome.ttf':
-1) Target 'backpacker' (project 'backpacker') has copy command from '/Users/TRECE/SideProject/backpacker/Frontend/node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf' to '/Users/TRECE/Library/Developer/Xcode/DerivedData/backpacker-dvmmnvsgzuhlefcfbyofbhpdosge/Build/Products/Debug-iphonesimulator/backpacker.app/FontAwesome.ttf'
-2) That command depends on command in Target 'backpacker' (project 'backpacker'): script phase “[CP] Copy Pods Resources”
+

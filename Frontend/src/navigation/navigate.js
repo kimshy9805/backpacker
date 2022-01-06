@@ -13,6 +13,7 @@ import {
     TweetScreen,
     NewTweetScreen,
     SearchScreen,
+    PlaceScreen,
     NotificationScreen,
     MessageScreen,
 } from '../screens/index';
@@ -35,6 +36,7 @@ const TabNavigator = () => {
                 tabBarActiveTintColor: Colors.primary,
                 tabBarInactiveTintColor: Colors.lightGray,
                 tabBarShowLabel: false,
+                tabBarStyle: {backgroundColor: Colors.black},
             }}>
             {/* TODO change Image source when focused */}
             <Tab.Screen
@@ -89,6 +91,7 @@ const AppStackNavigator = () => {
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Tweet" component={TweetScreen} />
             <Stack.Screen name="NewTweet" component={NewTweetScreen} />
+            <Stack.Screen name="Place" component={PlaceScreen} />
         </Stack.Navigator>
     );
 };

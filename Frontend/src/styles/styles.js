@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
     },
     mt10: {
         marginTop: 10,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     sectionHeaderContainer: {
         paddingHorizontal: Sizes.padding,
         paddingVertical: Sizes.padding,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
     },
 
     /********************

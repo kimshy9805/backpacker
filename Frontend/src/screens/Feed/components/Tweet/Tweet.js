@@ -57,8 +57,8 @@ const Tweet = () => {
                         <Text>No Tweet been found</Text>
                     </View>
                 }
-                refreshing={isFetching}
-                onRefresh={fetchTweets}
+                // refreshing={isFetching}
+                // onRefresh={fetchTweets}
             />
         </View>
     );
