@@ -5,35 +5,17 @@ import {useNavigation, CommonActions} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {
-    SectionHeader,
-    Background,
-    Description,
-    Articles,
-    Map,
-} from './components';
+import {SectionHeader, Map} from './components';
 import {styles} from '@styles';
 import {images} from '@constants';
 import {HorizontalLine} from '@components';
 import {resetGetUser} from '@ducks/user';
 
-const PlaceScreen = ({route}) => {
+const Articles = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
 
-    return (
-        <SafeAreaView
-            style={{flex: 1}}
-            forceInset={{bottom: 'never', top: 'never'}}>
-            <Background />
-            <SectionHeader />
-            <View style={styles.placeBodyContainer}>
-                <Description />
-                <Articles />
-            </View>
-            <Map />
-        </SafeAreaView>
-    );
+    return <View></View>;
 };
 
-export default PlaceScreen;
+export default Articles;

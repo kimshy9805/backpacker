@@ -1,5 +1,12 @@
-import React from 'react';
-import {View, Image, TouchableOpacity, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+    View,
+    Image,
+    TouchableOpacity,
+    ImageBackground,
+    Animated,
+    StyleSheet,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,21 +17,14 @@ import {data, icons} from '@constants';
 
 const SectionHeader = () => {
     const nav = useNavigation();
+
     return (
-        <View
-            style={[
-                styles.sectionHeaderContainer,
-                {
-                    backgroundColor: 'transparent',
-                    paddingTop: Sizes.padding * 3,
-                    paddingLeft: Sizes.padding,
-                },
-            ]}>
+        <View style={styles.placeSectionHeaderContainer}>
             <TouchableOpacity
                 onPress={() => nav.goBack()}
                 style={{
-                    width: 45,
-                    height: 45,
+                    width: 35,
+                    height: 35,
                     borderRadius: 25,
                     backgroundColor: Colors.transparentBlack,
                     justifyContent: 'center',

@@ -5,20 +5,30 @@ import {useNavigation, CommonActions} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {styles} from '@styles';
-import {SectionHeader} from './components';
+import {styles, Sizes} from '@styles';
+import {SectionHeader, Countries, Places} from './components';
+import {data} from '@constants';
 import {HorizontalLine} from '@components';
 import {resetGetUser} from '@ducks/user';
 
 const SearchScreen = () => {
     const {t} = useTranslation();
     const navigation = useNavigation();
+    const [places, setPlaces] = useState([
+        {place_id: -1},
+        ...data.countries[0].places,
+        {place_id: -2},
+    ]);
 
     const dispatch = useDispatch();
 
     return (
         <SafeAreaView style={styles.container} forceInset={{bottom: 'never'}}>
             <SectionHeader />
+            <ScrollView contentContainerStyle={{paddingBottom: 40}}>
+                <Countries places={places} setPlaces={setPlaces} />
+                <Places places={places} />
+            </ScrollView>
         </SafeAreaView>
     );
 };

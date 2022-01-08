@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text, Animated, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {data} from '@constants';
 import {Marginer, TweetCard, HorizontalLine} from '@components';
-import {styles, Sizes} from '@styles';
+import {styles, Sizes, Colors} from '@styles';
 import {fetchTweets, resetAPIStatus} from '@ducks/tweet';
 
-const Tweet = () => {
+const Tweets = ({scrollY}) => {
     const nav = useNavigation();
 
     const dispatch = useDispatch();
@@ -35,13 +35,24 @@ const Tweet = () => {
 
     return (
         <View style={styles.tweetContainer}>
-            <FlatList
+            <Animated.FlatList
                 data={data.tweets}
                 keyExtractor={item => `${item.tweetId}`}
+                onScroll={Animated.event(
+                    [
+                        {
+                            nativeEvent: {
+                                contentOffset: {y: scrollY.current},
+                            },
+                        },
+                    ],
+                    {useNativeDriver: true},
+                )}
                 keyboardDismissMode="on-drag"
                 showsVerticalScrollIndicator={false}
                 scrollEventThrottle={250}
                 onEndReachedThreshold={0.01}
+                bounces={false}
                 renderItem={({item}) => {
                     return (
                         <TweetCard
@@ -51,7 +62,11 @@ const Tweet = () => {
                         />
                     );
                 }}
-                ListFooterComponent={<Marginer margin={25} />}
+                ListFooterComponent={
+                    <View style={{backgroundColor: Colors.black}}>
+                        <Marginer margin={25} />
+                    </View>
+                }
                 ListEmptyComponent={
                     <View style={styles.flexRowCenterCenter}>
                         <Text>No Tweet been found</Text>
@@ -64,4 +79,4 @@ const Tweet = () => {
     );
 };
 
-export default Tweet;
+export default Tweets;

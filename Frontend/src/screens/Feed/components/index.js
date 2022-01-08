@@ -1,5 +1,5 @@
 import SectionHeader from './SectionHeader/SectionHeader';
-import Tweet from './Tweet/Tweet';
+import Tweets from './Tweets/Tweets';
 import NewTweetButton from './NewTweetButton/NewTweetButton';
 
-export {SectionHeader, Tweet, NewTweetButton};
+export {SectionHeader, Tweets, NewTweetButton};

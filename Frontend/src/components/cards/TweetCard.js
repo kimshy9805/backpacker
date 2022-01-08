@@ -27,13 +27,28 @@ const TweetCard = props => {
                 onPress={() => onPressTweet(tweet.tweetId)}>
                 <View style={styles.tweetHeaderContainer}>
                     <View style={styles.tweetHeaderNames}>
-                        <Text style={{marginRight: 5, ...Typography.bold5}}>
+                        <Text
+                            style={{
+                                marginRight: 5,
+                                ...Typography.bold5,
+                                color: Colors.white,
+                            }}>
                             {tweet.user.name}
                         </Text>
-                        <Text style={{marginRight: 5, ...Typography.body6}}>
+                        <Text
+                            style={{
+                                marginRight: 5,
+                                ...Typography.body6,
+                                color: Colors.white,
+                            }}>
                             @{tweet.user.username}
                         </Text>
-                        <Text style={{marginRight: 5, ...Typography.body5}}>
+                        <Text
+                            style={{
+                                marginRight: 5,
+                                ...Typography.body5,
+                                color: Colors.white,
+                            }}>
                             {moment(tweet.createdAt).fromNow()}
                         </Text>
                     </View>
@@ -47,7 +62,9 @@ const TweetCard = props => {
                 </View>
                 {/* Content */}
                 <View style={styles.tweetContentContainer}>
-                    <Text style={{...Typography.body5}}>{tweet.content}</Text>
+                    <Text style={{...Typography.body5, color: Colors.white}}>
+                        {tweet.content}
+                    </Text>
                     {tweet.image && (
                         <Image
                             source={{uri: tweet.image}}

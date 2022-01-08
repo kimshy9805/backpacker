@@ -83,7 +83,7 @@ const AppStackNavigator = () => {
     return (
         <Stack.Navigator
             screenOptions={screenOptionStyle}
-            initialRouteName={'Auth'}>
+            initialRouteName={'Dashboard'}>
             <Stack.Screen name="Auth" component={AuthScreen} />
             <Stack.Screen name="Update" component={UpdateScreen} />
             <Stack.Screen name="SignIn" component={SignInScreen} />

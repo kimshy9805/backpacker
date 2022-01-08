@@ -6,6 +6,11 @@ import DashedLine from './lines/DashedLine';
 import TweetCard from './cards/TweetCard';
 
 // Button
+import TextButton from './buttons/TextButton';
+import IconButton from './buttons/IconButton';
+
+
+
 
 // Modal
 
@@ -22,6 +27,7 @@ export {
     HorizontalLine,
     DashedLine,
     TweetCard,
+    TextButton,
     Marginer,
     CustomInput,
     TabBarIcon,

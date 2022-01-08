@@ -21,9 +21,6 @@ const NewTweet = () => {
 
     useEffect(() => {
         console.log(tweetText);
-
-
-
     }, [tweetText, imageURL]);
 
     const onPostTweet = () => {
@@ -40,6 +37,7 @@ const NewTweet = () => {
                     value={tweetText}
                     style={styles.newTweetInput}
                     placeholder={"What's happening?"}
+                    placeholderTextColor={Colors.darkGray}
                     onChangeText={text => setTweetText(text)}
                 />
             </View>
