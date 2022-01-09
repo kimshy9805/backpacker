@@ -18,6 +18,10 @@ type Processor interface {
 	// Users
 	ProcessUserCreate(user *model.User) error
 	ProcessUserTransition(ctx context.Context, user *model.User, verb string) error
+
+	// Tweets
+	ProcessTweetCreate(ctx context.Context, tweet *model.Tweet) error
+	ProcessTweetTransition(ctx context.Context, tweet *model.Tweet, verb string) error
 }
 
 func NewProcessor(repo model.Repository) Processor {

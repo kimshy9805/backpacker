@@ -33,7 +33,7 @@ func (r *repository) CreateUser(user *User, tx *Tx) (int64, error) {
 
 func (r *repository) GetUser(id int64, tx *Tx) (*User, error) {
 	user := &User{}
-	err := r.getDb(tx).QueryRow(`SELECT user_id, email, password, IFNULL(name, ''), status, created_at 
+	err := r.getDb(tx).QueryRow(`SELECT user_id, email, password, name, status, created_at 
 								   FROM users WHERE user_id = ?`, id).Scan(scanUser(user)...)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (r *repository) GetUser(id int64, tx *Tx) (*User, error) {
 func (r *repository) GetUserByEmailAndPassword(email, password string, tx *Tx) (*User, error) {
 	hash := hashPassword(password)
 	user := &User{}
-	err := r.getDb(tx).QueryRow(`SELECT user_id, email, password, IFNULL(name, ''), status, created_at
+	err := r.getDb(tx).QueryRow(`SELECT user_id, email, password, name, status, created_at
 								   FROM users WHERE email = ? AND password = ? AND status = ?`, email, hash, "ACTIVE").Scan(scanUser(user)...)
 	if err != nil {
 		return nil, err

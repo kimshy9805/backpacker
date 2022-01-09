@@ -10,7 +10,7 @@ import (
 	"kay.backpacker/config"
 )
 
-const DateTimeFormat = "2022-01-01 12:00:00"
+const dateTimeFormat = "2022-01-01 12:00:00"
 
 type repository struct {
 	db *sql.DB
@@ -31,6 +31,15 @@ type Repository interface {
 	CreateUser(user *User, tx *Tx) (int64, error)
 	GetUser(id int64, tx *Tx) (*User, error)
 	UpdateUser(user *User, tx *Tx) error
+
+	// Tweets
+	CreateTweet(tweet *Tweet, tx *Tx) (int64, error)
+	// GetTweets(tx *Tx) ([]*Tweet, error)
+	GetTweets(tx *Tx) ([]interface{}, error)
+	GetTweet(id int64, tx *Tx) (*Tweet, error)
+	GetTweetsByUserId(id int64, tx *Tx) ([]*Tweet, error)
+	GetMyTweets(userId int64, tx *Tx) ([]*Tweet, error)
+	UpdateTweet(tweet *Tweet, tx *Tx) error
 }
 
 type QueryAble interface {
