@@ -12,6 +12,7 @@ func scanUser(user *User) []interface{} {
 		&user.Email,
 		&user.Password,
 		&user.Name,
+		&user.Details,
 		&user.Status,
 		&user.CreatedAt,
 	}
@@ -22,8 +23,8 @@ func hashPassword(password string) string {
 }
 
 func (r *repository) CreateUser(user *User, tx *Tx) (int64, error) {
-	result, err := r.getDb(tx).Exec(`INSERT INTO users (email, password, name, status, created_at) 
-										  VALUES(?, ?, ?, ?, ?)`, user.Email, hashPassword(user.Password), user.Name, user.Status, user.CreatedAt)
+	result, err := r.getDb(tx).Exec(`INSERT INTO users (email, password, name, details, status, created_at) 
+										  VALUES(?, ?, ?, ?, ?)`, user.Email, hashPassword(user.Password), user.Name, user.Details, user.Status, user.CreatedAt)
 	if err != nil {
 		return -1, err
 	}
@@ -33,7 +34,7 @@ func (r *repository) CreateUser(user *User, tx *Tx) (int64, error) {
 
 func (r *repository) GetUser(id int64, tx *Tx) (*User, error) {
 	user := &User{}
-	err := r.getDb(tx).QueryRow(`SELECT user_id, email, password, name, status, created_at 
+	err := r.getDb(tx).QueryRow(`SELECT user_id, email, password, name, status, details, created_at 
 								   FROM users WHERE user_id = ?`, id).Scan(scanUser(user)...)
 	if err != nil {
 		return nil, err
@@ -45,7 +46,7 @@ func (r *repository) GetUser(id int64, tx *Tx) (*User, error) {
 func (r *repository) GetUserByEmailAndPassword(email, password string, tx *Tx) (*User, error) {
 	hash := hashPassword(password)
 	user := &User{}
-	err := r.getDb(tx).QueryRow(`SELECT user_id, email, password, name, status, created_at
+	err := r.getDb(tx).QueryRow(`SELECT user_id, email, password, name, status, details, created_at
 								   FROM users WHERE email = ? AND password = ? AND status = ?`, email, hash, "ACTIVE").Scan(scanUser(user)...)
 	if err != nil {
 		return nil, err
@@ -65,6 +66,9 @@ func (r *repository) UpdateUser(user *User, tx *Tx) error {
 		columns = append(columns, `status = ?`)
 		values = append(values, user.Status)
 	}
+
+	columns = append(columns, `details = ?`)
+	values = append(values, user.Details)
 	if len(columns) > 0 {
 		values = append(values, user.UserId)
 		if _, err := r.getDb(tx).Exec(`UPDATE users SET `+strings.Join(columns, ", ")+` where user_id = ?`, values...); err != nil {

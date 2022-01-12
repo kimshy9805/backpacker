@@ -25,9 +25,6 @@ func (h *apiHandler) tweetsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		fmt.Println("hphp")
-		fmt.Println(tweets)
-
 		encoder := json.NewEncoder(w)
 		encoder.Encode(tweets)
 		w.Header().Set("Content-Type", "application/json")

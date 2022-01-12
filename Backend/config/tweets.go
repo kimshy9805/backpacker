@@ -1,6 +1,10 @@
 package config
 
 const (
+	// DAO
+	TWEET_DEFAULT = "default"
+	TWEET_API     = "api"
+
 	// States
 	STATE_TWEETS_DELETE = "delete"
 

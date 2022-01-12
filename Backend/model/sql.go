@@ -34,12 +34,18 @@ type Repository interface {
 
 	// Tweets
 	CreateTweet(tweet *Tweet, tx *Tx) (int64, error)
-	// GetTweets(tx *Tx) ([]*Tweet, error)
-	GetTweets(tx *Tx) ([]interface{}, error)
+	GetTweets(tx *Tx) ([]*Tweet, error)
 	GetTweet(id int64, tx *Tx) (*Tweet, error)
 	GetTweetsByUserId(id int64, tx *Tx) ([]*Tweet, error)
 	GetMyTweets(userId int64, tx *Tx) ([]*Tweet, error)
 	UpdateTweet(tweet *Tweet, tx *Tx) error
+
+	// Comments
+	CreateComment(comment *Comment, tx *Tx) (int64, error)
+	// GetComment(id int64, tx *Tx) (*Tweet, error)
+	GetCommentsByTweetId(tweetId int64, tx *Tx) ([]*Comment, error)
+	// GetMyComments(userId int64, tx *Tx) ([]*Tweet, error)
+	// UpdateComment(tweet *Tweet, tx *Tx) error
 }
 
 type QueryAble interface {
