@@ -147,3 +147,32 @@ func (h *apiHandler) myTweetsHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
 }
+
+type Params []interface{}
+
+func (h *apiHandler) tweetStateHandler(w http.ResponseWriter, r *http.Request) {
+	ctx, err := h.accessControl(r)
+	if err != nil {
+		w.WriteHeader(http.StatusForbidden)
+		return
+	}
+
+	idString := mux.Vars(r)["id"]
+	id, err := strconv.ParseInt(idString, 10, 64)
+
+	verb := mux.Vars(r)["verb"]
+
+	if r.Method == http.MethodPost {
+		if err := h.processor.ProcessTweetTransition(ctx, id, verb); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		// encoder := json.NewEncoder(w)
+		// encoder.Encode(tweets)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+	} else {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+	}
+}

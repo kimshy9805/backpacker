@@ -24,7 +24,7 @@ func (h *apiHandler) commentsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Retrieve all latest tweets
+	// Retrieve all comments by tweet id
 	if r.Method == http.MethodGet {
 		comments, err := h.repo.GetCommentsByTweetId(tweetId, nil)
 		if err != nil {

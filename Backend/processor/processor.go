@@ -21,7 +21,7 @@ type Processor interface {
 
 	// Tweets
 	ProcessTweetCreate(ctx context.Context, tweet *model.Tweet) error
-	ProcessTweetTransition(ctx context.Context, tweet *model.Tweet, verb string) error
+	ProcessTweetTransition(ctx context.Context, params interface{}, verb string) error
 }
 
 func NewProcessor(repo model.Repository) Processor {

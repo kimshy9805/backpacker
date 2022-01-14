@@ -12,8 +12,8 @@ func scanUser(user *User) []interface{} {
 		&user.Email,
 		&user.Password,
 		&user.Name,
-		&user.Details,
 		&user.Status,
+		&user.Details,
 		&user.CreatedAt,
 	}
 }
@@ -68,7 +68,7 @@ func (r *repository) UpdateUser(user *User, tx *Tx) error {
 	}
 
 	columns = append(columns, `details = ?`)
-	values = append(values, user.Details)
+	// values = append(values, user.Details)
 	if len(columns) > 0 {
 		values = append(values, user.UserId)
 		if _, err := r.getDb(tx).Exec(`UPDATE users SET `+strings.Join(columns, ", ")+` where user_id = ?`, values...); err != nil {

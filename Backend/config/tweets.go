@@ -11,4 +11,5 @@ const (
 	// Actions
 	ACTION_TWEET_DELETE = "delete"
 	ACTION_TWEET_LIKE   = "like"
+	ACTION_TWEET_UNLIKE = "unlike"
 )

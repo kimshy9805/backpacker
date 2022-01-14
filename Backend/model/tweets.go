@@ -2,6 +2,7 @@ package model
 
 import (
 	"database/sql"
+	"fmt"
 	"strings"
 
 	"kay.backpacker/config"
@@ -19,7 +20,7 @@ func scanTweet(tweet *Tweet) []interface{} {
 	}
 }
 
-func scanTweetExtra(tweet *Tweet) []interface{} {
+func scanTweetAPI(tweet *Tweet) []interface{} {
 	return []interface{}{
 		&tweet.TweetId,
 		&tweet.UserId,
@@ -30,6 +31,7 @@ func scanTweetExtra(tweet *Tweet) []interface{} {
 		&tweet.UpdatedAt,
 		&tweet.LikesCount,
 		&tweet.CommentsCount,
+		&tweet.UsersLike,
 	}
 }
 
@@ -46,7 +48,8 @@ func (r *repository) readTweets(rows *sql.Rows, tx *Tx, twType string) ([]*Tweet
 			}
 			break
 		case config.TWEET_API:
-			if err := rows.Scan(scanTweetExtra(tweet)...); err != nil {
+			if err := rows.Scan(scanTweetAPI(tweet)...); err != nil {
+				fmt.Println(err)
 				return nil, err
 			}
 			break
@@ -90,8 +93,10 @@ func (r *repository) GetTweet(id int64, tx *Tx) (*Tweet, error) {
 func (r *repository) GetTweets(tx *Tx) ([]*Tweet, error) {
 	rows, err := r.getDb(tx).Query(`SELECT t.*,
 									(SELECT COUNT(*) FROM likes l WHERE l.tweet_id = t.tweet_id) AS likes_count,
-									(SELECT COUNT(*) FROM comments c WHERE c.tweet_id = t.tweet_id) AS comments_count
+									(SELECT COUNT(*) FROM comments c WHERE c.tweet_id = t.tweet_id) AS comments_count,
+									(SELECT IFNULL(JSON_ARRAYAGG(user_id), '[]') FROM likes l WHERE l.tweet_id = t.tweet_id) AS users_like
 									  FROM tweets t
+							 	  ORDER BY t.updated_at
 									 LIMIT 50`)
 	if err != nil {
 		return nil, err
@@ -132,7 +137,8 @@ func (r *repository) UpdateTweet(tweet *Tweet, tx *Tx) error {
 	columns = append(columns, `content = ?`)
 	values = append(values, tweet.Content)
 
-	// columns = append(columns, `details = ?`)
+	columns = append(columns, `details = ?`)
+	values = append(values, tweet.Details)
 
 	columns = append(columns, `updated_at = ?`)
 	values = append(values, tweet.UpdatedAt)
@@ -142,5 +148,31 @@ func (r *repository) UpdateTweet(tweet *Tweet, tx *Tx) error {
 			return err
 		}
 	}
+	return nil
+}
+
+func (r *repository) LikeTweet(tweetId int64, userId int64, tx *Tx) error {
+	result, err := r.getDb(tx).Exec(`INSERT INTO likes user_id, tweet_id VALUES (?, ?)`, tweetId, userId)
+	if err != nil {
+		return err
+	}
+
+	if _, err := result.RowsAffected(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *repository) UnlikeTweet(tweetId int64, userId int64, tx *Tx) error {
+	result, err := r.getDb(tx).Exec(`DELETE likes where user_id = ?, tweet_id = ?`, tweetId, userId)
+	if err != nil {
+		return err
+	}
+
+	if _, err := result.RowsAffected(); err != nil {
+		return err
+	}
+
 	return nil
 }

@@ -2,12 +2,14 @@ package model
 
 import (
 	"database/sql"
+	"fmt"
 
 	"kay.backpacker/config"
 )
 
 func scanComment(comment *Comment) []interface{} {
 	return []interface{}{
+		&comment.CommentId,
 		&comment.TweetId,
 		&comment.UserId,
 		&comment.Status,
@@ -18,8 +20,9 @@ func scanComment(comment *Comment) []interface{} {
 	}
 }
 
-func scanCommentExtra(comment *Comment) []interface{} {
+func scanCommentAPI(comment *Comment) []interface{} {
 	return []interface{}{
+		&comment.CommentId,
 		&comment.TweetId,
 		&comment.UserId,
 		&comment.Status,
@@ -38,10 +41,12 @@ func (r *repository) readComments(rows *sql.Rows, tx *Tx, cmtType string) ([]*Co
 		switch cmtType {
 		case config.COMMENT_DEFAULT:
 			if err := rows.Scan(scanComment(comment)...); err != nil {
+				fmt.Println(err)
 				return nil, err
 			}
+			fmt.Println(comment)
 		case config.COMMENT_API:
-			if err := rows.Scan(scanCommentExtra(comment)...); err != nil {
+			if err := rows.Scan(scanCommentAPI(comment)...); err != nil {
 				return nil, err
 			}
 		}
@@ -81,8 +86,10 @@ func (r *repository) CreateComment(comment *Comment, tx *Tx) (int64, error) {
 // }
 
 func (r *repository) GetCommentsByTweetId(tweetId int64, tx *Tx) ([]*Comment, error) {
-	rows, err := r.getDb(tx).Query(`SELECT * FROM comments WHERE tweet_id = ?`, tweetId)
+	rows, err := r.getDb(tx).Query(`SELECT comment_id, tweet_id, user_id, status, content, details, created_at, updated_at
+									  FROM comments WHERE tweet_id = ?`, tweetId)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 

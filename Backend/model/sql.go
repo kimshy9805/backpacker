@@ -39,6 +39,8 @@ type Repository interface {
 	GetTweetsByUserId(id int64, tx *Tx) ([]*Tweet, error)
 	GetMyTweets(userId int64, tx *Tx) ([]*Tweet, error)
 	UpdateTweet(tweet *Tweet, tx *Tx) error
+	LikeTweet(tweetId int64, userId int64, tx *Tx) error
+	UnlikeTweet(tweetId int64, userId int64, tx *Tx) error
 
 	// Comments
 	CreateComment(comment *Comment, tx *Tx) (int64, error)
