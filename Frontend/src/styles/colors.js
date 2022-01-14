@@ -9,6 +9,7 @@ const Colors = {
     gray2: '#E3E3E3',
     lightGray: '#CCCCCC',
     lightGray2: '#F2F2F2',
+    lightGray3: '#1C1C1E',
     darkGray: '#8d8d8d',
     facebook: '#3b5998',
 

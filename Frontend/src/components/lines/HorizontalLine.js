@@ -8,11 +8,10 @@ const HorizontalLine = props => {
     return (
         <View
             style={{
-                height: 1,
+                height: 0.25,
                 width: '100%',
                 backgroundColor: color,
-                marginBottom: margin,
-                marginTop: margin,
+                marginVertical: margin,
             }}
         />
     );

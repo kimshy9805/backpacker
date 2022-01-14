@@ -1,3 +1,3 @@
-import {handleFetchTweets, handlePostTweet} from './tweet';
+import {handleFetchTweets, handlePostTweet, handleLikeTweet, handleUnlikeTweet} from './tweet';
 
-export {handleFetchTweets, handlePostTweet};
+export {handleFetchTweets, handlePostTweet, handleLikeTweet, handleUnlikeTweet};

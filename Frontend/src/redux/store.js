@@ -15,7 +15,7 @@ const persistConfig = {
     blacklist: [],
     //will be persisted
     //나중에 'user'넣어서 앱 재실행해도 기존값 가져오게
-    whitelist: ['setting'],
+    whitelist: [],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

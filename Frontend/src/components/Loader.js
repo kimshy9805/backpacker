@@ -3,13 +3,14 @@ import {View, ActivityIndicator} from 'react-native';
 
 import {styles, Colors} from '@styles';
 
-const CustomActivityIndicator = props => {
+const Loader = props => {
     const {left = 0, right = 0, top = 0, bottom = 0} = props;
     return (
         <View
             style={[
-                styles.flexRowCenterCenter,
+                styles.flexColumnCenterCenter,
                 {
+                    flex: 1,
                     marginLeft: left,
                     marginRight: right,
                     marginTop: top,
@@ -21,4 +22,5 @@ const CustomActivityIndicator = props => {
     );
 };
 
-export default CustomActivityIndicator;
+export default Loader;
+

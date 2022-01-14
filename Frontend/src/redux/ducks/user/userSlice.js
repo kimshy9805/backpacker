@@ -5,7 +5,10 @@ const initialState = {
         user_name: 'nstory',
         email: 'neon@nstory.com',
         contact_number: 93935849,
-        image: 'https://picsum.photos/200',
+        details: {
+            images: [],
+        },
+        user_id: 25,
     },
 
     isFetching: null,

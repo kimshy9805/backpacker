@@ -1,22 +1,19 @@
-import React, {useState, useRef} from 'react';
-import {View, Animated, StatusBar} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {View, Animated, ActivityIndicator} from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import {useNavigation, CommonActions} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {SectionHeader, Tweets, NewTweetButton} from './components';
-import {styles} from '@styles';
-import {HorizontalLine} from '@components';
-import {resetGetUser} from '@ducks/user';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {styles, Colors} from '@styles';
 
 const {diffClamp} = Animated;
 const headerHeight = 58 * 2;
 
 const FeedScreen = () => {
-    const {t} = useTranslation();
     const dispatch = useDispatch();
+    const {isFetching, error, tweets} = useSelector(state => state.tweet);
 
     const scrollY = useRef(new Animated.Value(0));
     const scrollYClamped = diffClamp(scrollY.current, 0, headerHeight);

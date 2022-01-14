@@ -14,12 +14,12 @@ api.interceptors.request.use(
     async config => {
         const token = await AsyncStorage.getItem('token');
         if (token) {
-            config.headers['Authorization'] = 'Bearer ' + token;
+            config.headers['Token'] = token;
         }
+        config.headers['Token'] = '5475f841-0b1b-4e16-b5b6-c2bb19e62e9f';
         return config;
     },
     error => {
-        console.log(error);
         return Promise.reject('Invalid token');
     },
 );

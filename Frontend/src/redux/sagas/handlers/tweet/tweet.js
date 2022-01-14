@@ -1,48 +1,47 @@
 import {call, put} from 'redux-saga/effects';
 import {Alert} from 'react-native';
 
-import {signInUserAsync, signInUserAsyncFailed} from '@ducks/auth';
-import {getUserAsync, getUserAsyncFailed} from '@ducks/user';
-import {fetchTweetsAsync, fetchTweetsAsyncFailed} from '@ducks/tweet';
-
-const fetchTweets = {
-    data: {},
-    err: '',
-};
+import {
+    fetchTweetsAsync,
+    fetchTweetsAsyncFailed,
+    likeTweetAsync,
+    likeTweetAsyncFailed,
+    unlikeTweetAsync,
+    unlikeTweetAsyncFailed,
+} from '@ducks/tweet';
+import {
+    reqFetchTweets,
+    reqPostTweet,
+    reqLikeTweet,
+    reqUnlikeTweet,
+} from '@sagas/requests/tweet';
 
 export function* handleFetchTweets() {
     let resp;
     try {
-        resp = yield call(requestFetchTweets);
+        resp = yield call(reqFetchTweets);
 
-        // Throw exceptions
-        if (resp.data === undefined) {
-            throw resp;
-        }
+        // // Throw exceptions
+        // if (resp.data === undefined) {
+        //     throw resp;
+        // }
 
-        // Logic Error
-        if (resp.err !== null) {
-            throw resp.err;
-        }
+        // // Logic Error
+        // if (resp.err !== null) {
+        //     throw resp.err;
+        // }
 
-        let result = resp.data;
-
-        yield put(fetchTweetsAsync(user));
+        yield put(fetchTweetsAsync(resp.data));
     } catch (error) {
         yield put(fetchTweetsAsyncFailed(error));
     }
 }
 
-const postTweet = {
-    data: {},
-    err: '',
-};
-
 export function* handlePostTweet(action) {
     let resp;
 
     try {
-        resp = yield call(requestUpdateUser, action);
+        resp = yield call(reqPostTweet, action);
 
         // Throw exceptions
         if (resp.data === undefined) {
@@ -59,5 +58,41 @@ export function* handlePostTweet(action) {
     } catch (error) {
         // HTTP Error
         yield put(postTweetAsyncFailed(error));
+    }
+}
+
+export function* handleLikeTweet(action) {
+    let resp;
+    try {
+        // resp = yield call(reqLikeTweet, action);
+        // // Throw exceptions
+        // if (resp.data === undefined) {
+        //     throw resp;
+        // }
+        // // Logic Error
+        // if (resp.err !== null) {
+        //     throw resp.err;
+        // }
+        // yield put(likeTweetAsync(resp.data));
+    } catch (error) {
+        yield put(likeTweetAsyncFailed(error));
+    }
+}
+
+export function* handleUnlikeTweet(action) {
+    let resp;
+    try {
+        // resp = yield call(reqUnlikeTweet, action);
+        // // Throw exceptions
+        // if (resp.data === undefined) {
+        //     throw resp;
+        // }
+        // // Logic Error
+        // if (resp.err !== null) {
+        //     throw resp.err;
+        // }
+        // yield put(unlikeTweetAsync(resp.data));
+    } catch (error) {
+        yield put(unlikeTweetAsync(error));
     }
 }

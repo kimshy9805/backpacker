@@ -4,13 +4,11 @@ import DashedLine from './lines/DashedLine';
 
 // Card
 import TweetCard from './cards/TweetCard';
+import CommentCard from './cards/CommentCard';
 
 // Button
 import TextButton from './buttons/TextButton';
 import IconButton from './buttons/IconButton';
-
-
-
 
 // Modal
 
@@ -21,16 +19,17 @@ import CustomInput from './inputs/CustomInput';
 import Marginer from './Marginer';
 import TabBarIcon from './TabBarIcon';
 import ProfilePicture from './ProfilePicture';
-import CustomActivityIndicator from './CustomActivityIndicator';
+import Loader from './Loader';
 
 export {
     HorizontalLine,
     DashedLine,
     TweetCard,
+    CommentCard,
     TextButton,
     Marginer,
     CustomInput,
     TabBarIcon,
     ProfilePicture,
-    CustomActivityIndicator,
+    Loader,
 };

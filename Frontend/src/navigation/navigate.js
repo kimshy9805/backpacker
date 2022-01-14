@@ -10,12 +10,12 @@ import {
     UpdateScreen,
     FeedScreen,
     ProfileScreen,
-    TweetScreen,
     NewTweetScreen,
     SearchScreen,
     PlaceScreen,
     NotificationScreen,
     MessageScreen,
+    ThreadScreen,
 } from '../screens/index';
 import {TabBarIcon} from '@components';
 import {Colors, styles} from '@styles';
@@ -89,9 +89,9 @@ const AppStackNavigator = () => {
             <Stack.Screen name="SignIn" component={SignInScreen} />
             <Stack.Screen name="Dashboard" component={TabNavigator} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
-            <Stack.Screen name="Tweet" component={TweetScreen} />
             <Stack.Screen name="NewTweet" component={NewTweetScreen} />
             <Stack.Screen name="Place" component={PlaceScreen} />
+            <Stack.Screen name="Thread" component={ThreadScreen} />
         </Stack.Navigator>
     );
 };

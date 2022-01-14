@@ -230,6 +230,27 @@ const styles = StyleSheet.create({
     },
 
     /********************
+     **  @Thread   **
+     ********************/
+
+    threadHeaderContainer: {
+        padding: Sizes.padding,
+        backgroundColor: Colors.black,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+
+    threadProfileContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+
+    threadTweetContainer: {
+        marginVertical: Sizes.padding,
+    },
+
+    /********************
      **  @Components   **
      ********************/
 

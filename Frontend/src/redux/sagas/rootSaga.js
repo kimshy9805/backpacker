@@ -6,22 +6,33 @@ import {
     handleSignInUser,
     handleSignOutUser,
 } from './handlers/auth';
-import {handleFetchTweets} from './handlers/tweet';
+import {
+    handleFetchTweets,
+    handleLikeTweet,
+    handleUnlikeTweet,
+} from './handlers/tweet';
+import {handleFetchComments} from './handlers/comment';
 import {getUser, updateUser} from '@ducks/user';
 import {registerUser, signInUser, signOutUser} from '@ducks/auth';
-import {fetchTweets} from '@ducks/tweet';
+import {fetchTweets, likeTweet, unlikeTweet} from '@ducks/tweet';
+import {fetchComments} from '@ducks/comment';
 
 export function* watcherSaga() {
     // auth
-    yield takeLatest(registerUser.type, handleRegisterUser);
-    yield takeLatest(signInUser.type, handleSignInUser);
-    yield takeLatest(signOutUser.type, handleSignOutUser);
+    // yield takeLatest(registerUser.type, handleRegisterUser);
+    // yield takeLatest(signInUser.type, handleSignInUser);
+    // yield takeLatest(signOutUser.type, handleSignOutUser);
 
     // user
-    yield takeLatest(getUser.type, handleGetUser);
+    // yield takeLatest(getUser.type, handleGetUser);
     // yield takeLatest(updateUser.type, handleUpdateUser);
 
     // tweet
     yield takeLatest(fetchTweets.type, handleFetchTweets);
-    yield takeLatest(postTweet.type, handlePostTweet);
+    // yield takeLatest(postTweet.type, handlePostTweet);
+    yield takeLatest(likeTweet.type, handleLikeTweet);
+    yield takeLatest(unlikeTweet.type, handleUnlikeTweet);
+
+    // comment
+    yield takeLatest(fetchComments.type, handleFetchComments);
 }
