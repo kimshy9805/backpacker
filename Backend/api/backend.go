@@ -15,7 +15,7 @@ func registerBackend(router *mux.Router, h *apiHandler) {
 	router.HandleFunc("/tweet/{id:[0-9]+}", h.tweetHandler)
 	router.HandleFunc("/tweets", h.tweetsHandler)
 	router.HandleFunc("/tweets/me", h.myTweetsHandler)
-	router.HandleFunc("/tweet/{id:[0-9]+}/{verb}", h.tweetStateHandler)
+	router.HandleFunc("/tweet/{verb}", h.tweetStateHandler)
 
 	// Comments
 	router.HandleFunc("/comment/{id:[0-9]+}", h.commentHandler)

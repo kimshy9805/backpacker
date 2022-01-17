@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
+	"gopkg.in/guregu/null.v4"
 	"kay.backpacker/model"
 )
 
@@ -97,7 +99,9 @@ func (h *apiHandler) tweetHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
 		tweet.TweetId = id
+		tweet.UpdatedAt = null.NewTime(time.Now(), true)
 		if err := h.repo.UpdateTweet(tweet, nil); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -148,8 +152,6 @@ func (h *apiHandler) myTweetsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-type Params []interface{}
-
 func (h *apiHandler) tweetStateHandler(w http.ResponseWriter, r *http.Request) {
 	ctx, err := h.accessControl(r)
 	if err != nil {
@@ -157,22 +159,33 @@ func (h *apiHandler) tweetStateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	idString := mux.Vars(r)["id"]
-	id, err := strconv.ParseInt(idString, 10, 64)
-
 	verb := mux.Vars(r)["verb"]
 
 	if r.Method == http.MethodPost {
-		if err := h.processor.ProcessTweetTransition(ctx, id, verb); err != nil {
+		params := make(map[string]interface{})
+		decoder := json.NewDecoder(r.Body)
+		defer r.Body.Close()
+		if err := decoder.Decode(&params); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if err := h.processor.ProcessTweetTransition(ctx, params, verb); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		// encoder := json.NewEncoder(w)
-		// encoder.Encode(tweets)
+		result := &APIResult{msg: "SUCCESS"}
+		encoder := json.NewEncoder(w)
+		encoder.Encode(result)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 	} else {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
+}
+
+type APIResult struct {
+	err error
+	msg string
 }

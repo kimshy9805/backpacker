@@ -23,8 +23,7 @@ func (p *processor) ProcessTweetCreate(ctx context.Context, tweet *model.Tweet) 
 	return nil
 }
 
-func (p *processor) ProcessTweetTransition(ctx context.Context, params interface{}, verb string) error {
-
+func (p *processor) ProcessTweetTransition(ctx context.Context, params map[string]interface{}, verb string) error {
 	var user *model.User
 	v := ctx.Value("user")
 	if v != nil {
@@ -33,31 +32,35 @@ func (p *processor) ProcessTweetTransition(ctx context.Context, params interface
 
 	switch verb {
 	case config.ACTION_TWEET_DELETE:
-		tweetId := params.(int64)
-		tweet, err := p.repo.GetTweet(tweetId, nil)
-		if err != nil {
-			return err
-		}
+		tweet := &model.Tweet{}
+		tweetId := p.ConvertToInt(params["tweet_id"])
+
+		tweet.TweetId = tweetId
 		tweet.Status = "DELETED"
-		tweet.UpdatedAt.Time = time.Now()
+		tweet.UpdatedAt = null.NewTime(time.Now(), true)
 		if err := p.repo.UpdateTweet(tweet, nil); err != nil {
 			return err
 		}
 		break
 	case config.ACTION_TWEET_LIKE:
-		tweetId := params.(int64)
-		if err := p.repo.LikeTweet(tweetId, user.UserId, nil); err != nil {
+		tweetId := p.ConvertToInt(params["tweet_id"])
+
+		if err := p.repo.LikeTweet(user.UserId, tweetId, nil); err != nil {
 			return err
 		}
 		break
 	case config.ACTION_TWEET_UNLIKE:
-		tweetId := params.(int64)
-		if err := p.repo.UnlikeTweet(tweetId, user.UserId, nil); err != nil {
+		tweetId := p.ConvertToInt(params["tweet_id"])
+
+		if err := p.repo.UnlikeTweet(user.UserId, tweetId, nil); err != nil {
 			return err
 		}
-
 		break
 	}
 
 	return nil
 }
+
+// tweetId := int(params["tweet_id"].(float64))
+// ar := p.ConvertToIntArray(params["aaa"].([]interface{}))
+// stringAr := p.ConvertToStringArray(params["string"].([]interface{}))
