@@ -11,13 +11,11 @@ import {styles, Colors} from '@styles';
 
 const NewTweetButton = () => {
     const nav = useNavigation();
-    const dispatch = useDispatch();
 
     return (
         <TouchableOpacity
             style={styles.newTweetButtonContainer}
-            // onPress={() => nav.navigate('NewTweet')}>
-            onPress={() => dispatch(fetchTweets())}>
+            onPress={() => nav.navigate('NewTweet')}>
             <MaterialCommunityIcons
                 name={'feather'}
                 size={30}

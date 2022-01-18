@@ -53,8 +53,7 @@ export function* handlePostTweet(action) {
             throw resp.err;
         }
 
-        let result = resp.data;
-        yield put(postTweetAsync(result));
+        yield put(postTweetAsync(resp.data));
     } catch (error) {
         // HTTP Error
         yield put(postTweetAsyncFailed(error));
@@ -64,7 +63,7 @@ export function* handlePostTweet(action) {
 export function* handleLikeTweet(action) {
     let resp;
     try {
-        // resp = yield call(reqLikeTweet, action);
+        resp = yield call(reqLikeTweet, action);
         // // Throw exceptions
         // if (resp.data === undefined) {
         //     throw resp;
@@ -73,7 +72,7 @@ export function* handleLikeTweet(action) {
         // if (resp.err !== null) {
         //     throw resp.err;
         // }
-        // yield put(likeTweetAsync(resp.data));
+        yield put(likeTweetAsync(resp.data));
     } catch (error) {
         yield put(likeTweetAsyncFailed(error));
     }
@@ -82,7 +81,7 @@ export function* handleLikeTweet(action) {
 export function* handleUnlikeTweet(action) {
     let resp;
     try {
-        // resp = yield call(reqUnlikeTweet, action);
+        resp = yield call(reqUnlikeTweet, action);
         // // Throw exceptions
         // if (resp.data === undefined) {
         //     throw resp;
@@ -91,8 +90,8 @@ export function* handleUnlikeTweet(action) {
         // if (resp.err !== null) {
         //     throw resp.err;
         // }
-        // yield put(unlikeTweetAsync(resp.data));
+        yield put(unlikeTweetAsync(resp.data));
     } catch (error) {
-        yield put(unlikeTweetAsync(error));
+        yield put(unlikeTweetAsyncFailed(error));
     }
 }

@@ -2,11 +2,11 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
     user: {
-        user_name: 'nstory',
+        name: 'nstory',
         email: 'neon@nstory.com',
         contact_number: 93935849,
         details: {
-            images: [],
+            images: ['https://picsum.photos/200'],
         },
         user_id: 25,
     },

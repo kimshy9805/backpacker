@@ -9,12 +9,15 @@ import {Header, Profile, Tweet, Comments, NewComment} from './components';
 import {styles, Sizes} from '@styles';
 
 const ThreadScreen = ({route}) => {
-    const {tweet} = route.params;
-    const {t} = useTranslation();
+    const {tweet_id} = route.params;
+    const {tweets} = useSelector(state => state.tweet);
+    const [tweet, setTweet] = useState(
+        tweets.find(tw => tw.tweet_id === tweet_id),
+    );
 
     useEffect(() => {
-        console.log(tweet);
-    }, []);
+        setTweet(tweets.find(tw => tw.tweet_id === tweet_id));
+    }, [tweets]);
 
     return (
         <SafeAreaView style={styles.container} forceInset={{bottom: 'never'}}>

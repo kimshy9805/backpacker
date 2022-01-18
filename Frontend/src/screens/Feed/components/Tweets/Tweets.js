@@ -14,7 +14,6 @@ const Tweets = ({scrollY}) => {
     const dispatch = useDispatch();
     const {isFetching, error, tweets} = useSelector(state => state.tweet);
 
-    const [_tweets, _setTweets] = useState(tweets);
     const [stopFetch, setStopFetch] = useState(false);
 
     useEffect(() => {
@@ -28,21 +27,16 @@ const Tweets = ({scrollY}) => {
         dispatch(fetchTweets());
     }, []);
 
-    // useEffect(() => {
-    //     _setTweets(tweets);
-    // }, [tweets]);
-
     const onPressProfile = userId => {
-        nav.navigate('Profile', {userId: userId});
+        nav.navigate('Profile', {user_id: userId});
     };
 
     const onPressTweet = tweet => {
-        nav.navigate('Thread', {tweet});
+        nav.navigate('Thread', {tweet_id: tweet.tweet_id});
     };
 
     const handleOnEndReached = () => {
         if (!stopFetch) {
-            console.log('hho');
             setStopFetch(true);
         }
     };
@@ -54,8 +48,10 @@ const Tweets = ({scrollY}) => {
     return (
         <View style={styles.tweetContainer}>
             <Animated.FlatList
-                data={_tweets}
-                keyExtractor={item => `${item.tweet_id}`}
+                data={tweets}
+                keyExtractor={item => {
+                    return `tweet:${item.tweet_id}`;
+                }}
                 onScroll={Animated.event(
                     [
                         {

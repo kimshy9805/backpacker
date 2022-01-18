@@ -20,19 +20,21 @@ const TweetCard = props => {
     useEffect(() => {
         if (tweet.users_like.includes(user.user_id)) {
             setIsLiked(true);
+        } else {
+            setIsLiked(false);
         }
-    }, []);
+    }, [tweet]);
 
     const onLikeTweet = () => {
         if (isLiked) {
             setIsLiked(false);
             dispatch(
-                unlikeTweet({tweetId: tweet.tweet_id, userId: user.user_id}),
+                unlikeTweet({tweet_id: tweet.tweet_id, user_id: user.user_id}),
             );
         } else {
             setIsLiked(true);
             dispatch(
-                likeTweet({tweetId: tweet.tweet_id, userId: user.user_id}),
+                likeTweet({tweet_id: tweet.tweet_id, user_id: user.user_id}),
             );
         }
     };

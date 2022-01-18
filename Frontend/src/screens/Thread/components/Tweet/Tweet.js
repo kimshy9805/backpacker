@@ -16,7 +16,6 @@ const Tweet = ({tweet}) => {
     const nav = useNavigation();
 
     const dispatch = useDispatch();
-    const {isFetching, error, tweets} = useSelector(state => state.tweet);
     const {user} = useSelector(state => state.user);
 
     const [isLiked, setIsLiked] = useState(false);
@@ -24,19 +23,21 @@ const Tweet = ({tweet}) => {
     useEffect(() => {
         if (tweet.users_like.includes(user.user_id)) {
             setIsLiked(true);
+        } else {
+            setIsLiked(false);
         }
-    }, []);
+    }, [tweet]);
 
     const onLikeTweet = () => {
         if (isLiked) {
             setIsLiked(false);
             dispatch(
-                unlikeTweet({tweetId: tweet.tweet_id, userId: user.user_id}),
+                unlikeTweet({tweet_id: tweet.tweet_id, user_id: user.user_id}),
             );
         } else {
             setIsLiked(true);
             dispatch(
-                likeTweet({tweetId: tweet.tweet_id, userId: user.user_id}),
+                likeTweet({tweet_id: tweet.tweet_id, user_id: user.user_id}),
             );
         }
     };
@@ -70,7 +71,7 @@ const Tweet = ({tweet}) => {
                 style={{
                     ...Typography.bold4,
                     color: Colors.lightGray,
-                }}>{`Like this tweet ${tweet.likes_count}`}</Text>
+                }}>{`Like this tweet ${tweet.users_like.length}`}</Text>
             <HorizontalLine margin={10} />
             <View style={styles.flexRowCenterRound}>
                 <TouchableOpacity style={styles.flexRowCenter}>

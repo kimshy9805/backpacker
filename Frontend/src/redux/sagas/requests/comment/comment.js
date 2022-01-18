@@ -1,8 +1,6 @@
 import {api} from '@utils';
 
 const reqFetchComments = async action => {
-    let request = new Object();
-
     console.log('before sending request fetchTweets : ', request);
 
     return api

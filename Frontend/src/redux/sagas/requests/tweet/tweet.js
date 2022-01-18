@@ -1,9 +1,7 @@
 import {api} from '@utils';
 
 const reqFetchTweets = async () => {
-    let request = new Object();
-
-    console.log('before sending request fetchTweets : ', request);
+    console.log('before sending request fetchTweets');
 
     return api
         .get('/api/tweets')
@@ -18,12 +16,10 @@ const reqFetchTweets = async () => {
 };
 
 const reqLikeTweet = async action => {
-    let request = new Object();
-
-    console.log('before sending request reqLikeTweet : ', request);
+    console.log('before sending request reqLikeTweet : ', action.payload);
 
     return api
-        .post(`/api/tweet/${action.payload}/like`)
+        .post(`/api/tweet/like`, action.payload)
         .then(resp => {
             console.log('from request reqLikeTweet : ', resp);
             return resp;
@@ -35,12 +31,10 @@ const reqLikeTweet = async action => {
 };
 
 const reqUnlikeTweet = async action => {
-    let request = new Object();
-
-    console.log('before sending request reqUnlikeTweet : ', request);
+    console.log('before sending request reqUnlikeTweet : ', action.payload);
 
     return api
-        .post(`/api/tweet/${action.payload}/unlike`)
+        .post(`/api/tweet/unlike`, action.payload)
         .then(resp => {
             console.log('from request reqUnlikeTweet : ', resp);
             return resp;
@@ -52,19 +46,10 @@ const reqUnlikeTweet = async action => {
 };
 
 const reqPostTweet = async action => {
-    let data = new FormData();
-    let request = new Object();
-
-    request.request = 'user';
-    request.condition = 'user';
-    request.body = action.payload;
-
-    console.log('before sending request reqPostTweet : ', request);
-
-    data.append('request', JSON.stringify(request));
+    console.log('before sending request reqPostTweet : ', action.payload);
 
     return api
-        .post('/api/index.php', data)
+        .post('/api/tweets', action.payload)
         .then(response => {
             console.log('from request reqPostTweet : ', response);
             return response.data;
