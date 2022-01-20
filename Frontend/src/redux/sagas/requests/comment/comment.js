@@ -1,7 +1,7 @@
 import {api} from '@utils';
 
 const reqFetchComments = async action => {
-    console.log('before sending request fetchTweets : ', request);
+    console.log('before sending request fetchTweets : ', action.payload);
 
     return api
         .get(`/api/comments?tweet=${action.payload}`)
@@ -13,10 +13,6 @@ const reqFetchComments = async action => {
             console.log(err);
             return err;
         });
-};
-
-const requestGetMyTweets = async () => {
-    let request = new Object();
 };
 
 export {reqFetchComments};

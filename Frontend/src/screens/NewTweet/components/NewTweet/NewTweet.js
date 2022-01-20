@@ -9,28 +9,15 @@ import {ProfilePicture} from '@components';
 import {useSharedFormTweet} from '../../hooks';
 
 const NewTweet = () => {
-    const dispatch = useDispatch();
     const {user} = useSelector(state => state.user);
 
     const {content, onChangeContent, resetContent} = useSharedFormTweet();
-
-    const [tweetText, setTweetText] = useState('');
-    const [imageURL, setImageURL] = useState('');
-    const [newTweet, setNewTweet] = useState({});
 
     useEffect(() => {
         return () => {
             resetContent();
         };
     }, []);
-
-    useEffect(() => {
-        console.log(content);
-    }, [content]);
-
-    const onPostTweet = () => {
-        dispatch(postTweet(newTweet));
-    };
 
     return (
         <View style={styles.newTweetContainer}>

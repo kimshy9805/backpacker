@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
     },
+
+    flexRowCenterEvenly: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+    },
     flexColumn: {
         flexDirection: 'column',
     },

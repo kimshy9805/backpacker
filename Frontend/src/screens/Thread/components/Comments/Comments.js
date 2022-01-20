@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, Text, Animated, FlatList} from 'react-native';
+import {View, Text, Animated, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 

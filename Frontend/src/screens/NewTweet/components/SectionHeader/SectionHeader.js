@@ -13,11 +13,8 @@ import {useSharedFormTweet} from '../../hooks';
 const SectionHeader = () => {
     const nav = useNavigation();
     const dispatch = useDispatch();
-    const {content, onChangeContent} = useSharedFormTweet();
+    const {content} = useSharedFormTweet();
 
-    useEffect(() => {
-        console.log(content);
-    }, [content]);
     const onClose = () => {
         nav.goBack();
     };
