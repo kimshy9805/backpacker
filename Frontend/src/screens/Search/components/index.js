@@ -1,5 +1,5 @@
-import SectionHeader from './SectionHeader';
+import Header from './Header';
 import Countries from './Countries';
 import Places from './Places';
 
-export {SectionHeader, Countries, Places};
+export {Header, Countries, Places};

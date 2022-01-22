@@ -5,16 +5,16 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {Marginer, CommentCard, Loader, HorizontalLine} from '@components';
 import {styles, Sizes, Colors, Typography} from '@styles';
-import {fetchComments, resetAPIStatus} from '@ducks/comment';
+import {fetchReplies, resetAPIStatus} from '@ducks/reply';
 
 const Comments = ({tweet}) => {
     const nav = useNavigation();
 
     const dispatch = useDispatch();
-    const {isFetching, error, comments} = useSelector(state => state.comment);
+    const {isFetching, error, replies} = useSelector(state => state.reply);
 
     useEffect(() => {
-        dispatch(fetchComments(tweet.tweet_id));
+        dispatch(fetchReplies(tweet.tweet_id));
     }, []);
 
     useEffect(() => {
@@ -43,7 +43,7 @@ const Comments = ({tweet}) => {
     return (
         <View style={styles.tweetContainer}>
             <Animated.FlatList
-                data={comments}
+                data={replies}
                 keyExtractor={item => `${item.comment_id}`}
                 keyboardDismissMode="on-drag"
                 showsVerticalScrollIndicator={false}

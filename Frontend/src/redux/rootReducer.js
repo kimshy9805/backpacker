@@ -1,12 +1,12 @@
 import {combineReducers} from '@reduxjs/toolkit';
 
-import {userReducer, authReducer, tweetReducer, commentReducer} from './ducks';
+import {userReducer, authReducer, tweetReducer, replyReducer} from './ducks';
 
 const rootReducer = combineReducers({
     user: userReducer,
     auth: authReducer,
     tweet: tweetReducer,
-    comment: commentReducer,
+    reply: replyReducer,
 });
 
 export default rootReducer;

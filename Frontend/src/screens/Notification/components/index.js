@@ -1,3 +1,3 @@
-import SectionHeader from './SectionHeader/SectionHeader';
+import Header from './Header';
 
-export {SectionHeader};
+export {Header};

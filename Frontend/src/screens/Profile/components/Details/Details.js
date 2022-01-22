@@ -10,7 +10,13 @@ import {icons} from '@constants';
 const Details = () => {
     const nav = useNavigation();
 
-    const [followers, setFollowers] = useState(4);
+    const onPressFollowing = () => {
+        nav.navigate('Follow', {params: 'following'});
+    };
+
+    const onPressFollowers = () => {
+        nav.navigate('Follow', {params: 'followers'});
+    };
 
     return (
         <View style={_styles.container}>
@@ -37,11 +43,15 @@ const Details = () => {
             <Marginer margin={3} />
             {/* Followers and ~ */}
             <View style={[styles.flexRowCenter]}>
-                <TouchableOpacity style={styles.flexRowCenter}>
+                <TouchableOpacity
+                    style={styles.flexRowCenter}
+                    onPress={onPressFollowing}>
                     <Text style={_styles.number}>4</Text>
                     <Text style={_styles.detailText}>Following</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.flexRowCenter}>
+                <TouchableOpacity
+                    style={styles.flexRowCenter}
+                    onPress={onPressFollowers}>
                     <Text style={_styles.number}>4</Text>
                     <Text style={_styles.detailText}>Followers</Text>
                 </TouchableOpacity>

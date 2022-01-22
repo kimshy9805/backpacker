@@ -9,6 +9,7 @@ import PlaceScreen from './Place/PlaceScreen';
 import NotificationScreen from './Notification/NotificationScreen';
 import MessageScreen from './Message/MessageScreen';
 import ThreadScreen from './Thread/ThreadScreen';
+import FollowScreen from './Follow/FollowScreen';
 
 export {
     AuthScreen,
@@ -22,4 +23,5 @@ export {
     ProfileScreen,
     NewTweetScreen,
     ThreadScreen,
+    FollowScreen,
 };

@@ -15,6 +15,21 @@ const reqFetchTweets = async () => {
         });
 };
 
+const reqFetchMyTweets = async () => {
+    console.log('before sending request fetchMyTweets');
+
+    return api
+        .get('/api/tweets/me')
+        .then(resp => {
+            console.log('from request fetchMyTweets : ', resp);
+            return resp;
+        })
+        .catch(err => {
+            console.log(err);
+            return err;
+        });
+};
+
 const reqLikeTweet = async action => {
     console.log('before sending request reqLikeTweet : ', action.payload);
 
@@ -59,4 +74,10 @@ const reqPostTweet = async action => {
         });
 };
 
-export {reqFetchTweets, reqLikeTweet, reqUnlikeTweet, reqPostTweet};
+export {
+    reqFetchTweets,
+    reqFetchMyTweets,
+    reqLikeTweet,
+    reqUnlikeTweet,
+    reqPostTweet,
+};

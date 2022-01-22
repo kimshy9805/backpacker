@@ -1,9 +1,10 @@
 import {call, put} from 'redux-saga/effects';
-import {Alert} from 'react-native';
 
 import {
     fetchTweetsAsync,
     fetchTweetsAsyncFailed,
+    fetchMyTweetsAsync,
+    fetchMyTweetsAsyncFailed,
     likeTweetAsync,
     likeTweetAsyncFailed,
     unlikeTweetAsync,
@@ -11,6 +12,7 @@ import {
 } from '@ducks/tweet';
 import {
     reqFetchTweets,
+    reqFetchMyTweets,
     reqPostTweet,
     reqLikeTweet,
     reqUnlikeTweet,
@@ -34,6 +36,27 @@ export function* handleFetchTweets() {
         yield put(fetchTweetsAsync(resp.data));
     } catch (error) {
         yield put(fetchTweetsAsyncFailed(error));
+    }
+}
+
+export function* handleFetchMyTweets() {
+    let resp;
+    try {
+        resp = yield call(reqFetchMyTweets);
+
+        // // Throw exceptions
+        // if (resp.data === undefined) {
+        //     throw resp;
+        // }
+
+        // // Logic Error
+        // if (resp.err !== null) {
+        //     throw resp.err;
+        // }
+
+        yield put(fetchMyTweetsAsync(resp.data));
+    } catch (error) {
+        yield put(fetchMyTweetsAsyncFailed(error));
     }
 }
 

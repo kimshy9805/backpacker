@@ -1,5 +1,6 @@
 import {takeEvery, takeLatest} from 'redux-saga/effects';
 
+// handler
 import {handleGetUser, handleUpdateUser} from './handlers/user';
 import {
     handleRegisterUser,
@@ -8,15 +9,26 @@ import {
 } from './handlers/auth';
 import {
     handleFetchTweets,
+    handleFetchMyTweets,
     handlePostTweet,
     handleLikeTweet,
     handleUnlikeTweet,
 } from './handlers/tweet';
-import {handleFetchComments} from './handlers/comment';
+import {handleFetchReplies, handleFetchMyReplies} from './handlers/reply';
+import {handleFetchMyTips} from './handlers/tip';
+
+// duck
 import {getUser, updateUser} from '@ducks/user';
 import {registerUser, signInUser, signOutUser} from '@ducks/auth';
-import {fetchTweets, postTweet, likeTweet, unlikeTweet} from '@ducks/tweet';
-import {fetchComments} from '@ducks/comment';
+import {
+    fetchTweets,
+    fetchMyTweets,
+    postTweet,
+    likeTweet,
+    unlikeTweet,
+} from '@ducks/tweet';
+import {fetchReplies, fetchMyReplies} from '@ducks/reply';
+import {fetchMyTips} from '@ducks/tip';
 
 export function* watcherSaga() {
     // auth
@@ -30,10 +42,15 @@ export function* watcherSaga() {
 
     // tweet
     yield takeLatest(fetchTweets.type, handleFetchTweets);
+    yield takeLatest(fetchMyTweets.type, handleFetchMyTweets);
     yield takeLatest(postTweet.type, handlePostTweet);
     yield takeLatest(likeTweet.type, handleLikeTweet);
     yield takeLatest(unlikeTweet.type, handleUnlikeTweet);
 
-    // comment
-    yield takeLatest(fetchComments.type, handleFetchComments);
+    // tip
+    yield takeLatest(fetchMyTips.type, handleFetchMyTips);
+
+    // reply
+    yield takeLatest(fetchReplies.type, handleFetchReplies);
+    yield takeLatest(fetchMyReplies.type, handleFetchMyReplies);
 }

@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
     user: {
-        name: 'nstory',
+        name: 'Kay',
         email: 'neon@nstory.com',
         contact_number: 93935849,
         details: {

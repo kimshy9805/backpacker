@@ -6,7 +6,7 @@ import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {styles, Sizes} from '@styles';
-import {SectionHeader, Countries, Places} from './components';
+import {Header, Countries, Places} from './components';
 import {data} from '@constants';
 import {HorizontalLine} from '@components';
 import {resetGetUser} from '@ducks/user';
@@ -24,7 +24,7 @@ const SearchScreen = () => {
 
     return (
         <SafeAreaView style={styles.container} forceInset={{bottom: 'never'}}>
-            <SectionHeader />
+            <Header />
             <ScrollView contentContainerStyle={{paddingBottom: 40}}>
                 <Countries places={places} setPlaces={setPlaces} />
                 <Places places={places} />

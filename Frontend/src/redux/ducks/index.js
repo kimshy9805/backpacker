@@ -1,6 +1,7 @@
 import {authReducer} from './auth';
 import {userReducer} from './user';
 import {tweetReducer} from './tweet';
-import {commentReducer} from './comment';
+import {replyReducer} from './reply';
+import {tipReducer} from './tip';
 
-export {userReducer, authReducer, tweetReducer, commentReducer};
+export {userReducer, authReducer, tweetReducer, replyReducer, tipReducer};

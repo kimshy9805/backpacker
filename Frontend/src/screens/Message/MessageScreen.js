@@ -6,7 +6,7 @@ import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from '@styles';
-import {SectionHeader} from './components';
+import {Header} from './components';
 import {HorizontalLine} from '@components';
 import {resetGetUser} from '@ducks/user';
 
@@ -18,7 +18,7 @@ const MessageScreen = () => {
 
     return (
         <SafeAreaView style={styles.container} forceInset={{bottom: 'never'}}>
-            <SectionHeader />
+            <Header />
         </SafeAreaView>
     );
 };

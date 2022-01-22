@@ -5,7 +5,7 @@ import {useNavigation, CommonActions} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {SectionHeader, Tweets, NewTweetButton} from './components';
+import {SectionHeader, Tweets, NewTweetButton, Header} from './components';
 import {styles, Colors} from '@styles';
 
 const {diffClamp} = Animated;
@@ -32,7 +32,8 @@ const FeedScreen = () => {
         <SafeAreaView
             style={{flex: 1, backgroundColor: Colors.black}}
             forceInset={{bottom: 'never'}}>
-            <SectionHeader translateY={translateY} />
+            <Header />
+            {/* <SectionHeader translateY={translateY} /> */}
             <Tweets scrollY={scrollY} />
             <NewTweetButton />
         </SafeAreaView>

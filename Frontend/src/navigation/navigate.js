@@ -16,6 +16,7 @@ import {
     NotificationScreen,
     MessageScreen,
     ThreadScreen,
+    FollowScreen,
 } from '../screens/index';
 import {TabBarIcon} from '@components';
 import {Colors, styles} from '@styles';
@@ -92,6 +93,7 @@ const AppStackNavigator = () => {
             <Stack.Screen name="NewTweet" component={NewTweetScreen} />
             <Stack.Screen name="Place" component={PlaceScreen} />
             <Stack.Screen name="Thread" component={ThreadScreen} />
+            <Stack.Screen name="Follow" component={FollowScreen} />
         </Stack.Navigator>
     );
 };

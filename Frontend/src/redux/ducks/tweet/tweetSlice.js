@@ -31,6 +31,24 @@ const tweetSlice = createSlice({
             state.error = error;
         },
 
+        fetchMyTweets: state => {
+            console.log('Request fetchMyTweets');
+            state.isFetching = true;
+            state.error = null;
+        },
+
+        fetchMyTweetsAsync: (state, {payload: tweets}) => {
+            console.log('Saga fetchMyTweetsAsync');
+            state.myTweets = tweets;
+            state.isFetching = false;
+        },
+
+        fetchMyTweetsAsyncFailed: (state, {payload: error}) => {
+            console.log('Saga fetchMyTweetsAsyncFailed');
+            state.isFetching = false;
+            state.error = error;
+        },
+
         postTweet: state => {
             console.log('Request postTweet');
             state.isFetching = true;
@@ -92,6 +110,9 @@ export const {
     fetchTweets,
     fetchTweetsAsync,
     fetchTweetsAsyncFailed,
+    fetchMyTweets,
+    fetchMyTweetsAsync,
+    fetchMyTweetsAsyncFailed,
     postTweet,
     postTweetAsync,
     postTweetAsyncFailed,

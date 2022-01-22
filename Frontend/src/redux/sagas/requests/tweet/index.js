@@ -1,8 +1,15 @@
 import {
     reqFetchTweets,
+    reqFetchMyTweets,
     reqPostTweet,
     reqLikeTweet,
     reqUnlikeTweet,
 } from './tweet';
 
-export {reqFetchTweets, reqPostTweet, reqLikeTweet, reqUnlikeTweet};
+export {
+    reqFetchTweets,
+    reqFetchMyTweets,
+    reqPostTweet,
+    reqLikeTweet,
+    reqUnlikeTweet,
+};
