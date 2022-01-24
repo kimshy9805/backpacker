@@ -3,5 +3,13 @@ import {userReducer} from './user';
 import {tweetReducer} from './tweet';
 import {replyReducer} from './reply';
 import {tipReducer} from './tip';
+import {followReducer} from './follow';
 
-export {userReducer, authReducer, tweetReducer, replyReducer, tipReducer};
+export {
+    userReducer,
+    authReducer,
+    tweetReducer,
+    replyReducer,
+    tipReducer,
+    followReducer,
+};

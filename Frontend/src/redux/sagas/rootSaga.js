@@ -16,6 +16,12 @@ import {
 } from './handlers/tweet';
 import {handleFetchReplies, handleFetchMyReplies} from './handlers/reply';
 import {handleFetchMyTips} from './handlers/tip';
+import {
+    handleFetchMyFollowers,
+    handleFetchMyFollowings,
+    handleFollow,
+    handleUnfollow,
+} from './handlers/follow';
 
 // duck
 import {getUser, updateUser} from '@ducks/user';
@@ -29,6 +35,12 @@ import {
 } from '@ducks/tweet';
 import {fetchReplies, fetchMyReplies} from '@ducks/reply';
 import {fetchMyTips} from '@ducks/tip';
+import {
+    fetchMyFollowers,
+    fetchMyFollowings,
+    follow,
+    unfollow,
+} from '@ducks/follow';
 
 export function* watcherSaga() {
     // auth
@@ -53,4 +65,10 @@ export function* watcherSaga() {
     // reply
     yield takeLatest(fetchReplies.type, handleFetchReplies);
     yield takeLatest(fetchMyReplies.type, handleFetchMyReplies);
+
+    // follow
+    yield takeLatest(fetchMyFollowers.type, handleFetchMyFollowers);
+    yield takeLatest(fetchMyFollowings.type, handleFetchMyFollowings);
+    yield takeLatest(follow.type, handleFollow);
+    yield takeLatest(unfollow.type, handleUnfollow);
 }

@@ -3,26 +3,34 @@ import {TouchableOpacity, Text, View, Image, StyleSheet} from 'react-native';
 import moment from 'moment';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-import {HorizontalLine, Marginer, ProfilePicture} from '@components';
+import {HorizontalLine, TextButton, ProfilePicture} from '@components';
 import {icons, images} from '@constants';
 import {Typography, Sizes, Colors, styles} from '@styles';
 
 const FollowCard = props => {
-    const {follow, onPressProfile} = props;
+    const {follow, onPressProfile, onPressFollowing} = props;
     return (
         <View style={_styles.container}>
-            {/* Profile Image */}
             <TouchableOpacity
                 style={_styles.profileContainer}
-                onPress={() =>
-                    onPressProfile(follow.user_id)
-                }>
-                {/* ProfilePicture */}
-                {/* Name */}
-                {/* Hidden name */}
-                {/* Descrition */}
-                {/* Follow button unfollow or not */}
-                </TouchableOpacity>
+                onPress={() => onPressProfile(follow.user_id)}>
+                <ProfilePicture size={50} image={follow.details?.images[0]} />
+            </TouchableOpacity>
+            <View style={_styles.detailContainer}>
+                <Text style={_styles.name}>{follow.name}</Text>
+                <Text style={_styles.email} ellipsizeMode={'tail'}>
+                    {follow.email}
+                </Text>
+                <Text style={_styles.description}>
+                    {follow.details?.description}
+                </Text>
+            </View>
+            <TextButton
+                onPress={onPressFollowing}
+                label={'Following'}
+                containerStyle={_styles.editButtonContainer}
+                labelStyle={_styles.editButton}
+            />
         </View>
     );
 };
@@ -33,8 +41,10 @@ const _styles = StyleSheet.create({
     container: {
         width: '100%',
         flexDirection: 'row',
+        justifyContent: 'space-between',
         backgroundColor: Colors.black,
         paddingTop: Sizes.padding,
+        paddingHorizontal: Sizes.padding,
     },
 
     profileContainer: {
@@ -42,23 +52,37 @@ const _styles = StyleSheet.create({
         marginRight: Sizes.padding,
     },
 
-    headerContainer: {
+    detailContainer: {
+        justifyContent: 'flex-start',
         flex: 1,
-        height: '100%',
     },
 
-    header: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+    name: {
+        ...Typography.bold4,
+        color: Colors.white,
+        lineHeight: 15,
     },
 
-    headerName: {
-        ...styles.flexRowCenter,
+    email: {
+        ...Typography.body4,
+        color: 'grey',
+        lineHeight: 18,
     },
 
-    contentContainer: {
-        marginTop: 5,
+    description: {
+        ...Typography.body4,
+        color: Colors.white,
+    },
+    editButtonContainer: {
+        width: 100,
+        height: 35,
+        borderRadius: Sizes.radius * 2,
+        borderWidth: 0.5,
+        borderColor: 'grey',
+        backgroundColor: 'transparent',
+    },
+    editButton: {
+        color: Colors.white,
+        ...Typography.bold5,
     },
 });

@@ -19,16 +19,10 @@ const useFollowTab = () => {
     useEffect(() => {
         switch (itemIndex) {
             case 0:
-                setType('myTweets');
+                setType('followers');
                 break;
             case 1:
-                setType('myTips');
-                break;
-            case 2:
-                setType('myLikes');
-                break;
-            case 3:
-                setType('myReplies');
+                setType('followings');
                 break;
         }
     }, [itemIndex]);

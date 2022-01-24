@@ -16,21 +16,11 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import Feather from 'react-native-vector-icons/Feather';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import moment from 'moment';
 
-import {
-    Marginer,
-    TweetCard,
-    Loader,
-    HorizontalLine,
-    FollowCard,
-} from '@components';
 import {styles, Sizes, Colors, Typography} from '@styles';
-import {likeTweet, unlikeTweet, fetchTweets} from '@ducks/tweet';
 import {useSharedFollowTab} from '../hooks';
+import MyFollowers from './MyFollowers';
+import MyFollowings from './MyFollowings';
 
 const images = {
     Followers: '',
@@ -66,6 +56,7 @@ const Tabs = ({data, onItemPress}) => {
                 containerRef.current,
                 (x, y, width, height) => {
                     m.push({x, y, width, height});
+                    console.log(x, y, width);
                     if (m.length === data.length) setMeasures(m);
                 },
             );
@@ -73,11 +64,7 @@ const Tabs = ({data, onItemPress}) => {
     }, []);
 
     return (
-        <View
-            style={{
-                width: '100%',
-                paddingHorizontal: Sizes.padding * 1.5,
-            }}>
+        <View style={[_styles.tabsContainer, {width: '100%'}]}>
             <View style={styles.flexRowCenterBetween} ref={containerRef}>
                 {data.map((item, index) => {
                     return (
@@ -90,23 +77,21 @@ const Tabs = ({data, onItemPress}) => {
                     );
                 })}
             </View>
-            {measures.length > 0 && (
-                <Indicator measures={measures} scrollX={scrollX} />
-            )}
+            {measures.length > 0 && <Indicator measures={measures} />}
         </View>
     );
 };
 
 const Indicator = ({measures}) => {
     const {scrollX} = useSharedFollowTab();
-    const inputRange = data.map((_, index) => index * Sizes.width + 30);
+    const inputRange = data.map((_, index) => index * Sizes.width);
     const indicatorWidth = scrollX.interpolate({
         inputRange,
-        outputRange: measures.map(measure => measure.width + 30),
+        outputRange: measures.map(measure => measure.width),
     });
     const translateX = scrollX.interpolate({
         inputRange,
-        outputRange: measures.map(measure => measure.x),
+        outputRange: measures.map(measure => measure.y),
     });
     return (
         <Animated.View
@@ -125,8 +110,7 @@ const Follow = ({tweet}) => {
     const nav = useNavigation();
 
     const dispatch = useDispatch();
-
-    const {ref, scrollX, type, setItemIndex} = useSharedFollowTab();
+    const {ref, type, setItemIndex} = useSharedFollowTab();
 
     const onItemPress = useCallback(itemIndex => {
         ref?.current?.scrollToOffset({
@@ -137,26 +121,10 @@ const Follow = ({tweet}) => {
 
     return (
         <View style={_styles.container}>
-            <View style={_styles.tabContainer}>
-                <Tabs data={data} onItemPress={onItemPress} />
-            </View>
+            <Tabs data={data} onItemPress={onItemPress} />
             <View style={_styles.line} />
-            <Animated.FlatList
-                ref={ref}
-                data={data}
-                keyExtractor={item => item.key}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                pagingEnabled
-                bounces={false}
-                onScroll={Animated.event(
-                    [{nativeEvent: {contentOffset: {x: scrollX}}}],
-                    {useNativeDriver: false},
-                )}
-                renderItem={({item, index}) => {
-                    return <FollowCard follow={item} />;
-                }}
-            />
+            {type === 'followers' && <MyFollowers />}
+            {type === 'followings' && <MyFollowings />}
         </View>
     );
 };
@@ -167,12 +135,15 @@ const _styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    tabContainer: {
-        paddingHorizontal: Sizes.padding,
-        paddingTop: Sizes.padding,
-    },
+    tabContainer: {},
     line: {
         borderBottomColor: 'grey',
         borderBottomWidth: 0.5,
+    },
+
+    tabsContainer: {
+        width: '100%',
+        paddingHorizontal: Sizes.padding * 4,
+        paddingTop: Sizes.padding,
     },
 });
