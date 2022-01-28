@@ -1,14 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 import {styles, Colors, Sizes, Typography} from '@styles';
 import {ProfilePicture, TextButton, Marginer} from '@components';
+import {useSharedRBSheet} from '../../hooks';
+import Update from '../Update';
 import {icons} from '@constants';
 
 const Details = () => {
     const nav = useNavigation();
+
+    const {refRBSheet, onShowBSheet} = useSharedRBSheet();
 
     const onPressFollowing = () => {
         nav.navigate('Follow', {params: 'following'});
@@ -23,6 +28,7 @@ const Details = () => {
             {/* Edit Profile */}
             <View style={{alignSelf: 'flex-end'}}>
                 <TextButton
+                    onPress={onShowBSheet}
                     label={'Edit profile'}
                     containerStyle={_styles.editButtonContainer}
                     labelStyle={_styles.editButton}
@@ -56,6 +62,20 @@ const Details = () => {
                     <Text style={_styles.detailText}>Followers</Text>
                 </TouchableOpacity>
             </View>
+            <RBSheet
+                ref={refRBSheet}
+                animationType={'fade'}
+                closeOnDragDown={true}
+                dragFromTopOnly={true}
+                closeOnPressMask={false}
+                height={Sizes.height / 1.075}
+                customStyles={{
+                    wrapper: _styles.sheetWrapper,
+                    container: _styles.sheetContainer,
+                    draggableIcon: _styles.sheetDraggableIcon,
+                }}>
+                <Update />
+            </RBSheet>
         </View>
     );
 };
@@ -101,5 +121,17 @@ const _styles = StyleSheet.create({
         ...Typography.bold4,
         color: Colors.white,
         marginRight: 5,
+    },
+    sheetWrapper: {
+        backgroundColor: '#000000AA',
+    },
+    sheetContainer: {
+        borderTopLeftRadius: Sizes.radius * 2,
+        borderTopRightRadius: Sizes.radius * 2,
+        backgroundColor: Colors.white,
+        backgroundColor: '#000',
+    },
+    sheetDraggableIcon: {
+        backgroundColor: '#000',
     },
 });

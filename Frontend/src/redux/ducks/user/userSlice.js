@@ -2,13 +2,17 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
     user: {
-        name: 'Kay',
-        email: 'neon@nstory.com',
-        contact_number: 93935849,
+        user_id: 1,
+        name: 'kay',
+        status: 'ACTIVE',
+        created_at: '2021-01-09T14:00:00+08:00',
+        email: 'kimshy5840@naver.com',
         details: {
-            images: ['https://picsum.photos/200'],
+            profileImage: ['https://picsum.photos/200'],
+            backgraoundImage: 'https://picsum.photos/200',
+            description: '난 영웅이야',
+            location: 'Singapore',
         },
-        user_id: 25,
     },
 
     isFetching: null,
