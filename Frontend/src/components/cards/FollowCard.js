@@ -9,12 +9,16 @@ import {Typography, Sizes, Colors, styles} from '@styles';
 
 const FollowCard = props => {
     const {follow, onPressProfile, onPressFollowing} = props;
+    console.log(follow.details?.profileImage);
     return (
         <View style={_styles.container}>
             <TouchableOpacity
                 style={_styles.profileContainer}
                 onPress={() => onPressProfile(follow.user_id)}>
-                <ProfilePicture size={50} image={follow.details?.images[0]} />
+                <ProfilePicture
+                    size={50}
+                    image={follow.details?.profileImage}
+                />
             </TouchableOpacity>
             <View style={_styles.detailContainer}>
                 <Text style={_styles.name}>{follow.name}</Text>

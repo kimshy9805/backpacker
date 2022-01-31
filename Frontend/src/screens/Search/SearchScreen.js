@@ -6,19 +6,14 @@ import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {styles, Sizes} from '@styles';
-import {Header, Countries, Places} from './components';
+import {Header, SearchBar, Countries, Places} from './components';
 import {data} from '@constants';
 import {HorizontalLine} from '@components';
 import {resetGetUser} from '@ducks/user';
 
 const SearchScreen = () => {
     const {t} = useTranslation();
-    const navigation = useNavigation();
-    const [places, setPlaces] = useState([
-        {place_id: -1},
-        ...data.countries[0].places,
-        {place_id: -2},
-    ]);
+    const [places, setPlaces] = useState(data.places);
 
     const dispatch = useDispatch();
 
@@ -26,7 +21,7 @@ const SearchScreen = () => {
         <SafeAreaView style={styles.container} forceInset={{bottom: 'never'}}>
             <Header />
             <ScrollView contentContainerStyle={{paddingBottom: 40}}>
-                <Countries places={places} setPlaces={setPlaces} />
+                <SearchBar />
                 <Places places={places} />
             </ScrollView>
         </SafeAreaView>

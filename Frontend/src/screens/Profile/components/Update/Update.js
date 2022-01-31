@@ -8,17 +8,19 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {styles, Colors, Typography, Sizes} from '@styles';
-import {ProfilePicture} from '@components';
+import {ProfilePicture, Marginer, TextButton} from '@components';
+import {updateUser} from '@ducks/user';
 import {useSharedRBSheet, useSharedProfile} from '../../hooks';
 
 const Update = () => {
     const nav = useNavigation();
+    const dispatch = useDispatch();
     const {user} = useSelector(state => state.user);
     const {onCloseBSheet} = useSharedRBSheet();
     const {
@@ -27,9 +29,18 @@ const Update = () => {
         location,
         email,
         dob,
+        dobString,
         isDateOpened,
+        isChanged,
+        setDob,
+        setDobString,
         setIsDateOpened,
     } = useSharedProfile({user});
+
+    const onPressUpdate = () => {
+        // dispatch(updateUser());
+        onCloseBSheet();
+    };
 
     const onClose = () => {
         nav.goBack();
@@ -49,7 +60,16 @@ const Update = () => {
                 <Text style={{...Typography.bold3, color: Colors.white}}>
                     Edit profile
                 </Text>
-                <View style={{width: 30, height: 30}} />
+                {isChanged ? (
+                    <TextButton
+                        label={'Update'}
+                        labelStyle={_styles.update}
+                        onPress={onPressUpdate}
+                        containerStyle={_styles.updateContainer}
+                    />
+                ) : (
+                    <View style={{width: 30}} />
+                )}
             </View>
             {/* ImageBackground */}
             <ImageBackground
@@ -57,20 +77,30 @@ const Update = () => {
                 source={{uri: 'https://picsum.photos/200'}}
                 resizeMode="stretch"
             />
+            <TouchableOpacity style={_styles.profilePictureContainer}>
+                <ProfilePicture size={75} image={'https://picsum.photos/200'} />
+            </TouchableOpacity>
+            <Marginer margin={30} />
             {/* Details */}
-            <View>
+            <KeyboardAwareScrollView>
                 {/* Name */}
                 <View style={_styles.detailConatiner}>
                     <Text style={_styles.whiteText}>Name</Text>
-                    <Text style={_styles.blueText}>{name}</Text>
+                    <View style={{paddingHorizontal: Sizes.padding}}>
+                        <Text style={_styles.blueText}>{name}</Text>
+                    </View>
                 </View>
                 <View style={_styles.detailConatiner}>
                     <Text style={_styles.whiteText}>Description</Text>
-                    <Text style={_styles.blueText}>{description}</Text>
+                    <View style={{paddingHorizontal: Sizes.padding}}>
+                        <Text style={_styles.blueText}>{description}</Text>
+                    </View>
                 </View>
                 <View style={_styles.detailConatiner}>
                     <Text style={_styles.whiteText}>Email</Text>
-                    <Text style={_styles.blueText}>{email}</Text>
+                    <View style={{paddingHorizontal: Sizes.padding}}>
+                        <Text style={[_styles.blueText]}>{email}</Text>
+                    </View>
                 </View>
                 <View style={_styles.detailConatiner}>
                     <Text style={_styles.whiteText}>Location</Text>
@@ -79,35 +109,26 @@ const Update = () => {
                 <View style={_styles.detailConatiner}>
                     <Text style={_styles.whiteText}>Date of Birth</Text>
                     <TouchableOpacity
-                        style={{
-                            width: '100%',
-                            height: 43,
-                            borderRadius: Sizes.radius,
-                            backgroundColor: Colors.lightGray2,
-                            paddingHorizontal: Sizes.padding,
-                            marginVertical: Sizes.base,
-                            justifyContent: 'center',
-                            alignItems: 'flex-start',
-                        }}
+                        style={_styles.dobContainer}
                         onPress={() => setIsDateOpened(true)}>
-                        <Text>{moment(dob).format('YYYY')}</Text>
+                        <Text style={_styles.blueText}>{dobString}</Text>
                     </TouchableOpacity>
-                    {/* <DatePicker
+                    <DatePicker
                         modal
                         open={isDateOpened}
-                        date={new Date()}
+                        date={dob}
                         mode={'date'}
                         onConfirm={date => {
                             setIsDateOpened(false);
-                            console.log(date);
-                            // changeDate(date);
+                            setDob(date);
+                            setDobString(moment(date).format('YYYY-MM-DD'));
                         }}
                         onCancel={() => {
                             setIsDateOpened(false);
                         }}
-                    /> */}
+                    />
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         </View>
     );
 };
@@ -125,6 +146,14 @@ const _styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderBottomColor: 'grey',
     },
+    profilePictureContainer: {
+        position: 'absolute',
+        top: 165,
+        left: Sizes.padding - 5,
+        borderRadius: Sizes.radius * 5,
+        borderWidth: 3,
+        borderColor: Colors.black,
+    },
     backgroundContainer: {
         width: '100%',
         height: 150,
@@ -135,6 +164,13 @@ const _styles = StyleSheet.create({
         padding: Sizes.padding,
         flexDirection: 'row',
         alignItems: 'center',
+    },
+
+    dobContainer: {
+        borderRadius: Sizes.radius,
+        paddingHorizontal: Sizes.padding,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
 
     whiteText: {
@@ -150,5 +186,14 @@ const _styles = StyleSheet.create({
     blueText: {
         color: Colors.primary,
         ...Typography.body3,
+    },
+
+    updateContainer: {
+        backgroundColor: Colors.black,
+        height: 25,
+    },
+    update: {
+        ...Typography.bold4,
+        color: Colors.primary,
     },
 });

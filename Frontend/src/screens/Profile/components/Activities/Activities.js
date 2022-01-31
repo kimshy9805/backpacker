@@ -15,12 +15,8 @@ import {
     findNodeHandle,
     TouchableOpacity,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
 
 import {styles, Colors, Sizes, Typography} from '@styles';
-import {ProfilePicture} from '@components';
-import {icons} from '@constants';
 import {useSharedActivityTab} from '../../hooks';
 import {MyTweets, MyTips, MyLikes, MyReplies} from './index';
 

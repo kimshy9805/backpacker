@@ -1,28 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import {
-    View,
-    Image,
-    TouchableOpacity,
-    ImageBackground,
-    Animated,
-    StyleSheet,
-} from 'react-native';
+import {View, ImageBackground, Animated, StyleSheet} from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import {useNavigation, CommonActions} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {data, icons} from '@constants';
-import {SectionHeader, Map} from './components';
+import Header from '../Header';
 import {styles, Sizes, Colors} from '@styles';
 import {HorizontalLine} from '@components';
 import {resetGetUser} from '@ducks/user';
 
-const Background = () => {
+const Background = ({place}) => {
     const nav = useNavigation();
     const scrollX = new Animated.Value(0);
-
-    const place = data.places[0];
 
     useEffect(() => {
         scrollX.addListener(({value}) => {
@@ -40,8 +32,8 @@ const Background = () => {
         const dotPosition = Animated.divide(scrollX, Sizes.width);
 
         return (
-            <View style={styles.placeDotsContainer}>
-                {place.details.images.map((image, index) => {
+            <View style={_styles.dotsContainer}>
+                {place.details?.images.map((image, index) => {
                     const opacity = dotPosition.interpolate({
                         inputRange: [index - 1, index, index + 1],
                         outputRange: [0.3, 1, 0.3],
@@ -59,7 +51,7 @@ const Background = () => {
                             key={`dot-${index}`}
                             opacity={opacity}
                             style={[
-                                styles.placeDot,
+                                _styles.dot,
                                 {width: dotSize, height: dotSize},
                             ]}
                         />
@@ -70,7 +62,8 @@ const Background = () => {
     };
 
     return (
-        <View style={styles.placeBackgroundContainer}>
+        <View style={_styles.backgroundContainer}>
+            <Header />
             <Animated.ScrollView
                 horizontal
                 pagingEnabled
@@ -82,16 +75,23 @@ const Background = () => {
                     {useNativeDriver: false},
                 )}
                 showsHorizontalScrollIndicator={false}>
-                {place.details.images.map((img, index) => {
+                {place.details?.images.map((img, index) => {
                     return (
                         <View
                             key={index}
-                            style={styles.placeBackgroundImageContainer}>
+                            style={_styles.backgroundImageContainer}>
                             <ImageBackground
                                 source={{uri: img}}
                                 resizeMode="cover"
-                                style={styles.placeBackgroundImage}
-                            />
+                                style={_styles.backgroundImage}>
+                                <View style={_styles.backgroundFooter}>
+                                    <LinearGradient
+                                        colors={['transparent', '#000']}
+                                        style={_styles.linearGradient}
+                                        start={{x: 0, y: 0}}
+                                        end={{x: 0, y: 1}}></LinearGradient>
+                                </View>
+                            </ImageBackground>
                         </View>
                     );
                 })}
@@ -102,3 +102,45 @@ const Background = () => {
 };
 
 export default Background;
+
+const _styles = StyleSheet.create({
+    backgroundContainer: {
+        width: '100%',
+        height: Sizes.height < 700 ? Sizes.height * 0.4 : Sizes.height * 0.5,
+        marginBottom: -90,
+    },
+    backgroundImageContainer: {
+        width: Sizes.width,
+        height: Sizes.height * 0.45,
+    },
+    backgroundImage: {
+        width: '100%',
+        height: '100%',
+    },
+    backgroundFooter: {
+        borderWidth: 1,
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
+    dot: {
+        borderRadius: Sizes.radius,
+        backgroundColor: Colors.primary,
+        marginHorizontal: Sizes.radius / 2,
+    },
+
+    dotsContainer: {
+        position: 'absolute',
+        top: Sizes.height * 0.35,
+        left: '46%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: Sizes.padding / 2,
+        marginBottom: Sizes.padding * 3,
+        height: Sizes.padding,
+    },
+    linearGradient: {
+        width: '100%',
+        height: 300,
+    },
+});

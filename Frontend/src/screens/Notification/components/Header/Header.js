@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Feather from 'react-native-vector-icons/Feather';
 import {useSelector} from 'react-redux';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {styles, Colors, Typography, Sizes} from '@styles';
 import {ProfilePicture} from '@components';
@@ -18,13 +18,16 @@ const Header = () => {
 
     return (
         <View style={_styles.container}>
-            <TouchableOpacity onPress={onClose}>
-                <Feather name="arrow-left" size={30} color={Colors.primary} />
+            <TouchableOpacity
+                onPress={() => nav.navigate('Profile', {userId: 1})}>
+                <ProfilePicture size={30} image={data.users?.image} />
             </TouchableOpacity>
             <Text style={{...Typography.bold3, color: Colors.white}}>
                 Notification
             </Text>
-            <View style={{width: 30, height: 30}} />
+            <TouchableOpacity onPress={() => nav.navigate('Dashboard')}>
+                <AntDesign name={'setting'} size={25} color={Colors.primary} />
+            </TouchableOpacity>
         </View>
     );
 };

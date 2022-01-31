@@ -2,6 +2,7 @@ import React, {useRef, useState, useEffect, useCallback} from 'react';
 import {Animated} from 'react-native';
 import {useBetween} from 'use-between';
 import memoize from 'memoizee';
+import moment from 'moment';
 import {Sizes} from '@styles';
 
 const useActivityTab = () => {
@@ -63,17 +64,37 @@ const useProfile = ({user}) => {
     const [description, setDescription] = useState(user.details.description);
     const [location, setLocation] = useState(user.details.location);
     const [email, setEmail] = useState(user.email);
-    const [dob, setDob] = useState(new Date());
+    const [dob, setDob] = useState(new Date(user.details.dob));
+    const [dobString, setDobString] = useState(
+        moment(user.details.dob).format('YYYY-MM-DD'),
+    );
     const [isChanged, setIsChanged] = useState(false);
     const [isDateOpened, setIsDateOpened] = useState(false);
+
+    useEffect(() => {
+        if (
+            name != user.name ||
+            description != user.details.description ||
+            location != user.details.location ||
+            dobString != moment(user.details.dob).format('YYYY-MM-DD')
+        ) {
+            setIsChanged(true);
+        } else {
+            setIsChanged(false);
+        }
+    }, [name, description, location, dobString]);
 
     return {
         name,
         description,
         location,
         dob,
+        dobString,
         email,
         isDateOpened,
+        isChanged,
+        setDob,
+        setDobString,
         setIsDateOpened,
     };
 };

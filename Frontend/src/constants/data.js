@@ -492,13 +492,16 @@ const places = [
     {
         place_id: 1,
         name: 'Marina Bay',
-        category: 'HOTEL',
+        type: 'HOTEL',
         latitude: 127.6,
         longitude: 11.4,
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula fringilla augue vel pellentesque. Donec rutrum fringilla fringilla. Nullam porta, risus vel eleifend tempus, lorem eros fermentum elit, vitae suscipit velit tellus non ante. Vestibulum facilisis, nisi eget iaculis elementum, diam felis lacinia tellus, ac venenatis libero lorem nec mi. ',
         details: {
             images: [
-                'https://neonapp.sg.object.ncloudstorage.com/store/4/store/163489434233676.jpg',
-                'https://neonapp.sg.object.ncloudstorage.com/store/4/store/163489437145103.jpg',
+                'https://picsum.photos/200',
+                'https://picsum.photos/200',
+                'https://picsum.photos/200',
             ],
         },
         status: 'OPEN',
@@ -506,63 +509,55 @@ const places = [
     },
     {
         place_id: 2,
-        name: 'Marina Bay',
-        category: 'HOTEL',
+        name: 'Gardens By the Bay',
+        type: 'HOTEL',
         latitude: 127.6,
         longitude: 11.4,
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula fringilla augue vel pellentesque. Donec rutrum fringilla fringilla. Nullam porta, risus vel eleifend tempus, lorem eros fermentum elit, vitae suscipit velit tellus non ante. Vestibulum facilisis, nisi eget iaculis elementum, diam felis lacinia tellus, ac venenatis libero lorem nec mi. ',
         details: {
-            images: [
-                'https://neonapp.sg.object.ncloudstorage.com/store/4/store/163489434233676.jpg',
-                'https://neonapp.sg.object.ncloudstorage.com/store/4/store/163489437145103.jpg',
-            ],
+            images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
         },
         status: 'OPEN',
         updated_at: '2021-01-08 13:00:00',
     },
     {
         place_id: 3,
-        name: 'Marina Bay',
-        category: 'HOTEL',
+        name: 'LakeSide',
+        type: 'HOTEL',
         latitude: 127.6,
         longitude: 11.4,
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula fringilla augue vel pellentesque. Donec rutrum fringilla fringilla. Nullam porta, risus vel eleifend tempus, lorem eros fermentum elit, vitae suscipit velit tellus non ante. Vestibulum facilisis, nisi eget iaculis elementum, diam felis lacinia tellus, ac venenatis libero lorem nec mi. ',
         details: {
-            images: [
-                'https://neonapp.sg.object.ncloudstorage.com/store/4/store/163489434233676.jpg',
-                'https://neonapp.sg.object.ncloudstorage.com/store/4/store/163489437145103.jpg',
-            ],
+            images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
         },
         status: 'OPEN',
         updated_at: '2021-01-08 13:00:00',
     },
     {
         place_id: 4,
-        name: 'Marina Bay',
-        category: 'HOTEL',
+        name: 'Sentosa',
+        type: 'HOTEL',
         latitude: 127.6,
         longitude: 11.4,
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula fringilla augue vel pellentesque. Donec rutrum fringilla fringilla. Nullam porta, risus vel eleifend tempus, lorem eros fermentum elit, vitae suscipit velit tellus non ante. Vestibulum facilisis, nisi eget iaculis elementum, diam felis lacinia tellus, ac venenatis libero lorem nec mi. ',
         details: {
             images: [
-                'https://neonapp.sg.object.ncloudstorage.com/store/4/store/163489434233676.jpg',
-                'https://neonapp.sg.object.ncloudstorage.com/store/4/store/163489437145103.jpg',
+                'https://picsum.photos/200',
+                'https://picsum.photos/200',
+                'https://picsum.photos/200',
             ],
+            description: '',
         },
         status: 'OPEN',
         updated_at: '2021-01-08 13:00:00',
     },
 ];
 
-const articles = {};
-
-const users = {
-    userId: 1,
-    username: 'SavinVadim_',
-    name: 'Vadim Savin',
-    image: 'https://picsum.photos/200',
-};
-
 export default {
     tweets,
     countries,
-    users,
     places,
 };

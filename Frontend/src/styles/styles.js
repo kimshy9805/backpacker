@@ -382,62 +382,14 @@ const styles = StyleSheet.create({
      **     @Place    **
      ********************/
 
-    placeSectionHeaderContainer: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        paddingHorizontal: Sizes.padding,
-        backgroundColor: 'transparent',
-        paddingTop: Sizes.padding * 3,
-    },
-
-    placeBackgroundContainer: {
-        flex: 1,
-        marginBottom: -150,
-    },
-
-    placeBackgroundImageContainer: {
-        width: Sizes.width,
-        height: Sizes.height * 0.45,
-    },
-
-    placeBackgroundImage: {
-        width: '100%',
-        height: '100%',
-    },
-
-    placeDot: {
-        borderRadius: Sizes.radius,
-        backgroundColor: Colors.primary,
-        marginHorizontal: Sizes.radius / 2,
-    },
-
-    placeDotsContainer: {
-        position: 'absolute',
-        top: Sizes.height * 0.35,
-        left: '46%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: Sizes.padding / 2,
-        marginBottom: Sizes.padding * 3,
-        height: Sizes.padding,
-    },
-
     placeBodyContainer: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         borderTopLeftRadius: Sizes.radius * 3,
         borderTopRightRadius: Sizes.radius * 3,
         borderWidth: 1,
         paddingTop: Sizes.padding,
         paddingHorizontal: Sizes.padding,
-    },
-
-    placeDescriptionContainer: {
-        flex: 1,
-        borderWidth: 1,
     },
 });
 
