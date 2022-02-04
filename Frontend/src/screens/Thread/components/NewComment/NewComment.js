@@ -10,7 +10,6 @@ import {useNavigation} from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 import {styles, Colors, Typography, Sizes} from '@styles';
-import {data} from '@constants';
 
 const NewComment = () => {
     const onPressOptions = () => {

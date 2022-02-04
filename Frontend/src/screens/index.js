@@ -7,9 +7,11 @@ import NewTweetScreen from './NewTweet/NewTweetScreen';
 import SearchScreen from './Search/SearchScreen';
 import PlaceScreen from './Place/PlaceScreen';
 import NotificationScreen from './Notification/NotificationScreen';
-import MessageScreen from './Message/MessageScreen';
+import ChatRoomScreen from './ChatRoom/ChatRoomScreen';
+import ChatScreen from './Chat/ChatScreen';
 import ThreadScreen from './Thread/ThreadScreen';
 import FollowScreen from './Follow/FollowScreen';
+import ReportScreen from './Report/ReportScreen';
 
 export {
     AuthScreen,
@@ -19,9 +21,11 @@ export {
     SearchScreen,
     PlaceScreen,
     NotificationScreen,
-    MessageScreen,
+    ChatRoomScreen,
+    ChatScreen,
     ProfileScreen,
     NewTweetScreen,
     ThreadScreen,
     FollowScreen,
+    ReportScreen,
 };

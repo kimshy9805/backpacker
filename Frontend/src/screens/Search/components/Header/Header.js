@@ -6,7 +6,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {styles, Colors, Typography, Sizes} from '@styles';
 import {ProfilePicture} from '@components';
-import {data} from '@constants';
 
 const Header = () => {
     const nav = useNavigation();

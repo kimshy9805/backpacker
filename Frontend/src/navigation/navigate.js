@@ -14,9 +14,11 @@ import {
     SearchScreen,
     PlaceScreen,
     NotificationScreen,
-    MessageScreen,
+    ChatRoomScreen,
+    ChatScreen,
     ThreadScreen,
     FollowScreen,
+    ReportScreen,
 } from '../screens/index';
 import {TabBarIcon} from '@components';
 import {Colors, styles} from '@styles';
@@ -68,8 +70,8 @@ const TabNavigator = () => {
                 }}
             />
             <Tab.Screen
-                name="Message"
-                component={MessageScreen}
+                name="ChatRoom"
+                component={ChatRoomScreen}
                 options={{
                     tabBarIcon: ({focused, color, size}) => (
                         <TabBarIcon icon={'envelope'} color={color} size={20} />
@@ -94,6 +96,8 @@ const AppStackNavigator = () => {
             <Stack.Screen name="Place" component={PlaceScreen} />
             <Stack.Screen name="Thread" component={ThreadScreen} />
             <Stack.Screen name="Follow" component={FollowScreen} />
+            <Stack.Screen name="Chat" component={ChatScreen} />
+            <Stack.Screen name="Report" component={ReportScreen} />
         </Stack.Navigator>
     );
 };

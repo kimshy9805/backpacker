@@ -7,8 +7,6 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from '@styles';
 import {Header} from './components';
-import {HorizontalLine} from '@components';
-import {resetGetUser} from '@ducks/user';
 
 const NotificationScreen = () => {
     const {t} = useTranslation();

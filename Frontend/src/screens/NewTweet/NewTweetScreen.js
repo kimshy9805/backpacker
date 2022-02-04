@@ -7,8 +7,6 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {SectionHeader, NewTweet} from './components';
 import {styles} from '@styles';
-import {HorizontalLine} from '@components';
-import {resetGetUser} from '@ducks/user';
 
 const NewTweetScreen = () => {
     const {t} = useTranslation();

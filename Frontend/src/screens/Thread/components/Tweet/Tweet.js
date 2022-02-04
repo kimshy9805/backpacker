@@ -7,7 +7,6 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import moment from 'moment';
 
-import {data} from '@constants';
 import {Marginer, TweetCard, Loader, HorizontalLine} from '@components';
 import {styles, Sizes, Colors, Typography} from '@styles';
 import {likeTweet, unlikeTweet, fetchTweets} from '@ducks/tweet';

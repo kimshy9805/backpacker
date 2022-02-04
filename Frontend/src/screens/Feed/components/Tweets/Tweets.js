@@ -3,7 +3,6 @@ import {View, Text, Animated, FlatList, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {data} from '@constants';
 import {Marginer, TweetCard, Loader} from '@components';
 import {styles, Sizes, Colors} from '@styles';
 import {fetchTweets, resetAPIStatus} from '@ducks/tweet';

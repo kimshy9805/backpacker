@@ -12,7 +12,9 @@ const DISTANCE = [
     {label: '1.5 km', value: 1.5},
 ];
 
-export default {
-    CATEGORY,
-    DISTANCE,
-};
+const TWEETS_FILTER = [
+    {label: 'recent', value: 'RECENT'},
+    {lable: 'most liked', value: 'LIKE'},
+];
+
+export {TWEETS_FILTER};

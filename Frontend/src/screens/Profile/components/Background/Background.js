@@ -10,10 +10,6 @@ import {useNavigation} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {styles, Colors, Sizes} from '@styles';
-import {TextButton} from '@components';
-import {icons} from '@constants';
-import {Typography} from '@styles';
-import {useSharedProfile} from '../../hooks';
 
 const Background = () => {
     const nav = useNavigation();
@@ -81,5 +77,4 @@ const _styles = StyleSheet.create({
         backgroundColor: Colors.lightGray3,
         ...styles.flexRowCenterCenter,
     },
-
 });

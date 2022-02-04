@@ -3,7 +3,6 @@ import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {data} from '@constants';
 import {Marginer, HorizontalLine} from '@components';
 import {fetchTweets} from '@ducks/tweet';
 import {useDispatch} from 'react-redux';

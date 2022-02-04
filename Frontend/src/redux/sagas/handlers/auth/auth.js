@@ -10,7 +10,7 @@ import {
     signOutUserAsync,
     signOutUserAsyncFailed,
 } from '@ducks/auth';
-import {getUser, resetUser} from '@ducks/user';
+import {getUser, resetUser} from '../../../../screens/ChatRoom/node_modules/@ducks/user';
 import {
     requestRegisterUser,
     requestSignInUser,

@@ -5,8 +5,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import {useSelector} from 'react-redux';
 
 import {styles, Colors, Typography, Sizes} from '@styles';
-import {ProfilePicture} from '@components';
-import {data} from '@constants';
 
 const Header = () => {
     const nav = useNavigation();

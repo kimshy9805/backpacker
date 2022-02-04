@@ -7,6 +7,8 @@ import DashedLine from './lines/DashedLine';
 import TweetCard from './cards/TweetCard';
 import CommentCard from './cards/CommentCard';
 import FollowCard from './cards/FollowCard';
+import MessageCard from './cards/MessageCard';
+import ChatRoomCard from './cards/ChatRoomCard';
 
 // Button
 import TextButton from './buttons/TextButton';
@@ -30,6 +32,8 @@ export {
     TweetCard,
     CommentCard,
     FollowCard,
+    MessageCard,
+    ChatRoomCard,
     TextButton,
     Marginer,
     CustomInput,

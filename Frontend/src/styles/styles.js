@@ -365,32 +365,6 @@ const styles = StyleSheet.create({
         height: 50,
         opacity: 0.2,
     },
-
-    /*******************
-     **   @QrModal    **
-     *******************/
-
-    /*******************
-     **   @Explore    **
-     *******************/
-
-    /********************
-     **     @Filter    **
-     ********************/
-
-    /********************
-     **     @Place    **
-     ********************/
-
-    placeBodyContainer: {
-        flex: 1,
-        backgroundColor: Colors.black,
-        borderTopLeftRadius: Sizes.radius * 3,
-        borderTopRightRadius: Sizes.radius * 3,
-        borderWidth: 1,
-        paddingTop: Sizes.padding,
-        paddingHorizontal: Sizes.padding,
-    },
 });
 
 export default styles;

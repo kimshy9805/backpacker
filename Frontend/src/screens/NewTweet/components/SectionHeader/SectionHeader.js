@@ -5,8 +5,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
 
 import {styles, Colors, Typography, Sizes} from '@styles';
-import {ProfilePicture} from '@components';
-import {data} from '@constants';
 import {postTweet} from '@ducks/tweet';
 import {useSharedFormTweet} from '../../hooks';
 

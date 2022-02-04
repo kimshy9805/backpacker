@@ -9,14 +9,9 @@ import {
     Animated,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {styles, Colors, Typography, Sizes} from '@styles';
-import {ProfilePicture} from '@components';
 import {data, icons, images} from '@constants';
-import {Extrapolate} from 'react-native-reanimated';
-import {date} from 'yup';
 
 const COUNTRIES_ITEM_SIZES = Sizes.width / 3;
 const Countries = ({places, setPlaces}) => {

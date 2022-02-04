@@ -5,15 +5,15 @@ import {useNavigation, CommonActions} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {Header, Background, Description, Articles, Map} from './components';
-import {styles} from '@styles';
+import {Background, Body, Map} from './components';
+import {useSharedPlaceTab} from './hooks';
+import {styles, Colors} from '@styles';
 import {data} from '@constants';
-import {HorizontalLine} from '@components';
-import {resetGetUser} from '@ducks/user';
 
 const PlaceScreen = ({route}) => {
     const {place_id} = route.params;
     const [place, setPlace] = useState('');
+    const {type} = useSharedPlaceTab();
 
     useEffect(() => {
         setPlace(...data.places.filter(place => place.place_id === place_id));
@@ -21,14 +21,13 @@ const PlaceScreen = ({route}) => {
 
     return (
         <SafeAreaView
-            style={{flex: 1}}
+            style={styles.container}
             forceInset={{bottom: 'never', top: 'never'}}>
-            <Background place={place} />
-            <View style={styles.placeBodyContainer}>
-                <Description place={place} />
-                <Articles />
-            </View>
-            <Map />
+            <ScrollView style={{flex: 1, backgroundColor: Colors.black}}>
+                <Background place={place} />
+                <Body place={place} />
+            </ScrollView>
+            {type === 'about' && <Map />}
         </SafeAreaView>
     );
 };

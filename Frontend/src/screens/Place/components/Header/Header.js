@@ -7,11 +7,8 @@ import {
     LinearGradient,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {styles, Colors, Sizes} from '@styles';
-import {ProfilePicture} from '@components';
 import {data, icons} from '@constants';
 
 const Header = () => {

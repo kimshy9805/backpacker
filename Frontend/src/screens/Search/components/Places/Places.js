@@ -15,7 +15,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {styles, Colors, Typography, Sizes} from '@styles';
 import {TextButton, Marginer} from '@components';
-import {data, icons, images} from '@constants';
 
 const Places = ({places, setPlaces}) => {
     const nav = useNavigation();

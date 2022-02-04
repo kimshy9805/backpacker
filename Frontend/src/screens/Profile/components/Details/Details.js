@@ -8,7 +8,6 @@ import {styles, Colors, Sizes, Typography} from '@styles';
 import {ProfilePicture, TextButton, Marginer} from '@components';
 import {useSharedRBSheet} from '../../hooks';
 import Update from '../Update';
-import {icons} from '@constants';
 
 const Details = () => {
     const nav = useNavigation();

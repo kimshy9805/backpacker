@@ -7,7 +7,6 @@ import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {styles, Colors, Sizes, Typography} from '@styles';
 import {ProfilePicture} from '@components';
 import {data, icons, mapStyle} from '@constants';
-import {SectionHeader} from '../index';
 
 const hotels = [
     {
@@ -82,10 +81,15 @@ const Map = () => {
             snappingPoints={[Sizes.height + 120]}
             height={Sizes.height + 120}
             friction={0.7}
+            minimumDistanceThreshold={30}
             onBottomReached={() => {
                 setAllowDragging(true);
             }}>
-            <View style={{flex: 1, backgroundColor: 'transparent'}}>
+            <View
+                style={{
+                    flex: 1,
+                    backgroundColor: 'transparent',
+                }}>
                 {/* Panel Header */}
                 <View
                     style={{
@@ -174,7 +178,12 @@ const Map = () => {
                         </View>
                     </View>
                     <View
-                        style={{position: 'absolute', top: Sizes.padding * 2}}>
+                        style={{
+                            position: 'absolute',
+                            top: Sizes.padding * 5,
+                            borderWidth: 1,
+                            width: '100%',
+                        }}>
                         <View style={styles.flexRowCenterBetween}>
                             <TouchableOpacity onPress={() => nav.goBack()}>
                                 <Image

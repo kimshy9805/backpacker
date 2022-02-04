@@ -7,7 +7,6 @@ import {useSelector, useDispatch} from 'react-redux';
 import {config, configurePusher} from '../../config';
 
 import {styles, Colors} from '@styles';
-import {SectionHeader, SignIn, Information, SNSLinks} from './components';
 import {HorizontalLine} from '@components';
 import {resetGetUser, getUser} from '@ducks/user';
 
@@ -21,7 +20,7 @@ const SignInScreen = () => {
     return (
         <SafeAreaView style={styles.container} forceInset={{bottom: 'never'}}>
             <View style={styles.HeaderContainer}>
-                <SectionHeader />
+                {/* <SectionHeader /> */}
             </View>
             <ScrollView style={styles.BodyContainer}>
                 <TouchableOpacity

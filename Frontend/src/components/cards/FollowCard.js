@@ -4,7 +4,6 @@ import moment from 'moment';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 import {HorizontalLine, TextButton, ProfilePicture} from '@components';
-import {icons, images} from '@constants';
 import {Typography, Sizes, Colors, styles} from '@styles';
 
 const FollowCard = props => {

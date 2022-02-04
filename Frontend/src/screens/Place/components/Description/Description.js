@@ -5,35 +5,29 @@ import {useNavigation, CommonActions} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {SectionHeader, Map} from './components';
 import {styles, Colors, Sizes, Typography} from '@styles';
-import {images} from '@constants';
 import {Marginer} from '@components';
-import {resetGetUser} from '@ducks/user';
 
 const Description = ({place}) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
 
     return (
-        <View style={styles.container}>
-            <View style={styles.flexRow}>
-                <TouchableOpacity
-                    style={[_styles.buttonContainer, {marginRight: 10}]}>
-                    <Text style={_styles.about}>About</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[
-                        _styles.buttonContainer,
-                        {width: 124, backgroundColor: Colors.input},
-                    ]}>
-                    <Text style={_styles.about}>Participants</Text>
-                </TouchableOpacity>
-            </View>
-            <Marginer margin={15} />
-            <Text style={{color: Colors.white, ...Typography.bold5}}>
+        <View style={[styles.container, {paddingHorizontal: Sizes.padding}]}>
+            <Marginer margin={10} />
+            <Text style={{color: Colors.white, ...Typography.bold2}}>
+                {place.name}
+            </Text>
+            <Marginer margin={5} />
+            <Text style={{color: Colors.white, ...Typography.body4}}>
                 {place.description}
             </Text>
+            {/* <Map />  */}
+            <Marginer margin={10} />
+            <Text style={{color: Colors.white, ...Typography.bold3}}>
+                LOCATION
+            </Text>
+            <Marginer margin={5} />
         </View>
     );
 };
@@ -42,7 +36,7 @@ export default Description;
 
 const _styles = StyleSheet.create({
     buttonContainer: {
-        width: 76,
+        width: '30%',
         height: 32,
         borderRadius: 10,
         backgroundColor: Colors.white,

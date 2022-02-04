@@ -2,7 +2,7 @@ import {call, put} from 'redux-saga/effects';
 import {Alert} from 'react-native';
 
 import {signInUserAsync, signInUserAsyncFailed} from '@ducks/auth';
-import {getUserAsync, getUserAsyncFailed} from '@ducks/user';
+import {getUserAsync, getUserAsyncFailed} from '../../../../screens/ChatRoom/node_modules/@ducks/user';
 import {requestGetUser, requestUpdateUser} from '@sagas/requests/user';
 
 const getUserResp = {

@@ -6,11 +6,8 @@ import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {data, icons} from '@constants';
 import Header from '../Header';
 import {styles, Sizes, Colors} from '@styles';
-import {HorizontalLine} from '@components';
-import {resetGetUser} from '@ducks/user';
 
 const Background = ({place}) => {
     const nav = useNavigation();
