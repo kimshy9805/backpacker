@@ -4,6 +4,7 @@ const initialState = {
     user: {
         user_id: 1,
         name: 'kay',
+        alias: '@yigmmm042223',
         status: 'ACTIVE',
         created_at: '2021-01-09T14:00:00+08:00',
         email: 'kimshy5840@naver.com',

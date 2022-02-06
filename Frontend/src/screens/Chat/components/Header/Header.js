@@ -7,7 +7,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 import {styles, Colors, Typography, Sizes} from '@styles';
-import {ProfilePicture} from '@components';
 import {data} from '@constants';
 
 const Header = () => {

@@ -1,17 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {View, FlatList, StyleSheet, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 import {ChatRoomCard, Loader} from '@components';
 import {data} from '@constants';
+import NewChat from '../NewChat';
 import {icons, images} from '@constants';
 import {Typography, Sizes, Colors, styles} from '@styles';
+import {useSharedRBSheet} from '../../Hooks';
 
 const ChatRooms = () => {
     const nav = useNavigation();
 
-    // const { isFecthing } = useSelector(state => state.chatroom);
-
+    const {refRBSheet} = useSharedRBSheet();
     const [chatRooms, setChatRooms] = useState(data.chatRooms);
 
     const _onPressChatRoom = chatRoom => {
@@ -52,6 +54,20 @@ const ChatRooms = () => {
                 }
                 onEndReachedThreshold={0.5}
             />
+            <RBSheet
+                ref={refRBSheet}
+                animationType={'fade'}
+                closeOnDragDown={true}
+                dragFromTopOnly={true}
+                closeOnPressMask={false}
+                height={Sizes.height / 1.1}
+                customStyles={{
+                    wrapper: _styles.sheetWrapper,
+                    container: _styles.sheetContainer,
+                    draggableIcon: _styles.sheetDraggableIcon,
+                }}>
+                <NewChat />
+            </RBSheet>
         </View>
     );
 };
@@ -63,5 +79,18 @@ const _styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.black,
         paddingHorizontal: Sizes.padding * 0.5,
+    },
+
+    sheetWrapper: {
+        backgroundColor: '#000000AA',
+    },
+    sheetContainer: {
+        borderTopLeftRadius: Sizes.radius * 2,
+        borderTopRightRadius: Sizes.radius * 2,
+        backgroundColor: Colors.white,
+        backgroundColor: '#000',
+    },
+    sheetDraggableIcon: {
+        backgroundColor: Colors.white,
     },
 });

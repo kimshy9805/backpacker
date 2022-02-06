@@ -13,7 +13,6 @@ const MessageCard = ({message}) => {
     useEffect(() => {
         if (message.user.user_id === user.user_id) {
             setIsMyMsg(true);
-            console.log('hoho');
         }
     }, []);
 
@@ -23,12 +22,14 @@ const MessageCard = ({message}) => {
                 _styles.container,
                 {alignItems: isMyMsg === true ? 'flex-end' : 'flex-start'},
             ]}>
-            <View style={_styles.contentContainer}>
-                <Text style={_styles.content}>{message.content}</Text>
+            <View style={_styles.messageContainer}>
+                <View style={_styles.contentContainer}>
+                    <Text style={_styles.content}>{message.content}</Text>
+                </View>
+                <Text style={_styles.time}>
+                    {moment(message.created_at).fromNow()}
+                </Text>
             </View>
-            <Text style={[_styles.time]}>
-                {moment(message.created_at).fromNow()}
-            </Text>
         </View>
     );
 };
@@ -42,8 +43,11 @@ const _styles = StyleSheet.create({
         paddingHorizontal: Sizes.padding,
     },
 
-    contentContainer: {
+    messageContainer: {
         width: '65%',
+    },
+
+    contentContainer: {
         backgroundColor: Colors.primary,
         borderRadius: Sizes.radius,
         padding: Sizes.padding * 0.5,
@@ -58,5 +62,6 @@ const _styles = StyleSheet.create({
         marginTop: 3,
         ...Typography.body6,
         color: 'grey',
+        alignSelf: 'flex-end',
     },
 });

@@ -887,10 +887,89 @@ const chatRooms = [
     },
 ];
 
+const users = [
+    {
+        user_id: 1,
+        name: 'kay',
+        alias: '@yigmmm042223',
+        status: 'ACTIVE',
+        created_at: '2021-01-09T14:00:00+08:00',
+        email: 'kimshy5840@naver.com',
+        details: {
+            profileImage: 'https://picsum.photos/200',
+            backgraoundImage: 'https://picsum.photos/200',
+            description: '난 영웅이야',
+            location: 'Singapore',
+            dob: '1997-10-27',
+        },
+    },
+    {
+        user_id: 2,
+        name: 'kay',
+        alias: '@yigmmm042223',
+        status: 'ACTIVE',
+        created_at: '2021-01-09T14:00:00+08:00',
+        email: 'kimshy5840@naver.com',
+        details: {
+            profileImage: 'https://picsum.photos/200',
+            backgraoundImage: 'https://picsum.photos/200',
+            description: '난 영웅이야',
+            location: 'Singapore',
+            dob: '1997-10-27',
+        },
+    },
+    {
+        user_id: 3,
+        name: 'kay',
+        alias: '@yigmmm042223',
+        status: 'ACTIVE',
+        created_at: '2021-01-09T14:00:00+08:00',
+        email: 'kimshy5840@naver.com',
+        details: {
+            profileImage: 'https://picsum.photos/200',
+            backgraoundImage: 'https://picsum.photos/200',
+            description: '난 영웅이야',
+            location: 'Singapore',
+            dob: '1997-10-27',
+        },
+    },
+    {
+        user_id: 4,
+        name: 'kay',
+        alias: '@yigmmm042223',
+        status: 'ACTIVE',
+        created_at: '2021-01-09T14:00:00+08:00',
+        email: 'kimshy5840@naver.com',
+        details: {
+            profileImage: 'https://picsum.photos/200',
+            backgraoundImage: 'https://picsum.photos/200',
+            description: '난 영웅이야',
+            location: 'Singapore',
+            dob: '1997-10-27',
+        },
+    },
+    {
+        user_id: 5,
+        name: 'kay',
+        alias: '@yigmmm042223',
+        status: 'ACTIVE',
+        created_at: '2021-01-09T14:00:00+08:00',
+        email: 'kimshy5840@naver.com',
+        details: {
+            profileImage: 'https://picsum.photos/200',
+            backgraoundImage: 'https://picsum.photos/200',
+            description: '난 영웅이야',
+            location: 'Singapore',
+            dob: '1997-10-27',
+        },
+    },
+];
+
 export default {
     tweets,
     countries,
     places,
     chats,
     chatRooms,
+    users,
 };

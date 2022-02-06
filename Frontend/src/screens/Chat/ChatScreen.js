@@ -4,7 +4,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from '@styles';
-import {Header, Messages} from './components';
+import {Header, Messages, InputBox} from './components';
 
 const ChatScreen = ({route}) => {
     const {chatroom_id, users} = route.params;
@@ -14,6 +14,7 @@ const ChatScreen = ({route}) => {
         <SafeAreaView style={styles.container} forceInset={{bottom: 'never'}}>
             <Header />
             <Messages />
+            <InputBox />
         </SafeAreaView>
     );
 };

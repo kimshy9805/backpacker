@@ -6,15 +6,20 @@ import {useTranslation} from 'react-i18next';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from '@styles';
-import {Header, ChatRooms} from './components';
+import {Header, ChatRooms, NewChat} from './components';
+import {NewChatButton} from '@components';
+import {useSharedRBSheet} from './Hooks';
 
 const ChatRoomScreen = () => {
     const dispatch = useDispatch();
+
+    const {onShowBSheet} = useSharedRBSheet();
 
     return (
         <SafeAreaView style={styles.container} forceInset={{bottom: 'never'}}>
             <Header />
             <ChatRooms />
+            <NewChatButton onPress={onShowBSheet} />
         </SafeAreaView>
     );
 };

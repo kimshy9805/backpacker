@@ -21,7 +21,7 @@ const NewTweet = () => {
 
     return (
         <View style={styles.newTweetContainer}>
-            <ProfilePicture image={user.details?.images[0]} />
+            <ProfilePicture image={user.details.profileImage} />
             <View style={styles.newTweetInputContainer}>
                 <TextInput
                     numberOfLines={3}
