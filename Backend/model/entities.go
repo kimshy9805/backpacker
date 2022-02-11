@@ -59,13 +59,13 @@ type Token struct {
 }
 
 type Tweet struct {
-	TweetId   int64           `json:"tweet_id"`
-	UserId    int64           `json:"user_id"`
-	Status    string          `json:"status"`
-	Content   null.String     `json:"content"`
-	Details   json.RawMessage `json:"details,omitempty"`
-	CreatedAt null.Time       `json:"created_at"`
-	UpdatedAt null.Time       `json:"updated_at"`
+	TweetId   int64            `json:"tweet_id"`
+	UserId    int64            `json:"user_id"`
+	Status    string           `json:"status"`
+	Content   null.String      `json:"content"`
+	Details   *json.RawMessage `json:"details,omitempty"`
+	CreatedAt null.Time        `json:"created_at"`
+	UpdatedAt null.Time        `json:"updated_at"`
 
 	// for API
 	LikesCount    null.Int  `json:"likes_count"`
@@ -90,6 +90,10 @@ type Comment struct {
 	// for Join
 	User  *User  `json:"user"`
 	Tweet *Tweet `json:"tweet"`
+}
+
+type Message struct {
+	Content string `json:"content"`
 }
 
 type Authorization struct {

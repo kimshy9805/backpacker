@@ -107,14 +107,18 @@ func (r *repository) GetTweets(tx *Tx) ([]*Tweet, error) {
 }
 
 func (r *repository) GetMyTweets(userId int64, tx *Tx) ([]*Tweet, error) {
-	rows, err := r.getDb(tx).Query(`SELECT * 
-									  FROM tweets 
-									 WHERE user_id = ?`, userId)
+	rows, err := r.getDb(tx).Query(`SELECT t.*,
+									(SELECT COUNT(*) FROM likes l WHERE l.tweet_id = t.tweet_id) AS likes_count,
+									(SELECT COUNT(*) FROM comments c WHERE c.tweet_id = t.tweet_id) AS comments_count,
+									(SELECT IFNULL(JSON_ARRAYAGG(user_id), '[]') FROM likes l WHERE l.tweet_id = t.tweet_id) AS users_like
+	  								   FROM tweets t
+	 								  WHERE t.status LIKE "ACTIVE" AND user_id = ?
+   									  ORDER BY t.updated_at`, userId)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	return r.readTweets(rows, tx, config.TWEET_DEFAULT)
+	return r.readTweets(rows, tx, config.TWEET_API)
 }
 
 func (r *repository) GetTweetsByUserId(userId int64, tx *Tx) ([]*Tweet, error) {
