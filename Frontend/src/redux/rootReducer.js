@@ -6,6 +6,7 @@ import {
     tweetReducer,
     replyReducer,
     followReducer,
+    errorReducer,
 } from './ducks';
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     tweet: tweetReducer,
     reply: replyReducer,
     follow: followReducer,
+    error: errorReducer,
 });
 
 export default rootReducer;

@@ -1,61 +1,53 @@
 import {call, put} from 'redux-saga/effects';
-import {Alert} from 'react-native';
 
-import {signInUserAsync, signInUserAsyncFailed} from '@ducks/auth';
-import {getUserAsync, getUserAsyncFailed} from '../../../../screens/ChatRoom/node_modules/@ducks/user';
+import {
+    getUserAsync,
+    getUserAsyncFailed,
+    updateUserAsync,
+    updateUserAsyncFailed,
+} from '@ducks/user';
 import {requestGetUser, requestUpdateUser} from '@sagas/requests/user';
-
-const getUserResp = {
-    data: {},
-    err: '',
-};
+import {setError} from '@ducks/error';
+import {errorHandler} from '@utils';
 
 export function* handleGetUser() {
     let resp;
     try {
         resp = yield call(requestGetUser);
 
-        // Throw exceptions
-        if (resp.data === undefined) {
-            throw resp;
+        if (resp.status === 'SUCCESS') {
+            yield put(getUserAsync(resp.data));
+            return;
         }
-
-        // Logic Error
-        if (resp.err !== null) {
-            throw resp.err;
+        if (resp.status === 'FAIL' && resp.data) {
+            yield put(setError(resp.data));
+            yield put(getUserAsyncFailed(resp.data));
+            return;
         }
-
-        let user = resp.data;
-
-        yield put(getUserAsync(user));
+        throw resp;
     } catch (error) {
+        errorHandler(error, true);
         yield put(getUserAsyncFailed(error));
     }
 }
 
 export function* handleUpdateUser(action) {
     let resp;
-
     try {
         resp = yield call(requestUpdateUser, action);
 
-        // Throw exceptions
-        if (resp.data === undefined) {
-            throw resp;
-        }
-
-        // Logic Error
-        if (resp.status === 'FAIL') {
-            Alert.alert('NEON', resp.data);
+        if (resp.status === 'SUCCESS') {
+            yield put(updateUserAsync(resp.data));
             return;
         }
-
-        let user = resp.data;
-        yield put(updateUserAsync(user));
-        yield put(getUser());
+        if (resp.status === 'FAIL' && resp.data) {
+            yield put(setError(resp.data));
+            yield put(updateUserAsyncFailed(resp.data));
+            return;
+        }
+        throw resp;
     } catch (error) {
-        // HTTP Error
-        Alert.alert('NEON', 'Something went wrong...');
+        errorHandler(error, true);
         yield put(updateUserAsyncFailed(error));
     }
 }

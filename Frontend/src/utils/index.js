@@ -8,7 +8,7 @@ import {
     queryValidationSchema,
     bookingValidationSchema,
 } from './validator';
-import {signIn, callNumber} from './helpers';
+import {signIn, callNumber, errorHandler} from './helpers';
 
 export {
     platform,
@@ -22,4 +22,5 @@ export {
     bookingValidationSchema,
     signIn,
     callNumber,
+    errorHandler,
 };

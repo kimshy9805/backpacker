@@ -40,13 +40,16 @@ func (s *IntArray) Scan(src interface{}) (err error) {
 }
 
 type User struct {
-	UserId    int64           `json:"user_id"`
-	Email     string          `json:"email"`
-	Password  string          `json:"password"`
-	Name      null.String     `json:"name"`
-	Details   json.RawMessage `json:"details,omitempty"`
-	Status    string          `json:"status"`
-	CreatedAt null.Time       `json:"created_at"`
+	UserId       int64            `json:"user_id"`
+	Email        string           `json:"email"`
+	Password     string           `json:"password"`
+	Alias        null.String      `json:"alias"`
+	Status       string           `json:"status"`
+	ProfileImage null.String      `json:"profile_image"`
+	Description  null.String      `json:"description"`
+	Details      *json.RawMessage `json:"details,omitempty"`
+	CreatedAt    null.Time        `json:"created_at"`
+	UpdatedAt    null.Time        `json:"updated_at"`
 }
 
 type Token struct {
@@ -61,6 +64,8 @@ type Token struct {
 type Tweet struct {
 	TweetId   int64            `json:"tweet_id"`
 	UserId    int64            `json:"user_id"`
+	PlaceId   *int64           `json:"place_id"`
+	Type      string           `json:"type"`
 	Status    string           `json:"status"`
 	Content   null.String      `json:"content"`
 	Details   *json.RawMessage `json:"details,omitempty"`
@@ -76,20 +81,36 @@ type Tweet struct {
 }
 
 type Comment struct {
-	CommentId int64           `json:"comment_id"`
-	UserId    int64           `json:"user_id"`
-	TweetId   int64           `json:"tweet_id"`
-	Status    string          `json:"status"`
-	Content   null.String     `json:"content"`
-	Details   json.RawMessage `json:"details"`
-	CreatedAt null.Time       `json:"created_at"`
-	UpdatedAt null.Time       `json:"updated_at"`
+	CommentId int64            `json:"comment_id"`
+	UserId    int64            `json:"user_id"`
+	TweetId   int64            `json:"tweet_id"`
+	Status    string           `json:"status"`
+	Content   null.String      `json:"content"`
+	Details   *json.RawMessage `json:"details"`
+	CreatedAt null.Time        `json:"created_at"`
+	UpdatedAt null.Time        `json:"updated_at"`
 
 	// for API
 
 	// for Join
 	User  *User  `json:"user"`
 	Tweet *Tweet `json:"tweet"`
+}
+
+type Likes struct {
+	UserId  int64  `json:"user_id"`
+	PlaceId *int64 `json:place_id`
+	TweetId *int64 `json:"tweet_id"`
+}
+
+type Places struct {
+	PlaceId   int64            `json:"place_id"`
+	Name      string           `json:"name"`
+	Status    string           `json:"status"`
+	Details   *json.RawMessage `json:"details"`
+	Latitude  float64          `json:"latitude"`
+	Longitude float64          `json:"longitude"`
+	Updated   null.Time        `json:"updated_at"`
 }
 
 type Message struct {

@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"time"
 
+	"gopkg.in/guregu/null.v4"
 	"kay.backpacker/config"
 )
 
@@ -12,6 +14,7 @@ func scanTweet(tweet *Tweet) []interface{} {
 	return []interface{}{
 		&tweet.TweetId,
 		&tweet.UserId,
+		&tweet.PlaceId,
 		&tweet.Status,
 		&tweet.Content,
 		&tweet.Details,
@@ -24,6 +27,7 @@ func scanTweetAPI(tweet *Tweet) []interface{} {
 	return []interface{}{
 		&tweet.TweetId,
 		&tweet.UserId,
+		&tweet.PlaceId,
 		&tweet.Status,
 		&tweet.Content,
 		&tweet.Details,
@@ -68,8 +72,8 @@ func (r *repository) readTweets(rows *sql.Rows, tx *Tx, twType string) ([]*Tweet
 }
 
 func (r *repository) CreateTweet(tweet *Tweet, tx *Tx) (int64, error) {
-	result, err := r.getDb(tx).Exec(`INSERT INTO tweets (user_id, status, content, details, created_at, updated_at) 
-										  VALUES(?, ?, ?, ?, ?, ?)`, tweet.UserId, tweet.Status, tweet.Content, tweet.Details, tweet.CreatedAt, tweet.UpdatedAt)
+	result, err := r.getDb(tx).Exec(`INSERT INTO tweets (user_id, place_id, type, status, content, details, created_at, updated_at) 
+										  VALUES(?, ?, ?, ?, ?, ?, ?, ?)`, tweet.UserId, tweet.PlaceId, tweet.Type, tweet.Status, tweet.Content, tweet.Details, tweet.CreatedAt, tweet.UpdatedAt)
 	if err != nil {
 		return -1, err
 	}
@@ -85,7 +89,6 @@ func (r *repository) GetTweet(id int64, tx *Tx) (*Tweet, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	tweet.User, _ = r.GetUser(tweet.UserId, tx)
 	return tweet, nil
 }
@@ -102,7 +105,6 @@ func (r *repository) GetTweets(tx *Tx) ([]*Tweet, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return r.readTweets(rows, tx, config.TWEET_API)
 }
 
@@ -151,42 +153,15 @@ func (r *repository) UpdateTweet(tweet *Tweet, tx *Tx) error {
 		values = append(values, tweet.Details)
 	}
 
-	if tweet.UpdatedAt.Valid {
-		columns = append(columns, `updated_at = ?`)
-		values = append(values, tweet.UpdatedAt)
-	}
-
 	if len(columns) > 0 {
+		// Update time
+		columns = append(columns, `updated_at = ?`)
+		values = append(values, null.NewTime(time.Now(), true))
+
 		values = append(values, tweet.TweetId)
 		if _, err := r.getDb(tx).Exec(`UPDATE tweets SET `+strings.Join(columns, ", ")+` WHERE tweet_id = ?`, values...); err != nil {
 			return err
 		}
 	}
-	return nil
-}
-
-func (r *repository) LikeTweet(userId int64, tweetId int64, tx *Tx) error {
-	result, err := r.getDb(tx).Exec(`INSERT INTO likes (user_id, tweet_id) VALUES (?, ?)`, userId, tweetId)
-	if err != nil {
-		return err
-	}
-
-	if _, err := result.RowsAffected(); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (r *repository) UnlikeTweet(userId int64, tweetId int64, tx *Tx) error {
-	result, err := r.getDb(tx).Exec(`DELETE FROM likes WHERE user_id = ? AND tweet_id = ?`, userId, tweetId)
-	if err != nil {
-		return err
-	}
-
-	if _, err := result.RowsAffected(); err != nil {
-		return err
-	}
-
 	return nil
 }

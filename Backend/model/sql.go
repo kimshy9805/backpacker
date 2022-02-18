@@ -32,6 +32,12 @@ type Repository interface {
 	GetUser(id int64, tx *Tx) (*User, error)
 	UpdateUser(user *User, tx *Tx) error
 
+	// Following
+	GetMyFollowers(userId int64, tx *Tx) ([]*User, error)
+	GetMyFollowings(userId int64, tx *Tx) ([]*User, error)
+	FollowUser(userId int64, followId int64, tx *Tx) error
+	UnFollowUser(userId int64, followId int64, tx *Tx) error
+
 	// Tweets
 	CreateTweet(tweet *Tweet, tx *Tx) (int64, error)
 	GetTweets(tx *Tx) ([]*Tweet, error)
@@ -87,6 +93,7 @@ func InitDB(mysqlConfig *config.MysqlConfig) Repository {
 		DBName:    mysqlConfig.Database,
 		Loc:       location,
 		ParseTime: true,
+		AllowNativePasswords: true,
 	}
 
 	if mysqlConfig.Host != "" {

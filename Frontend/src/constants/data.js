@@ -515,7 +515,7 @@ const places = [
         longitude: 11.4,
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula fringilla augue vel pellentesque. Donec rutrum fringilla fringilla. Nullam porta, risus vel eleifend tempus, lorem eros fermentum elit, vitae suscipit velit tellus non ante. Vestibulum facilisis, nisi eget iaculis elementum, diam felis lacinia tellus, ac venenatis libero lorem nec mi. ',
-        details: {
+            details: {
             images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
         },
         status: 'OPEN',

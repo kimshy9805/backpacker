@@ -18,6 +18,10 @@ import NewChatButton from './buttons/NewChatButton';
 import NewTweetButton from './buttons/NewTweetButton';
 
 // Modal
+import ErrorModal from './modals/ErrorModal';
+import AskModal from './modals/AskModal';
+import LoaderModal from './modals/LoaderModal';
+import MessageModal from './modals/MessageModal';
 
 // Input
 import CustomInput from './inputs/CustomInput';
@@ -41,6 +45,10 @@ export {
     TextButton,
     NewChatButton,
     NewTweetButton,
+    ErrorModal,
+    AskModal,
+    LoaderModal,
+    MessageModal,
     Marginer,
     CustomInput,
     TabBarIcon,

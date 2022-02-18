@@ -15,6 +15,11 @@ type apiHandler struct {
 	repo      model.Repository
 }
 
+type Resp struct {
+	Error error       `json:"err"`
+	Data  interface{} `json:"data"`
+}
+
 func RegisterAPI(r *mux.Router, mysqlConfig *config.MysqlConfig) {
 	// Initiate ws server in a Go routine
 	wsServer := NewWebsocketServer()

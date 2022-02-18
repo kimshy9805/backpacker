@@ -24,7 +24,7 @@ import {
 } from './handlers/follow';
 
 // duck
-import {getUser, updateUser} from '../../screens/ChatRoom/node_modules/@ducks/user';
+import {getUser, updateUser} from '@ducks/user';
 import {registerUser, signInUser, signOutUser} from '@ducks/auth';
 import {
     fetchTweets,
@@ -71,4 +71,8 @@ export function* watcherSaga() {
     yield takeLatest(fetchMyFollowings.type, handleFetchMyFollowings);
     yield takeLatest(follow.type, handleFollow);
     yield takeLatest(unfollow.type, handleUnfollow);
+
+
+    // chat
+    
 }

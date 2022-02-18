@@ -15,8 +15,13 @@ func registerBackend(router *mux.Router, h *apiHandler) {
 	// router.HandleFunc("/chats/me", h.myChatsHandler)
 
 	// Users
-	router.HandleFunc("/users/{id:[0-9]+}", h.userHandler)
-	router.HandleFunc("/users/{id:[0-9]+}/{verb}", h.userStateHandler)
+	router.HandleFunc("/user", h.userHandler)
+	router.HandleFunc("/users/{verb}", h.userStateHandler)
+
+	// Follow
+	router.HandleFunc("/followers/me", h.myFollowersHandler)
+	router.HandleFunc("/followings/me", h.myFollowingsHandler)
+	router.HandleFunc("/following/{verb}", h.followingStateHandler)
 
 	// Tweets
 	router.HandleFunc("/tweet/{id:[0-9]+}", h.tweetHandler)
@@ -29,8 +34,6 @@ func registerBackend(router *mux.Router, h *apiHandler) {
 	router.HandleFunc("/comments", h.commentsHandler).Queries("tweet", "{[0-9]*?}")
 	router.HandleFunc("/comments/me", h.myCommentsHandler)
 
-	// Follow
-	router.HandleFunc("./followers/me", h.myFollowersHandler)
-	router.HandleFunc("./follwings/me", h.myFollowingsHandler)
-	router.HandleFunc("/follow/{verb}", h.followStateHandler)
+	// Places
+
 }

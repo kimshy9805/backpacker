@@ -22,11 +22,14 @@ type Processor interface {
 
 	// Users
 	ProcessUserCreate(user *model.User) error
-	ProcessUserTransition(ctx context.Context, user *model.User, verb string) error
+	ProcessUserTransition(ctx context.Context, verb string) error
+
+	// Following
+	ProcessFollowingTransition(ctx context.Context, params map[string]interface{}, verb string) (interface{}, error)
 
 	// Tweets
 	ProcessTweetCreate(ctx context.Context, tweet *model.Tweet) error
-	ProcessTweetTransition(ctx context.Context, params map[string]interface{}, verb string) error
+	ProcessTweetTransition(ctx context.Context, params map[string]interface{}, verb string) (interface{}, error)
 }
 
 func NewProcessor(repo model.Repository) Processor {

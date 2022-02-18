@@ -4,6 +4,7 @@ import {tweetReducer} from './tweet';
 import {replyReducer} from './reply';
 import {tipReducer} from './tip';
 import {followReducer} from './follow';
+import {errorReducer} from './error';
 
 export {
     userReducer,
@@ -12,4 +13,5 @@ export {
     replyReducer,
     tipReducer,
     followReducer,
+    errorReducer,
 };

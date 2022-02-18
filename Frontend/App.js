@@ -19,25 +19,14 @@ import {
     setJSExceptionHandler,
     setNativeExceptionHandler,
 } from 'react-native-exception-handler';
+import {errorHandler} from '@utils';
 
-function handleApplicationError(errorMessage) {
-    const title = 'Unexpected error occurred';
-    const message = errorMessage + '\nApplication must be restarted.';
-    Alert.alert(title, message, [{text: 'OK '}]);
-}
 
-// setJSExceptionHandler((e, isFatal) => {
-//     if (isFatal) {
-//         const error = `Error: ${isFatal ? 'Fatal:' : ''} ${e.name} ${
-//             e.message
-//         }`;
-//         // handleApplicationError(error);
-//     }
-// }, true);
+// javascript
+setJSExceptionHandler((e, isFatal) => {
+    errorHandler(e, isFatal);
+}, true);
 
-// setJSExceptionHandler(errorHandler, true);
-
-// setNativeExceptionHandler(handleApplicationError, true, false);
 
 // FontAwesome Library
 library.add(fab, faHome, faSearch, faBell, faEnvelope);

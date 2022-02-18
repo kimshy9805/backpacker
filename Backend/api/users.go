@@ -2,33 +2,22 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 	"kay.backpacker/model"
 )
 
 func (h *apiHandler) userHandler(w http.ResponseWriter, r *http.Request) {
-	if _, err := h.accessControl(r); err != nil {
+	ctx, err := h.accessControl(r)
+	if err != nil {
 		w.WriteHeader(http.StatusForbidden)
 		return
 	}
 
-	idString := mux.Vars(r)["id"]
-	id, err := strconv.ParseInt(idString, 10, 64)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
 	if r.Method == http.MethodGet {
-		user, err := h.repo.GetUser(id, nil)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
+		v := ctx.Value("user")
+		user := v.(*model.Authorization).User
 
 		encoder := json.NewEncoder(w)
 		encoder.Encode(user)
@@ -48,7 +37,6 @@ func (h *apiHandler) userHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-
 		id, err := h.repo.CreateUser(user, nil)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -71,7 +59,6 @@ func (h *apiHandler) userHandler(w http.ResponseWriter, r *http.Request) {
 		encoder.Encode(user)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
-		w.Write([]byte(fmt.Sprintf(`{"id": %d}`, id)))
 	} else if r.Method == http.MethodPut {
 		user := &model.User{}
 		decoder := json.NewDecoder(r.Body)
@@ -81,11 +68,13 @@ func (h *apiHandler) userHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		user.UserId = id
+		v := ctx.Value("user")
+		user.UserId = v.(*model.Authorization).User.UserId
 		if err := h.repo.UpdateUser(user, nil); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
 		w.WriteHeader(http.StatusOK)
 	} else {
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -99,28 +88,16 @@ func (h *apiHandler) userStateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	idString := mux.Vars(r)["id"]
 	verb := mux.Vars(r)["verb"]
-	id, err := strconv.ParseInt(idString, 10, 64)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
 
-	if r.Method == http.MethodPut {
-		user, err := h.repo.GetUser(id, nil)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		if err := h.processor.ProcessUserTransition(ctx, user, verb); err != nil {
+	if r.Method == http.MethodPost {
+		if err := h.processor.ProcessUserTransition(ctx, verb); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
-		encoder := json.NewEncoder(w)
-		encoder.Encode(user)
+		// encoder := json.NewEncoder(w)
+		// encoder.Encode(user)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 	} else {

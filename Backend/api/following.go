@@ -15,30 +15,24 @@ func (h *apiHandler) myFollowersHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	// Retrieve my tweets
 	if r.Method == http.MethodGet {
 		v := ctx.Value("user")
-		if v == nil {
-			http.Error(w, "Only for a user", http.StatusForbidden)
-			return
-		}
-
 		user := v.(*model.Authorization).User
-		tweets, err := h.repo.GetMyTweets(user.UserId, nil)
+
+		followers, err := h.repo.GetMyFollowers(user.UserId, nil)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
 		encoder := json.NewEncoder(w)
-		encoder.Encode(tweets)
+		encoder.Encode(followers)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 	} else {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
 }
-
 
 func (h *apiHandler) myFollowingsHandler(w http.ResponseWriter, r *http.Request) {
 	ctx, err := h.accessControl(r)
@@ -50,20 +44,16 @@ func (h *apiHandler) myFollowingsHandler(w http.ResponseWriter, r *http.Request)
 	// Retrieve my tweets
 	if r.Method == http.MethodGet {
 		v := ctx.Value("user")
-		if v == nil {
-			http.Error(w, "Only for a user", http.StatusForbidden)
-			return
-		}
-
 		user := v.(*model.Authorization).User
-		tweets, err := h.repo.GetMyTweets(user.UserId, nil)
+
+		followings, err := h.repo.GetMyFollowings(user.UserId, nil)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
 		encoder := json.NewEncoder(w)
-		encoder.Encode(tweets)
+		encoder.Encode(followings)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 	} else {
@@ -71,7 +61,7 @@ func (h *apiHandler) myFollowingsHandler(w http.ResponseWriter, r *http.Request)
 	}
 }
 
-func (h *apiHandler) followStateHandler(w http.ResponseWriter, r *http.Request) {
+func (h *apiHandler) followingStateHandler(w http.ResponseWriter, r *http.Request) {
 	ctx, err := h.accessControl(r)
 	if err != nil {
 		w.WriteHeader(http.StatusForbidden)
@@ -89,14 +79,15 @@ func (h *apiHandler) followStateHandler(w http.ResponseWriter, r *http.Request) 
 			return
 		}
 
-		if err := h.processor.ProcessTweetTransition(ctx, params, verb); err != nil {
+		result, err := h.processor.ProcessFollowingTransition(ctx, params, verb)
+		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		result := &APIResult{msg: "SUCCESS"}
+		resp := &Resp{Error: nil, Data: result}
 		encoder := json.NewEncoder(w)
-		encoder.Encode(result)
+		encoder.Encode(resp)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 	} else {

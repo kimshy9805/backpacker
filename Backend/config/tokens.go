@@ -6,5 +6,5 @@ const (
 	STATE_TOKENS_EXPIRED = "Expired"
 
 	// Actions
-	ACTION_EXPIRE = "Expire"
+	ACTION_EXPIRE = "expire"
 )
