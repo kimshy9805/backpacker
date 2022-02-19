@@ -50,10 +50,14 @@ type Repository interface {
 
 	// Comments
 	CreateComment(comment *Comment, tx *Tx) (int64, error)
-	// GetComment(id int64, tx *Tx) (*Tweet, error)
+	GetComment(id int64, tx *Tx) (*Comment, error)
 	GetCommentsByTweetId(tweetId int64, tx *Tx) ([]*Comment, error)
-	// GetMyComments(userId int64, tx *Tx) ([]*Tweet, error)
-	// UpdateComment(tweet *Tweet, tx *Tx) error
+	GetMyComments(userId int64, tx *Tx) ([]*Comment, error)
+	UpdateComment(comment *Comment, tx *Tx) error
+
+	// Places
+	GetPlace(id int64, tx *Tx) (*Place, error)
+	GetMyPlaces(userId int64, tx *Tx) ([]*Place, error)
 }
 
 type QueryAble interface {
@@ -88,11 +92,11 @@ func (r *repository) Rollback(tx *Tx) error {
 
 func InitDB(mysqlConfig *config.MysqlConfig) Repository {
 	driverConfig := &mysql.Config{
-		User:      mysqlConfig.Username,
-		Passwd:    mysqlConfig.Password,
-		DBName:    mysqlConfig.Database,
-		Loc:       location,
-		ParseTime: true,
+		User:                 mysqlConfig.Username,
+		Passwd:               mysqlConfig.Password,
+		DBName:               mysqlConfig.Database,
+		Loc:                  location,
+		ParseTime:            true,
 		AllowNativePasswords: true,
 	}
 

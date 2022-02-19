@@ -2,8 +2,10 @@ package model
 
 import (
 	"database/sql"
-	"fmt"
+	"strings"
+	"time"
 
+	"gopkg.in/guregu/null.v4"
 	"kay.backpacker/config"
 )
 
@@ -41,14 +43,14 @@ func (r *repository) readComments(rows *sql.Rows, tx *Tx, cmtType string) ([]*Co
 		switch cmtType {
 		case config.COMMENT_DEFAULT:
 			if err := rows.Scan(scanComment(comment)...); err != nil {
-				fmt.Println(err)
 				return nil, err
 			}
-			fmt.Println(comment)
+			break
 		case config.COMMENT_API:
 			if err := rows.Scan(scanCommentAPI(comment)...); err != nil {
 				return nil, err
 			}
+			break
 		}
 		comments = append(comments, comment)
 	}
@@ -72,71 +74,64 @@ func (r *repository) CreateComment(comment *Comment, tx *Tx) (int64, error) {
 	return result.LastInsertId()
 }
 
-// func (r *repository) GetComment(id int64, tx *Tx) (*Comment, error) {
-// 	comment := &Comment{}
-// 	err := r.getDb(tx).QueryRow(`SELECT *
-// 								   FROM comments
-// 								  WHERE comment_id = ?`, id).Scan(scanComment(comment)...)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	comment.User, _ = r.GetUser(comment.UserId, tx)
-// 	return tweet, nil
-// }
+func (r *repository) GetComment(id int64, tx *Tx) (*Comment, error) {
+	comment := &Comment{}
+	err := r.getDb(tx).QueryRow(`SELECT *
+								   FROM comments
+								  WHERE comment_id = ?`, id).Scan(scanComment(comment)...)
+	if err != nil {
+		return nil, err
+	}
+	comment.User, _ = r.GetUser(comment.UserId, tx)
+	return comment, nil
+}
 
 func (r *repository) GetCommentsByTweetId(tweetId int64, tx *Tx) ([]*Comment, error) {
 	rows, err := r.getDb(tx).Query(`SELECT comment_id, tweet_id, user_id, status, content, details, created_at, updated_at
 									  FROM comments WHERE tweet_id = ?`, tweetId)
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
-
 	return r.readComments(rows, tx, config.COMMENT_DEFAULT)
 }
 
-// func (r *repository) GetMyComments(userId int64, tx *Tx) ([]*Tweet, error) {
-// 	rows, err := r.getDb(tx).Query(`SELECT *
-// 									  FROM tweets
-// 									 WHERE user_id = ?`, userId)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	defer rows.Close()
-// 	return readTweets(rows)
-// }
+func (r *repository) GetMyComments(userId int64, tx *Tx) ([]*Comment, error) {
+	rows, err := r.getDb(tx).Query(`SELECT *
+									  FROM comments
+									 WHERE user_id = ?`, userId)
+	if err != nil {
+		return nil, err
+	}
+	return r.readComments(rows, tx, config.COMMENT_DEFAULT)
+}
 
-// func (r *repository) GetCommentsByTweetId(userId int64, tx *Tx) ([]*Tweet, error) {
-// 	rows, err := r.getDb(tx).Query(`SELECT *
-// 									  FROM tweets
-// 								     WHERE user_id = ?`, userId)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	defer rows.Close()
-// 	return readTweets(rows)
-// }
+func (r *repository) UpdateComment(comment *Comment, tx *Tx) error {
+	columns := make([]string, 0)
+	values := make([]interface{}, 0)
 
-// func (r *repository) UpdateComment(tweet *Tweet, tx *Tx) error {
-// 	columns := make([]string, 0)
-// 	values := make([]interface{}, 0)
+	if comment.Status != "" {
+		columns = append(columns, `status = ?`)
+		values = append(values, comment.Status)
+	}
 
-// 	columns = append(columns, `status = ?`)
-// 	values = append(values, tweet.Status)
+	if comment.Content.Valid {
+		columns = append(columns, `content = ?`)
+		values = append(values, comment.Content)
+	}
 
-// 	columns = append(columns, `content = ?`)
-// 	values = append(values, tweet.Content)
+	if comment.Details != nil {
+		columns = append(columns, `details = ?`)
+		values = append(values, comment.Details)
+	}
 
-// 	// columns = append(columns, `details = ?`)
+	if len(columns) > 0 {
+		columns = append(columns, `updated_at = ?`)
+		values = append(values, null.NewTime(time.Now(), true))
 
-// 	columns = append(columns, `updated_at = ?`)
-// 	values = append(values, tweet.UpdatedAt)
-
-// 	if len(columns) > 0 {
-// 		if _, err := r.getDb(tx).Exec(`UPDATE tweets SET `+strings.Join(columns, ", ")+`WHERE tweet_id = ?`, values...); err != nil {
-// 			return err
-// 		}
-// 	}
-// 	return nil
-// }
+		values = append(values, comment.CommentId)
+		if _, err := r.getDb(tx).Exec(`UPDATE comments SET `+strings.Join(columns, ", ")+`WHERE comment_id = ?`, values...); err != nil {
+			return err
+		}
+	}
+	return nil
+}

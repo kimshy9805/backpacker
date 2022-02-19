@@ -51,14 +51,14 @@ func (h *apiHandler) tweetHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		tweetId := h.processor.ConvertToInt(params["tweet_id"])
-		tweets, err := h.repo.GetTweet(tweetId, nil)
+		tweet, err := h.repo.GetTweet(tweetId, nil)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
 		encoder := json.NewEncoder(w)
-		encoder.Encode(tweets)
+		encoder.Encode(tweet)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 

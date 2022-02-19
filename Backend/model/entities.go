@@ -103,11 +103,13 @@ type Likes struct {
 	TweetId *int64 `json:"tweet_id"`
 }
 
-type Places struct {
+type Place struct {
 	PlaceId   int64            `json:"place_id"`
 	Name      string           `json:"name"`
+	Country   string           `json:"country"`
 	Status    string           `json:"status"`
 	Details   *json.RawMessage `json:"details"`
+	Type      string           `json:"type"`
 	Latitude  float64          `json:"latitude"`
 	Longitude float64          `json:"longitude"`
 	Updated   null.Time        `json:"updated_at"`

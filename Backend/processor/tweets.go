@@ -2,6 +2,7 @@ package processor
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"gopkg.in/guregu/null.v4"
@@ -32,9 +33,18 @@ func (p *processor) ProcessTweetTransition(ctx context.Context, params map[strin
 		tweet := &model.Tweet{}
 		tweetId := p.ConvertToInt(params["tweet_id"])
 
+		// check if the tweet belongs to a user
+		dbTweet, err := p.repo.GetTweet(tweetId, nil)
+		if err != nil {
+			return nil, err
+		}
+
+		if dbTweet.UserId != user.UserId {
+			return nil, errors.New("Not a valid user")
+		}
+
 		tweet.TweetId = tweetId
 		tweet.Status = "DELETED"
-		tweet.UpdatedAt = null.NewTime(time.Now(), true)
 		if err := p.repo.UpdateTweet(tweet, nil); err != nil {
 			return nil, err
 		}

@@ -2,30 +2,30 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
-	"strconv"
 
-	"github.com/gorilla/mux"
 	"kay.backpacker/model"
 )
 
 func (h *apiHandler) commentsHandler(w http.ResponseWriter, r *http.Request) {
-	ctx, err := h.accessControl(r)
+	_, err := h.accessControl(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusForbidden)
 		return
 	}
 
-	tweetIdString := r.FormValue("tweet")
-	tweetId, err := strconv.ParseInt(tweetIdString, 10, 64)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
 	// Retrieve all comments by tweet id
 	if r.Method == http.MethodGet {
+		params := make(map[string]interface{})
+		decoder := json.NewDecoder(r.Body)
+		defer r.Body.Close()
+
+		if err := decoder.Decode(&params); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		tweetId := h.processor.ConvertToInt(params["tweet_id"])
 		comments, err := h.repo.GetCommentsByTweetId(tweetId, nil)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
@@ -37,86 +37,90 @@ func (h *apiHandler) commentsHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		// Create a new tweet
-	} else if r.Method == http.MethodPost {
-		tweet := &model.Tweet{}
-		decoder := json.NewDecoder(r.Body)
-		defer r.Body.Close()
-
-		if err := decoder.Decode(&tweet); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		if err := h.processor.ProcessTweetCreate(ctx, tweet); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-		id, err := h.repo.CreateTweet(tweet, nil)
-
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		tweet.TweetId = id
-
-		encoder := json.NewEncoder(w)
-		encoder.Encode(tweet)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusCreated)
-		w.Write([]byte(fmt.Sprintf(`{"id": %d}`, id)))
 	} else {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
 }
 
 func (h *apiHandler) commentHandler(w http.ResponseWriter, r *http.Request) {
-	_, err := h.accessControl(r)
+	ctx, err := h.accessControl(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusForbidden)
 		return
 	}
 
-	idString := mux.Vars(r)["id"]
-	id, err := strconv.ParseInt(idString, 10, 64)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	// Retrieve a tweet
+	// Retrieve a comment
 	if r.Method == http.MethodGet {
-		tweets, err := h.repo.GetTweet(id, nil)
+		params := make(map[string]interface{})
+		decoder := json.NewDecoder(r.Body)
+		defer r.Body.Close()
+
+		if err := decoder.Decode(&params); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		commentId := h.processor.ConvertToInt(params["comment_id"])
+		comment, err := h.repo.GetComment(commentId, nil)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
 		encoder := json.NewEncoder(w)
-		encoder.Encode(tweets)
+		encoder.Encode(comment)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
-		// Update a tweet
-	} else if r.Method == http.MethodPut {
-		tweet := &model.Tweet{}
+		// Create a comment
+	} else if r.Method == http.MethodPost {
+		comment := &model.Comment{}
 		decoder := json.NewDecoder(r.Body)
 		defer r.Body.Close()
-		if err := decoder.Decode(tweet); err != nil {
+
+		if err := decoder.Decode(&comment); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		tweet.TweetId = id
-		if err := h.repo.UpdateTweet(tweet, nil); err != nil {
+		if err := h.processor.ProcessCommentCreate(ctx, comment); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		id, err := h.repo.CreateComment(comment, nil)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		comment.CommentId = id
+
+		encoder := json.NewEncoder(w)
+		encoder.Encode(comment)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+
+		// Update a comment
+	} else if r.Method == http.MethodPut {
+		comment := &model.Comment{}
+		decoder := json.NewDecoder(r.Body)
+		defer r.Body.Close()
+
+		if err := decoder.Decode(comment); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		if err := h.repo.UpdateComment(comment, nil); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		dbTweet, err := h.repo.GetTweet(id, nil)
+		dbComment, err := h.repo.GetComment(comment.CommentId, nil)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 		encoder := json.NewEncoder(w)
-		encoder.Encode(dbTweet)
+		encoder.Encode(dbComment)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 	} else {
