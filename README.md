@@ -11,23 +11,23 @@ Used React Native, Go and Mysql for the development.
 
 ## App snips
 ### profile
-<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/profile.png" width="150">
+<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/profile.png" width="200">
 
 ### chats
-<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/chats.png" width="150">
+<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/chats.png" width="200">
 
 ### following
-<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/following.png" width="150">
+<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/following.png" width="200">
 
 ### place
-<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/place1.png" width="150">
-<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/place2.png" width="150">
+<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/place1.png" width="200">
+<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/place2.png" width="200">
 
 ### search
-<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/search.png" width="150">
+<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/search.png" width="200">
 
 ### thread
-<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/thread.png" width="150">
+<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/thread.png" width="200">
 
 ### map
-<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/map.png" width="150">
+<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/map.png" width="200">
