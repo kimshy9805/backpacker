@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -45,7 +46,10 @@ func (h *apiHandler) tweetHandler(w http.ResponseWriter, r *http.Request) {
 		decoder := json.NewDecoder(r.Body)
 		defer r.Body.Close()
 
+		fmt.Println(params)
+
 		if err := decoder.Decode(&params); err != nil {
+			fmt.Println(params)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -158,13 +162,14 @@ func (h *apiHandler) tweetStateHandler(w http.ResponseWriter, r *http.Request) {
 		params := make(map[string]interface{})
 		decoder := json.NewDecoder(r.Body)
 		defer r.Body.Close()
+
 		if err := decoder.Decode(&params); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-
 		result, err := h.processor.ProcessTweetTransition(ctx, params, verb)
 		if err != nil {
+			fmt.Println(err)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}

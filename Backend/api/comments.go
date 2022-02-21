@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"kay.backpacker/model"
@@ -15,12 +16,13 @@ func (h *apiHandler) commentsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Retrieve all comments by tweet id
-	if r.Method == http.MethodGet {
+	if r.Method == http.MethodPost {
 		params := make(map[string]interface{})
 		decoder := json.NewDecoder(r.Body)
 		defer r.Body.Close()
 
 		if err := decoder.Decode(&params); err != nil {
+			fmt.Println(err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -36,7 +38,6 @@ func (h *apiHandler) commentsHandler(w http.ResponseWriter, r *http.Request) {
 		encoder.Encode(comments)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		// Create a new tweet
 	} else {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}

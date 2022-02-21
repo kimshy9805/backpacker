@@ -21,11 +21,6 @@ const ProfileScreen = ({route}) => {
         // dispatch(getUser({userId: userId}));
     }, []);
 
-    // API Error Handling
-    useEffect(() => {
-        if (error === null) return;
-    }, [error]);
-
     return (
         <SafeAreaView
             style={styles.container}

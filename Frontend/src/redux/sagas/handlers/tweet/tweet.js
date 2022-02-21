@@ -9,6 +9,8 @@ import {
     likeTweetAsyncFailed,
     unlikeTweetAsync,
     unlikeTweetAsyncFailed,
+    postTweetAsync,
+    postTweetAsyncFailed,
 } from '@ducks/tweet';
 import {
     reqFetchTweets,
@@ -17,105 +19,100 @@ import {
     reqLikeTweet,
     reqUnlikeTweet,
 } from '@sagas/requests/tweet';
+import {setError} from '@ducks/error';
+import {errorHandler} from '@utils';
 
 export function* handleFetchTweets() {
-    let resp;
     try {
-        resp = yield call(reqFetchTweets);
-
-        // // Throw exceptions
-        // if (resp.data === undefined) {
-        //     throw resp;
-        // }
-
-        // // Logic Error
-        // if (resp.err !== null) {
-        //     throw resp.err;
-        // }
-
-        yield put(fetchTweetsAsync(resp.data));
+        const {data, status} = yield call(reqFetchTweets);
+        if (status === 200) {
+            yield put(fetchTweetsAsync(data));
+            return;
+        }
+        if (status > 200) {
+            yield put(setError('Something went wrong...'));
+            yield put(fetchTweetsAsyncFailed(''));
+            return;
+        }
+        throw new Error();
     } catch (error) {
+        errorHandler(error, true);
         yield put(fetchTweetsAsyncFailed(error));
     }
 }
 
 export function* handleFetchMyTweets() {
-    let resp;
     try {
-        resp = yield call(reqFetchMyTweets);
-
-        // // Throw exceptions
-        // if (resp.data === undefined) {
-        //     throw resp;
-        // }
-
-        // // Logic Error
-        // if (resp.err !== null) {
-        //     throw resp.err;
-        // }
-
-        yield put(fetchMyTweetsAsync(resp.data));
+        const {data, status} = yield call(reqFetchMyTweets);
+        if (status === 200) {
+            yield put(fetchMyTweetsAsync(data));
+            return;
+        }
+        if (status > 200) {
+            yield put(setError('Something went wrong...'));
+            yield put(fetchMyTweetsAsyncFailed(''));
+            return;
+        }
+        throw new Error();
     } catch (error) {
+        errorHandler(error, true);
         yield put(fetchMyTweetsAsyncFailed(error));
     }
 }
 
 export function* handlePostTweet(action) {
-    let resp;
-
     try {
-        resp = yield call(reqPostTweet, action);
-
-        // Throw exceptions
-        if (resp.data === undefined) {
-            throw resp;
+        const {data, status} = yield call(reqPostTweet, action);
+        if (status === 200) {
+            yield put(postTweetAsync(data));
+            return;
         }
-
-        // Logic Error
-        if (resp.err !== null) {
-            throw resp.err;
+        if (status > 200) {
+            yield put(setError('Something went wrong...'));
+            yield put(postTweetAsyncFailed(''));
+            return;
         }
-
-        yield put(postTweetAsync(resp.data));
+        throw new Error();
     } catch (error) {
-        // HTTP Error
+        errorHandler(error, true);
         yield put(postTweetAsyncFailed(error));
     }
 }
 
 export function* handleLikeTweet(action) {
-    let resp;
     try {
-        resp = yield call(reqLikeTweet, action);
-        console.log(resp);
-        // // Throw exceptions
-        // if (resp.data === undefined) {
-        //     throw resp;
-        // }
-        // // Logic Error
-        // if (resp.err !== null) {
-        //     throw resp.err;
-        // }
-        yield put(likeTweetAsync(resp.data));
+        const {data, status} = yield call(reqLikeTweet, action);
+        if (status === 200) {
+            yield put(likeTweetAsync(data));
+            return;
+        }
+        if (status > 200) {
+            yield put(setError('Something went wrong...'));
+            yield put(likeTweetAsyncFailed(''));
+            return;
+        }
+        throw new Error();
     } catch (error) {
+        errorHandler(error, true);
         yield put(likeTweetAsyncFailed(error));
     }
 }
 
 export function* handleUnlikeTweet(action) {
-    let resp;
     try {
-        resp = yield call(reqUnlikeTweet, action);
-        // // Throw exceptions
-        // if (resp.data === undefined) {
-        //     throw resp;
-        // }
-        // // Logic Error
-        // if (resp.err !== null) {
-        //     throw resp.err;
-        // }
-        yield put(unlikeTweetAsync(resp.data));
+        const {data, status} = yield call(reqUnlikeTweet, action);
+        if (status === 200) {
+            yield put(unlikeTweetAsync(data));
+            return;
+        }
+        if (status > 200) {
+            yield put(setError('Something went wrong...'));
+            yield put(unlikeTweetAsyncFailed(''));
+            return;
+        }
+        throw new Error();
     } catch (error) {
+        errorHandler(error, true);
         yield put(unlikeTweetAsyncFailed(error));
     }
 }

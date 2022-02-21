@@ -18,7 +18,7 @@ func registerBackend(router *mux.Router, h *apiHandler) {
 	router.HandleFunc("/user", h.userHandler)
 	router.HandleFunc("/users/{verb}", h.userStateHandler)
 
-	// Follow
+	// Following
 	router.HandleFunc("/followers/me", h.myFollowersHandler)
 	router.HandleFunc("/followings/me", h.myFollowingsHandler)
 	router.HandleFunc("/following/{verb}", h.followingStateHandler)

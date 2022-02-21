@@ -13,15 +13,15 @@ import {errorHandler} from '@utils';
 export function* handleFetchComments(action) {
     try {
         const {data, status} = yield call(reqFetchComments, action);
-        // if (status === 200) {
-        //     yield put(fetchCommentsAsync(data));
-        //     return;
-        // }
-        // if (status > 200) {
-        //     yield put(setError('Something went wrong...'));
-        //     yield put(fetchCommentsAsyncFailed(''));
-        //     return;
-        // }
+        if (status === 200) {
+            yield put(fetchCommentsAsync(data));
+            return;
+        }
+        if (status > 200) {
+            yield put(setError('Something went wrong...'));
+            yield put(fetchCommentsAsyncFailed(''));
+            return;
+        }
         throw new Error();
     } catch (error) {
         errorHandler(error, true);

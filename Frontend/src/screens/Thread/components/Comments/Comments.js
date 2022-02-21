@@ -11,7 +11,7 @@ const Comments = ({tweet}) => {
     const nav = useNavigation();
 
     const dispatch = useDispatch();
-    const {isFetching, replies} = useSelector(state => state.comment);
+    const {isFetching, comments} = useSelector(state => state.comment);
 
     useEffect(() => {
         dispatch(fetchComments({tweet_id: tweet.tweet_id}));
@@ -36,7 +36,7 @@ const Comments = ({tweet}) => {
     return (
         <View style={styles.tweetContainer}>
             <Animated.FlatList
-                data={replies}
+                data={comments}
                 keyExtractor={item => `${item.comment_id}`}
                 keyboardDismissMode="on-drag"
                 showsVerticalScrollIndicator={false}
