@@ -6,6 +6,15 @@ const initialState = {
 
     result: {},
     isFetching: false,
+
+    // Loading
+    isFetchingMyFollowers: false,
+    isFetchingMyFollowings: false,
+
+    // Status
+    fetchMyFollowersStatus: '',
+    fetchMyFollowingsStatus: '',
+
     error: null,
 };
 

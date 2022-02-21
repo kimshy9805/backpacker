@@ -1,9 +1,26 @@
 import {createSlice, current} from '@reduxjs/toolkit';
 
 const initialState = {
+    myTweets: [],
     tweets: [],
+
     result: {},
     isFetching: false,
+
+    // Loading
+    isFetchingTweets: false,
+    isFetchingMyTweets: false,
+    isPostingTweet: false,
+    isDeletingTweet: false,
+    isUpdatingTweet: false,
+
+    // Status
+    fetchTweetsStatus: '',
+    fetchMyTweetsStatus: '',
+    postTweetStatus: '',
+    deleteTweetStatus: '',
+    updateTweetStatus: '',
+
     error: null,
 };
 

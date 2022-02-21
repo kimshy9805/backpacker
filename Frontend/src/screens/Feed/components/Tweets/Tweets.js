@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, Animated, FlatList, Alert} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {View, Text, Animated, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -7,20 +7,14 @@ import {Marginer, TweetCard, Loader} from '@components';
 import {styles, Sizes, Colors} from '@styles';
 import {fetchTweets, resetAPIStatus} from '@ducks/tweet';
 
-const Tweets = ({scrollY}) => {
+const Tweets = () => {
     const nav = useNavigation();
+    const scrollY = useRef(new Animated.Value(0));
 
     const dispatch = useDispatch();
     const {isFetching, error, tweets} = useSelector(state => state.tweet);
 
     const [stopFetch, setStopFetch] = useState(false);
-
-    useEffect(() => {
-        if (error === null) return;
-
-        Alert.alert('backpacker', 'Something went wrong...');
-        dispatch(resetAPIStatus);
-    }, [error]);
 
     useEffect(() => {
         dispatch(fetchTweets());

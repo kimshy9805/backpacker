@@ -5,8 +5,7 @@ import {
     updateUser,
     updateUserAsync,
     updateUserAsyncFailed,
-    resetGetUser,
-    resetUser,
+    resetAPIStatus,
     namespace,
     userReducer,
 } from './userSlice';
@@ -18,8 +17,7 @@ export {
     updateUser,
     updateUserAsync,
     updateUserAsyncFailed,
-    resetGetUser,
-    resetUser,
+    resetAPIStatus,
     namespace,
     userReducer,
 };

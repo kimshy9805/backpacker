@@ -20,17 +20,14 @@ const Profile = ({tweet}) => {
     return (
         <View style={styles.threadProfileContainer}>
             <View style={styles.flexRowCenter}>
-                <ProfilePicture
-                    size={55}
-                    image={tweet.user.details?.images[0]}
-                />
+                <ProfilePicture size={55} image={tweet.user.profile_image} />
                 <View style={{marginLeft: 20}}>
                     <Text style={{...Typography.bold3, color: Colors.white}}>
-                        {tweet.user.name}
+                        {tweet.user.alias}
                     </Text>
                     <Text
                         style={{...Typography.bold6, color: Colors.lightGray}}>
-                        {tweet.user.name}
+                        {tweet.user.alias}
                     </Text>
                 </View>
             </View>

@@ -14,7 +14,7 @@ import {
     handleLikeTweet,
     handleUnlikeTweet,
 } from './handlers/tweet';
-import {handleFetchReplies, handleFetchMyReplies} from './handlers/reply';
+import {handleFetchComments, handleFetchMyComments} from './handlers/comment';
 import {handleFetchMyTips} from './handlers/tip';
 import {
     handleFetchMyFollowers,
@@ -33,7 +33,7 @@ import {
     likeTweet,
     unlikeTweet,
 } from '@ducks/tweet';
-import {fetchReplies, fetchMyReplies} from '@ducks/reply';
+import {fetchComments, fetchMyComments} from '@ducks/comment';
 import {fetchMyTips} from '@ducks/tip';
 import {
     fetchMyFollowers,
@@ -49,8 +49,8 @@ export function* watcherSaga() {
     // yield takeLatest(signOutUser.type, handleSignOutUser);
 
     // user
-    // yield takeLatest(getUser.type, handleGetUser);
-    // yield takeLatest(updateUser.type, handleUpdateUser);
+    yield takeLatest(getUser.type, handleGetUser);
+    yield takeLatest(updateUser.type, handleUpdateUser);
 
     // tweet
     yield takeLatest(fetchTweets.type, handleFetchTweets);
@@ -62,9 +62,9 @@ export function* watcherSaga() {
     // tip
     yield takeLatest(fetchMyTips.type, handleFetchMyTips);
 
-    // reply
-    yield takeLatest(fetchReplies.type, handleFetchReplies);
-    yield takeLatest(fetchMyReplies.type, handleFetchMyReplies);
+    // comment
+    yield takeLatest(fetchComments.type, handleFetchComments);
+    yield takeLatest(fetchMyComments.type, handleFetchMyComments);
 
     // follow
     yield takeLatest(fetchMyFollowers.type, handleFetchMyFollowers);
@@ -72,7 +72,5 @@ export function* watcherSaga() {
     yield takeLatest(follow.type, handleFollow);
     yield takeLatest(unfollow.type, handleUnfollow);
 
-
     // chat
-    
 }

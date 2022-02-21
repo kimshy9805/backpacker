@@ -2,19 +2,19 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
     user: {
-        user_id: 1,
-        name: 'kay',
-        alias: '@yigmmm042223',
-        status: 'ACTIVE',
-        created_at: '2021-01-09T14:00:00+08:00',
-        email: 'kimshy5840@naver.com',
+        user_id: -1,
+        email: '',
+        alias: '',
+        status: '',
+        profile_image: '',
+        description: '',
         details: {
-            profileImage: 'https://picsum.photos/200',
-            backgraoundImage: 'https://picsum.photos/200',
-            description: '난 영웅이야',
-            location: 'Singapore',
-            dob: '1997-10-27',
+            background_images: '',
+            location: '',
+            dob: '',
         },
+        created_at: '',
+        updated_at: '',
     },
 
     isFetching: false,
@@ -71,6 +71,7 @@ const userSlice = createSlice({
 
         resetAPIStatus: state => {
             state.getUserStatus = initialState.getUserStatus;
+            state.updateUserStatus = initialState.updateUserStatus;
         },
     },
 });

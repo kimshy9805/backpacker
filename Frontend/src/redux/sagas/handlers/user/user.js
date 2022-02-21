@@ -6,25 +6,23 @@ import {
     updateUserAsync,
     updateUserAsyncFailed,
 } from '@ducks/user';
-import {requestGetUser, requestUpdateUser} from '@sagas/requests/user';
+import {reqGetUser, reqUpdateUser} from '@sagas/requests/user';
 import {setError} from '@ducks/error';
 import {errorHandler} from '@utils';
 
 export function* handleGetUser() {
-    let resp;
     try {
-        resp = yield call(requestGetUser);
-
-        if (resp.status === 'SUCCESS') {
-            yield put(getUserAsync(resp.data));
+        const {data, status} = yield call(reqGetUser);
+        if (status === 200) {
+            yield put(getUserAsync(data));
             return;
         }
-        if (resp.status === 'FAIL' && resp.data) {
-            yield put(setError(resp.data));
-            yield put(getUserAsyncFailed(resp.data));
+        if (status > 200) {
+            yield put(setError('Something went wrong...'));
+            yield put(getUserAsyncFailed(''));
             return;
         }
-        throw resp;
+        throw new Error();
     } catch (error) {
         errorHandler(error, true);
         yield put(getUserAsyncFailed(error));
@@ -32,20 +30,19 @@ export function* handleGetUser() {
 }
 
 export function* handleUpdateUser(action) {
-    let resp;
     try {
-        resp = yield call(requestUpdateUser, action);
+        const {data, status} = yield call(reqUpdateUser, action);
 
-        if (resp.status === 'SUCCESS') {
-            yield put(updateUserAsync(resp.data));
+        if (status === 200) {
+            yield put(updateUserAsync(data));
             return;
         }
-        if (resp.status === 'FAIL' && resp.data) {
-            yield put(setError(resp.data));
-            yield put(updateUserAsyncFailed(resp.data));
+        if (status > 200) {
+            yield put(setError('Something went wrong...'));
+            yield put(updateUserAsyncFailed(''));
             return;
         }
-        throw resp;
+        throw new Error();
     } catch (error) {
         errorHandler(error, true);
         yield put(updateUserAsyncFailed(error));

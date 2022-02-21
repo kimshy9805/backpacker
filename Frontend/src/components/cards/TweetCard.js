@@ -45,10 +45,7 @@ const TweetCard = props => {
             <TouchableOpacity
                 style={styles.tweetProfileContainer}
                 onPress={() => onPressProfile(tweet.user_id)}>
-                <ProfilePicture
-                    size={40}
-                    image={tweet.user.details?.images[0]}
-                />
+                <ProfilePicture size={40} image={tweet.user?.profile_image} />
             </TouchableOpacity>
             {/* Tweet Detail */}
             <TouchableOpacity
@@ -62,15 +59,7 @@ const TweetCard = props => {
                                 ...Typography.bold5,
                                 color: Colors.white,
                             }}>
-                            {tweet.user.name}
-                        </Text>
-                        <Text
-                            style={{
-                                marginRight: 5,
-                                ...Typography.body6,
-                                color: Colors.white,
-                            }}>
-                            @{tweet.user.name}
+                            {tweet.user.alias}
                         </Text>
                         <Text
                             style={{

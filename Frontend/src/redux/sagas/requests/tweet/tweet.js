@@ -10,7 +10,6 @@ const reqFetchTweets = async () => {
             return resp;
         })
         .catch(err => {
-            console.log(err);
             return err;
         });
 };
@@ -25,7 +24,6 @@ const reqFetchMyTweets = async () => {
             return resp;
         })
         .catch(err => {
-            console.log(err);
             return err;
         });
 };
@@ -40,7 +38,6 @@ const reqLikeTweet = async action => {
             return resp;
         })
         .catch(err => {
-            console.log(err);
             return err;
         });
 };
@@ -55,7 +52,6 @@ const reqUnlikeTweet = async action => {
             return resp;
         })
         .catch(err => {
-            console.log(err);
             return err;
         });
 };
@@ -69,8 +65,8 @@ const reqPostTweet = async action => {
             console.log('from request reqPostTweet : ', response);
             return response.data;
         })
-        .catch(error => {
-            return error;
+        .catch(err => {
+            return err;
         });
 };
 

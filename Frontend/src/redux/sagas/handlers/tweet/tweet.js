@@ -87,6 +87,7 @@ export function* handleLikeTweet(action) {
     let resp;
     try {
         resp = yield call(reqLikeTweet, action);
+        console.log(resp);
         // // Throw exceptions
         // if (resp.data === undefined) {
         //     throw resp;

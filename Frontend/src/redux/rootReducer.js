@@ -4,7 +4,7 @@ import {
     userReducer,
     authReducer,
     tweetReducer,
-    replyReducer,
+    commentReducer,
     followReducer,
     errorReducer,
 } from './ducks';
@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     auth: authReducer,
     tweet: tweetReducer,
-    reply: replyReducer,
+    comment: commentReducer,
     follow: followReducer,
     error: errorReducer,
 });

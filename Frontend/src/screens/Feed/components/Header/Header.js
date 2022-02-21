@@ -20,7 +20,7 @@ const Header = () => {
         <View style={_styles.container}>
             <TouchableOpacity
                 onPress={() => nav.navigate('Profile', {userId: user.user_id})}>
-                <ProfilePicture size={30} image={user.details.profileImage} />
+                <ProfilePicture size={30} image={user?.profile_image} />
             </TouchableOpacity>
             <Text style={{...Typography.bold3, color: Colors.white}}>Feed</Text>
             <TouchableOpacity onPress={() => nav.navigate('Dashboard')}>

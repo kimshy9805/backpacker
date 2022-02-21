@@ -30,15 +30,7 @@ const CommentCard = props => {
                                 ...Typography.bold5,
                                 color: Colors.white,
                             }}>
-                            {comment.user.name}
-                        </Text>
-                        <Text
-                            style={{
-                                marginRight: 5,
-                                ...Typography.body6,
-                                color: Colors.white,
-                            }}>
-                            @{comment.user.name}
+                            {comment.user.alias}
                         </Text>
                         <Text
                             style={{

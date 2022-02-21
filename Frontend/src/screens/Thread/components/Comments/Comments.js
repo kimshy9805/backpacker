@@ -1,28 +1,21 @@
 import React, {useEffect} from 'react';
-import {View, Text, Animated, Alert} from 'react-native';
+import {View, Text, Animated} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {Marginer, CommentCard, Loader, HorizontalLine} from '@components';
 import {styles, Sizes, Colors, Typography} from '@styles';
-import {fetchReplies, resetAPIStatus} from '@ducks/reply';
+import {fetchComments, resetAPIStatus} from '@ducks/comment';
 
 const Comments = ({tweet}) => {
     const nav = useNavigation();
 
     const dispatch = useDispatch();
-    const {isFetching, error, replies} = useSelector(state => state.reply);
+    const {isFetching, replies} = useSelector(state => state.comment);
 
     useEffect(() => {
-        dispatch(fetchReplies(tweet.tweet_id));
+        dispatch(fetchComments({tweet_id: tweet.tweet_id}));
     }, []);
-
-    useEffect(() => {
-        if (error === null) return;
-
-        Alert.alert('backpacker', 'Something went wrong...');
-        dispatch(resetAPIStatus);
-    }, [error]);
 
     const onPressProfile = userId => {
         nav.navigate('Profile', {userId: userId});

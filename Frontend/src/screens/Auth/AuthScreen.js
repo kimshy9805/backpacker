@@ -15,19 +15,30 @@ import {useNavigation} from '@react-navigation/native';
 
 import {styles} from '@styles';
 import {config, configurePusher} from '../../config';
-import {getUser, resetGetUser} from '@ducks/user';
+import {getUser, resetAPIStatus} from '@ducks/user';
 import {signInUserAsync} from '@ducks/auth';
 
 const AuthScreen = () => {
-    const dispatch = useDispatch();
     const nav = useNavigation();
+
+    const dispatch = useDispatch();
+    const {getUserStatus} = useSelector(state => state.user);
 
     useEffect(() => {
         init();
     }, []);
 
+    useEffect(() => {
+        if (getUserStatus === '') return;
+        if (getUserStatus === 'SUCCESS') {
+            nav.navigate('Dashboard');
+        } else {
+            nav.navigate('SignIn');
+        }
+        dispatch(resetAPIStatus());
+    }, [getUserStatus]);
+
     const init = async () => {
-        nav.navigate('SignIn');
         // 1. Check app version
         let updateNeeded = await VersionCheck.needUpdate();
         if (updateNeeded && updateNeeded.isNeeded) {
@@ -36,13 +47,9 @@ const AuthScreen = () => {
         // 2. Check necessary permissions
         // await handlePermissions();
 
-        // 3. Configure token
-        const token = await config();
-        if (token !== null) {
-            // dispatch(signInUserAsync());
-            // dispatch(getUser());
-            return;
-        }
+        // 3. Dispatch getUser
+        dispatch(getUser());
+        return;
     };
 
     return (

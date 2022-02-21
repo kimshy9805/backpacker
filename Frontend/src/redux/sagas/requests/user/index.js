@@ -1,3 +1,3 @@
-import {requestGetUser, requestUpdateUser} from './user';
+import {reqGetUser, reqUpdateUser} from './user';
 
-export {requestGetUser, requestUpdateUser};
+export {reqGetUser, reqUpdateUser};

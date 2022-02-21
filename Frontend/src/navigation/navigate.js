@@ -1,8 +1,7 @@
-import React from 'react';
-import {View, Image} from 'react-native';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 import {
     SignInScreen,
@@ -83,10 +82,16 @@ const TabNavigator = () => {
 };
 
 const AppStackNavigator = () => {
+    const {error} = useSelector(state => state.error);
+
+    useEffect(() => {
+        console.log(error);
+    }, [error]);
+
     return (
         <Stack.Navigator
             screenOptions={screenOptionStyle}
-            initialRouteName={'Dashboard'}>
+            initialRouteName={'Auth'}>
             <Stack.Screen name="Auth" component={AuthScreen} />
             <Stack.Screen name="Update" component={UpdateScreen} />
             <Stack.Screen name="SignIn" component={SignInScreen} />
