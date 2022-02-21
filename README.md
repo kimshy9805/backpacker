@@ -12,6 +12,7 @@ Used React Native, Go and Mysql for the development.
 ## App snips
 ### profile
 ![alt text](https://github.com/kimshy9805/backpacker/blob/main/DB/profile.png?raw=true)
+<img src="https://github.com/kimshy9805/backpacker/blob/main/DB/profile.png" width="48">
 
 ### chats
 ![alt text](https://github.com/kimshy9805/backpacker/blob/main/DB/chats.png?raw=true)
