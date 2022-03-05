@@ -62,15 +62,16 @@ type Token struct {
 }
 
 type Tweet struct {
-	TweetId   int64            `json:"tweet_id"`
-	UserId    int64            `json:"user_id"`
-	PlaceId   *int64           `json:"place_id"`
-	Type      string           `json:"type"`
-	Status    string           `json:"status"`
-	Content   null.String      `json:"content"`
-	Details   *json.RawMessage `json:"details,omitempty"`
-	CreatedAt null.Time        `json:"created_at"`
-	UpdatedAt null.Time        `json:"updated_at"`
+	TweetId       int64            `json:"tweet_id"`
+	UserId        int64            `json:"user_id"`
+	PlaceId       *int64           `json:"place_id"`
+	Type          string           `json:"type"`
+	Status        string           `json:"status"`
+	Content       null.String      `json:"content"`
+	Details       *json.RawMessage `json:"details,omitempty"`
+	ParentTweetId *int64           `json:"parent_tweet_id"`
+	CreatedAt     null.Time        `json:"created_at"`
+	UpdatedAt     null.Time        `json:"updated_at"`
 
 	// for API
 	LikesCount    null.Int  `json:"likes_count"`

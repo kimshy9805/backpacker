@@ -1,161 +1,152 @@
 package api
 
-import (
-	"encoding/json"
-	"fmt"
-	"net/http"
+// func (h *apiHandler) commentsHandler(w http.ResponseWriter, r *http.Request) {
+// 	_, err := h.accessControl(r)
+// 	if err != nil {
+// 		http.Error(w, err.Error(), http.StatusForbidden)
+// 		return
+// 	}
 
-	"kay.backpacker/model"
-)
+// 	// Retrieve all comments by tweet id
+// 	if r.Method == http.MethodPost {
+// 		params := make(map[string]interface{})
+// 		decoder := json.NewDecoder(r.Body)
+// 		defer r.Body.Close()
 
-func (h *apiHandler) commentsHandler(w http.ResponseWriter, r *http.Request) {
-	_, err := h.accessControl(r)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusForbidden)
-		return
-	}
+// 		if err := decoder.Decode(&params); err != nil {
+// 			http.Error(w, err.Error(), http.StatusInternalServerError)
+// 			return
+// 		}
 
-	// Retrieve all comments by tweet id
-	if r.Method == http.MethodPost {
-		params := make(map[string]interface{})
-		decoder := json.NewDecoder(r.Body)
-		defer r.Body.Close()
+// 		tweetId := h.processor.ConvertToInt(params["tweet_id"])
+// 		comments, err := h.repo.GetCommentsByTweetId(tweetId, nil)
+// 		if err != nil {
+// 			http.Error(w, err.Error(), http.StatusBadRequest)
+// 			return
+// 		}
 
-		if err := decoder.Decode(&params); err != nil {
-			fmt.Println(err)
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+// 		encoder := json.NewEncoder(w)
+// 		encoder.Encode(comments)
+// 		w.Header().Set("Content-Type", "application/json")
+// 		w.WriteHeader(http.StatusOK)
+// 	} else {
+// 		w.WriteHeader(http.StatusMethodNotAllowed)
+// 	}
+// }
 
-		tweetId := h.processor.ConvertToInt(params["tweet_id"])
-		comments, err := h.repo.GetCommentsByTweetId(tweetId, nil)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
+// func (h *apiHandler) commentHandler(w http.ResponseWriter, r *http.Request) {
+// 	ctx, err := h.accessControl(r)
+// 	if err != nil {
+// 		http.Error(w, err.Error(), http.StatusForbidden)
+// 		return
+// 	}
 
-		encoder := json.NewEncoder(w)
-		encoder.Encode(comments)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-	} else {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-	}
-}
+// 	// Retrieve a comment
+// 	if r.Method == http.MethodGet {
+// 		params := make(map[string]interface{})
+// 		decoder := json.NewDecoder(r.Body)
+// 		defer r.Body.Close()
 
-func (h *apiHandler) commentHandler(w http.ResponseWriter, r *http.Request) {
-	ctx, err := h.accessControl(r)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusForbidden)
-		return
-	}
+// 		if err := decoder.Decode(&params); err != nil {
+// 			http.Error(w, err.Error(), http.StatusInternalServerError)
+// 			return
+// 		}
 
-	// Retrieve a comment
-	if r.Method == http.MethodGet {
-		params := make(map[string]interface{})
-		decoder := json.NewDecoder(r.Body)
-		defer r.Body.Close()
+// 		commentId := h.processor.ConvertToInt(params["comment_id"])
+// 		comment, err := h.repo.GetComment(commentId, nil)
+// 		if err != nil {
+// 			http.Error(w, err.Error(), http.StatusBadRequest)
+// 			return
+// 		}
 
-		if err := decoder.Decode(&params); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+// 		encoder := json.NewEncoder(w)
+// 		encoder.Encode(comment)
+// 		w.Header().Set("Content-Type", "application/json")
+// 		w.WriteHeader(http.StatusOK)
 
-		commentId := h.processor.ConvertToInt(params["comment_id"])
-		comment, err := h.repo.GetComment(commentId, nil)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
+// 		// Create a comment
+// 	} else if r.Method == http.MethodPost {
+// 		comment := &model.Comment{}
+// 		decoder := json.NewDecoder(r.Body)
+// 		defer r.Body.Close()
 
-		encoder := json.NewEncoder(w)
-		encoder.Encode(comment)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
+// 		if err := decoder.Decode(&comment); err != nil {
+// 			http.Error(w, err.Error(), http.StatusInternalServerError)
+// 			return
+// 		}
+// 		if err := h.processor.ProcessCommentCreate(ctx, comment); err != nil {
+// 			http.Error(w, err.Error(), http.StatusBadRequest)
+// 			return
+// 		}
+// 		id, err := h.repo.CreateComment(comment, nil)
 
-		// Create a comment
-	} else if r.Method == http.MethodPost {
-		comment := &model.Comment{}
-		decoder := json.NewDecoder(r.Body)
-		defer r.Body.Close()
+// 		if err != nil {
+// 			http.Error(w, err.Error(), http.StatusInternalServerError)
+// 			return
+// 		}
+// 		comment.CommentId = id
 
-		if err := decoder.Decode(&comment); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		if err := h.processor.ProcessCommentCreate(ctx, comment); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-		id, err := h.repo.CreateComment(comment, nil)
+// 		encoder := json.NewEncoder(w)
+// 		encoder.Encode(comment)
+// 		w.Header().Set("Content-Type", "application/json")
+// 		w.WriteHeader(http.StatusCreated)
 
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		comment.CommentId = id
+// 		// Update a comment
+// 	} else if r.Method == http.MethodPut {
+// 		comment := &model.Comment{}
+// 		decoder := json.NewDecoder(r.Body)
+// 		defer r.Body.Close()
 
-		encoder := json.NewEncoder(w)
-		encoder.Encode(comment)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusCreated)
+// 		if err := decoder.Decode(comment); err != nil {
+// 			http.Error(w, err.Error(), http.StatusInternalServerError)
+// 			return
+// 		}
+// 		if err := h.repo.UpdateComment(comment, nil); err != nil {
+// 			http.Error(w, err.Error(), http.StatusBadRequest)
+// 			return
+// 		}
 
-		// Update a comment
-	} else if r.Method == http.MethodPut {
-		comment := &model.Comment{}
-		decoder := json.NewDecoder(r.Body)
-		defer r.Body.Close()
+// 		dbComment, err := h.repo.GetComment(comment.CommentId, nil)
+// 		if err != nil {
+// 			http.Error(w, err.Error(), http.StatusInternalServerError)
+// 			return
+// 		}
+// 		encoder := json.NewEncoder(w)
+// 		encoder.Encode(dbComment)
+// 		w.Header().Set("Content-Type", "application/json")
+// 		w.WriteHeader(http.StatusOK)
+// 	} else {
+// 		w.WriteHeader(http.StatusMethodNotAllowed)
+// 	}
+// }
 
-		if err := decoder.Decode(comment); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		if err := h.repo.UpdateComment(comment, nil); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
+// func (h *apiHandler) myCommentsHandler(w http.ResponseWriter, r *http.Request) {
+// 	ctx, err := h.accessControl(r)
+// 	if err != nil {
+// 		w.WriteHeader(http.StatusForbidden)
+// 		return
+// 	}
 
-		dbComment, err := h.repo.GetComment(comment.CommentId, nil)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		encoder := json.NewEncoder(w)
-		encoder.Encode(dbComment)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-	} else {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-	}
-}
+// 	// Retrieve my tweets
+// 	if r.Method == http.MethodGet {
+// 		v := ctx.Value("user")
+// 		if v == nil {
+// 			http.Error(w, "Only for a user", http.StatusForbidden)
+// 			return
+// 		}
 
-func (h *apiHandler) myCommentsHandler(w http.ResponseWriter, r *http.Request) {
-	ctx, err := h.accessControl(r)
-	if err != nil {
-		w.WriteHeader(http.StatusForbidden)
-		return
-	}
+// 		user := v.(*model.Authorization).User
+// 		tweets, err := h.repo.GetMyTweets(user.UserId, nil)
+// 		if err != nil {
+// 			http.Error(w, err.Error(), http.StatusBadRequest)
+// 			return
+// 		}
 
-	// Retrieve my tweets
-	if r.Method == http.MethodGet {
-		v := ctx.Value("user")
-		if v == nil {
-			http.Error(w, "Only for a user", http.StatusForbidden)
-			return
-		}
-
-		user := v.(*model.Authorization).User
-		tweets, err := h.repo.GetMyTweets(user.UserId, nil)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		encoder := json.NewEncoder(w)
-		encoder.Encode(tweets)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-	} else {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-	}
-}
+// 		encoder := json.NewEncoder(w)
+// 		encoder.Encode(tweets)
+// 		w.Header().Set("Content-Type", "application/json")
+// 		w.WriteHeader(http.StatusOK)
+// 	} else {
+// 		w.WriteHeader(http.StatusMethodNotAllowed)
+// 	}
+// }

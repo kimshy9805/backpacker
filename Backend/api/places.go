@@ -25,15 +25,15 @@ func (h *apiHandler) placesHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		tweetId := h.processor.ConvertToInt(params["tweet_id"])
-		comments, err := h.repo.GetCommentsByTweetId(tweetId, nil)
+		// tweetId := h.processor.ConvertToInt(params["tweet_id"])
+		// comments, err := h.repo.GetCommentsByTweetId(tweetId, nil)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		encoder := json.NewEncoder(w)
-		encoder.Encode(comments)
+		// encoder := json.NewEncoder(w)
+		// encoder.Encode(comments)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		// Create a new tweet
@@ -43,11 +43,11 @@ func (h *apiHandler) placesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *apiHandler) placeHandler(w http.ResponseWriter, r *http.Request) {
-	ctx, err := h.accessControl(r)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusForbidden)
-		return
-	}
+	// ctx, err := h.accessControl(r)
+	// if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusForbidden)
+	// 	return
+	// }
 
 	// Retrieve a comment
 	if r.Method == http.MethodGet {
@@ -60,15 +60,15 @@ func (h *apiHandler) placeHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		commentId := h.processor.ConvertToInt(params["comment_id"])
-		comment, err := h.repo.GetComment(commentId, nil)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
+		// commentId := h.processor.ConvertToInt(params["comment_id"])
+		// // comment, err := h.repo.GetComment(commentId, nil)
+		// if err != nil {
+		// 	http.Error(w, err.Error(), http.StatusBadRequest)
+		// 	return
+		// }
 
-		encoder := json.NewEncoder(w)
-		encoder.Encode(comment)
+		// encoder := json.NewEncoder(w)
+		// encoder.Encode(comment)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
@@ -82,17 +82,17 @@ func (h *apiHandler) placeHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		if err := h.processor.ProcessCommentCreate(ctx, comment); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-		id, err := h.repo.CreateComment(comment, nil)
+		// if err := h.processor.ProcessCommentCreate(ctx, comment); err != nil {
+		// 	http.Error(w, err.Error(), http.StatusBadRequest)
+		// 	return
+		// }
+		// id, err := h.repo.CreateComment(comment, nil)
 
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		comment.CommentId = id
+		// if err != nil {
+		// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+		// 	return
+		// }
+		// comment.CommentId = id
 
 		encoder := json.NewEncoder(w)
 		encoder.Encode(comment)
@@ -109,18 +109,18 @@ func (h *apiHandler) placeHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		if err := h.repo.UpdateComment(comment, nil); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
+		// if err := h.repo.UpdateComment(comment, nil); err != nil {
+		// 	http.Error(w, err.Error(), http.StatusBadRequest)
+		// 	return
+		// }
 
-		dbComment, err := h.repo.GetComment(comment.CommentId, nil)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		encoder := json.NewEncoder(w)
-		encoder.Encode(dbComment)
+		// dbComment, err := h.repo.GetComment(comment.CommentId, nil)
+		// if err != nil {
+		// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+		// 	return
+		// }
+		// encoder := json.NewEncoder(w)
+		// encoder.Encode(dbComment)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 	} else {

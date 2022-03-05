@@ -18,6 +18,31 @@ func (p *processor) ProcessTweetCreate(ctx context.Context, tweet *model.Tweet) 
 	tweet.Status = "ACTIVE"
 	tweet.CreatedAt = null.NewTime(time.Now(), true)
 	tweet.UpdatedAt = null.NewTime(time.Now(), true)
+	
+	return nil
+}
+
+func (p *processor) ProcessCommentCreate(ctx context.Context, tweet *model.Tweet) error {
+	v := ctx.Value("user")
+	user := v.(*model.Authorization).User
+
+	tweet.UserId = user.UserId
+	tweet.Status = "ACTIVE"
+	tweet.CreatedAt = null.NewTime(time.Now(), true)
+	tweet.UpdatedAt = null.NewTime(time.Now(), true)
+
+	return nil
+}
+
+func (p *processor) ProcessTipCreate(ctx context.Context, tweet *model.Tweet) error {
+	v := ctx.Value("user")
+	user := v.(*model.Authorization).User
+
+	tweet.UserId = user.UserId
+	tweet.Status = "ACTIVE"
+	tweet.CreatedAt = null.NewTime(time.Now(), true)
+	tweet.UpdatedAt = null.NewTime(time.Now(), true)
+
 	return nil
 }
 

@@ -31,9 +31,9 @@ type Processor interface {
 	ProcessTweetCreate(ctx context.Context, tweet *model.Tweet) error
 	ProcessTweetTransition(ctx context.Context, params map[string]interface{}, verb string) (interface{}, error)
 
-	// Comments
-	ProcessCommentCreate(ctx context.Context, comment *model.Comment) error
-	ProcessCommentTransition(ctx context.Context, params map[string]interface{}, verb string) (interface{}, error)
+	// // Comments
+	// ProcessCommentCreate(ctx context.Context, comment *model.Comment) error
+	// ProcessCommentTransition(ctx context.Context, params map[string]interface{}, verb string) (interface{}, error)
 }
 
 func NewProcessor(repo model.Repository) Processor {

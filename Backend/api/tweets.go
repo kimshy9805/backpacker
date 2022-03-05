@@ -46,10 +46,7 @@ func (h *apiHandler) tweetHandler(w http.ResponseWriter, r *http.Request) {
 		decoder := json.NewDecoder(r.Body)
 		defer r.Body.Close()
 
-		fmt.Println(params)
-
 		if err := decoder.Decode(&params); err != nil {
-			fmt.Println(params)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -76,12 +73,12 @@ func (h *apiHandler) tweetHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
 		if err := h.processor.ProcessTweetCreate(ctx, tweet); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 		id, err := h.repo.CreateTweet(tweet, nil)
-
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -129,15 +126,33 @@ func (h *apiHandler) myTweetsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	ty := mux.Vars(r)["type"]
+	fmt.Println(ty)
+
 	// Retrieve my tweets
 	if r.Method == http.MethodGet {
 		v := ctx.Value("user")
 		user := v.(*model.Authorization).User
 
-		tweets, err := h.repo.GetMyTweets(user.UserId, nil)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
+		var tweets = make([]*model.Tweet, 0)
+
+		switch ty {
+		case "tweet":
+			tweets, err = h.repo.GetMyTweets(user.UserId, nil)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+
+			break
+		case "comment":
+
+			break
+
+		case "tip":
+
+			break
+
 		}
 
 		encoder := json.NewEncoder(w)
